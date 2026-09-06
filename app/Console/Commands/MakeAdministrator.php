@@ -76,11 +76,32 @@ class MakeAdministrator extends Command
     {
         $role = $this->administratorRole();
 
-        $user->forceFill([
+        $attributes = [
             'role_id' => $role->getKey(),
             'is_active' => true,
             'expires_at' => null,
-        ])->save();
+        ];
+
+        $plainPassword = $this->stringOption('password');
+
+        if ($plainPassword !== null) {
+            $validator = Validator::make(
+                ['password' => $plainPassword],
+                ['password' => ['required', 'string', Password::default()]],
+            );
+
+            if ($validator->fails()) {
+                foreach ($validator->errors()->all() as $message) {
+                    $this->components->error($message);
+                }
+
+                return self::FAILURE;
+            }
+
+            $attributes['password'] = $plainPassword;
+        }
+
+        $user->forceFill($attributes)->save();
 
         /**
          * With no actor: shell access is what authorised this, and the trail
@@ -92,7 +113,11 @@ class MakeAdministrator extends Command
             'role_name' => $role->name,
         ]);
 
-        $this->components->info("{$user->email} is now an unrestricted administrator.");
+        $this->components->info(
+            $plainPassword !== null
+                ? "{$user->email} is now an unrestricted administrator and the password was reset."
+                : "{$user->email} is now an unrestricted administrator.",
+        );
 
         return self::SUCCESS;
     }

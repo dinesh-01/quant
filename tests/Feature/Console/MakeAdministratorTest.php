@@ -100,6 +100,25 @@ class MakeAdministratorTest extends TestCase
     }
 
     /**
+     * Recovery also has to be able to set a password the owner still knows.
+     * Create already required --password; promote used to ignore it, so a
+     * Cloud bootstrap that created the account with a shell-eaten hash could
+     * never be fixed by running the same command again.
+     */
+    public function test_promoting_with_a_password_resets_it(): void
+    {
+        Role::factory()->superAdmin()->create();
+        $existing = User::factory()->create(['email' => 'ada@example.com']);
+
+        $this->artisan('app:make-administrator', [
+            '--email' => 'ada@example.com',
+            '--password' => 'correct-horse-battery-staple',
+        ])->assertSuccessful();
+
+        $this->assertTrue(Hash::check('correct-horse-battery-staple', $existing->refresh()->password));
+    }
+
+    /**
      * An unusable administrator is no use as a recovery path, so a promotion
      * clears whatever made the account unusable.
      */

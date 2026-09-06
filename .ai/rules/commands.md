@@ -12,7 +12,7 @@ paths:
 Keep these properties when changing it:
 
 - Non-interactive via `--name`, `--email`, `--password`, so provisioning scripts work; prompts only fill the gaps.
-- An existing email **promotes** rather than erroring, and clears `is_active` / `expires_at` — an unusable administrator is no use as a recovery path.
+- An existing email **promotes** rather than erroring, and clears `is_active` / `expires_at` — an unusable administrator is no use as a recovery path. `--password` on that path resets the password; omit it to leave the hash alone.
 - Reuse an existing `is_super_admin` role; only create one when the roles were never seeded, or every run accumulates another.
 - Set `email_verified_at`, or the new account lands on the verification prompt that a fresh install has no mail to satisfy.
 
