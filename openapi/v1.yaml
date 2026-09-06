@@ -1,0 +1,345 @@
+openapi: 3.1.0
+info:
+  title: Quanta REST API
+  version: "1.0.0"
+  description: >
+    Fresh `/api/v1` for CI and other automation. Authenticate with a Sanctum
+    personal access token (`Authorization: Bearer`). Tokens inherit the user's
+    Role/Ability gates — there is no second permission system, and this is not
+    a compatibility shim for TestLink XML-RPC or `/lib/api/rest/v3`.
+servers:
+  - url: /api/v1
+security:
+  - bearerAuth: []
+paths:
+  /me:
+    get:
+      operationId: getMe
+      summary: The authenticated user
+      responses:
+        "200":
+          description: The caller
+        "401":
+          description: Missing token or deactivated account
+  /projects:
+    get:
+      operationId: listProjects
+      summary: Projects the caller can view
+      responses:
+        "200":
+          description: Active projects the caller may open
+  /projects/{testProject}:
+    get:
+      operationId: getProject
+      summary: One project
+      parameters:
+        - $ref: "#/components/parameters/testProject"
+      responses:
+        "200":
+          description: The project
+        "403":
+          description: No view_test_cases on this project
+  /projects/{testProject}/cases:
+    get:
+      operationId: listProjectCases
+      summary: Cases in a project
+      parameters:
+        - $ref: "#/components/parameters/testProject"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/cursor"
+      responses:
+        "200":
+          description: Cursor page of cases (`meta.next_cursor`, `meta.has_more`)
+  /projects/{testProject}/plans:
+    get:
+      operationId: listProjectPlans
+      summary: Plans the caller can view or execute
+      parameters:
+        - $ref: "#/components/parameters/testProject"
+      responses:
+        "200":
+          description: Plans in the project the caller can read
+  /projects/{testProject}/suites/{testSuite}/cases:
+    post:
+      operationId: createCase
+      summary: Create a test case
+      parameters:
+        - $ref: "#/components/parameters/testProject"
+        - $ref: "#/components/parameters/testSuite"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+                summary:
+                  type: string
+                preconditions:
+                  type: string
+                status:
+                  type: string
+                importance:
+                  type: string
+                execution_type:
+                  type: string
+                estimated_duration:
+                  type: string
+      responses:
+        "201":
+          description: The new case and its first version
+        "403":
+          description: No manage_test_cases
+        "404":
+          description: Suite is not in this project
+  /cases/{testCase}:
+    get:
+      operationId: getCase
+      summary: One case with its latest version and script links
+      parameters:
+        - $ref: "#/components/parameters/testCase"
+      responses:
+        "200":
+          description: The case
+        "403":
+          description: No view_test_cases
+  /plans/{testPlan}:
+    get:
+      operationId: getPlan
+      summary: One plan
+      parameters:
+        - $ref: "#/components/parameters/testPlan"
+      responses:
+        "200":
+          description: The plan
+        "403":
+          description: No view_executions or execute_tests
+  /plans/{testPlan}/cases:
+    get:
+      operationId: listPlanCases
+      summary: Cases pinned on a plan
+      parameters:
+        - $ref: "#/components/parameters/testPlan"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/cursor"
+      responses:
+        "200":
+          description: Cursor page of plan items
+  /plans/{testPlan}/builds:
+    get:
+      operationId: listPlanBuilds
+      summary: Builds on a plan
+      parameters:
+        - $ref: "#/components/parameters/testPlan"
+      responses:
+        "200":
+          description: Builds
+  /plans/{testPlan}/executions:
+    post:
+      operationId: reportExecution
+      summary: Record an execution result
+      description: >
+        Identify the item with `test_plan_item_id` or `full_external_id`
+        (`PREFIX-N`). If the case is pinned on more than one platform, send
+        `platform`. Identify the build with `build_id` or `build` (name).
+        `complete` defaults to true.
+      parameters:
+        - $ref: "#/components/parameters/testPlan"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                test_plan_item_id:
+                  type: integer
+                full_external_id:
+                  type: string
+                platform:
+                  type: string
+                build_id:
+                  type: integer
+                build:
+                  type: string
+                status:
+                  type: string
+                  enum: [not_run, passed, failed, blocked]
+                notes:
+                  type: string
+                duration:
+                  type: number
+                complete:
+                  type: boolean
+                  default: true
+                steps:
+                  type: array
+                  items:
+                    type: object
+                    required: [test_case_step_id, status]
+                    properties:
+                      test_case_step_id:
+                        type: integer
+                      status:
+                        type: string
+                      notes:
+                        type: string
+      responses:
+        "201":
+          description: The recorded run
+        "403":
+          description: No execute_tests
+        "422":
+          description: Item, build, or platform could not be resolved
+  /projects/{testProject}/attachments:
+    post:
+      operationId: uploadProjectAttachment
+      summary: Attach a file to a project
+      parameters:
+        - $ref: "#/components/parameters/testProject"
+      requestBody:
+        $ref: "#/components/requestBodies/attachmentUpload"
+      responses:
+        "201":
+          description: The attachment
+  /suites/{testSuite}/attachments:
+    post:
+      operationId: uploadSuiteAttachment
+      summary: Attach a file to a suite
+      parameters:
+        - $ref: "#/components/parameters/testSuite"
+      requestBody:
+        $ref: "#/components/requestBodies/attachmentUpload"
+      responses:
+        "201":
+          description: The attachment
+  /versions/{testCaseVersion}/attachments:
+    post:
+      operationId: uploadVersionAttachment
+      summary: Attach a file to a case version
+      parameters:
+        - $ref: "#/components/parameters/testCaseVersion"
+      requestBody:
+        $ref: "#/components/requestBodies/attachmentUpload"
+      responses:
+        "201":
+          description: The attachment
+  /plans/{testPlan}/attachments:
+    post:
+      operationId: uploadPlanAttachment
+      summary: Attach a file to a plan
+      parameters:
+        - $ref: "#/components/parameters/testPlan"
+      requestBody:
+        $ref: "#/components/requestBodies/attachmentUpload"
+      responses:
+        "201":
+          description: The attachment
+  /executions/{execution}/attachments:
+    post:
+      operationId: uploadExecutionAttachment
+      summary: Attach a file to an execution
+      parameters:
+        - $ref: "#/components/parameters/execution"
+      requestBody:
+        $ref: "#/components/requestBodies/attachmentUpload"
+      responses:
+        "201":
+          description: The attachment
+  /attachments/{attachment}:
+    get:
+      operationId: downloadAttachment
+      summary: Download an attachment
+      parameters:
+        - $ref: "#/components/parameters/attachment"
+      responses:
+        "200":
+          description: The file
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "403":
+          description: No view or manage ability on the parent
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: PAT
+  parameters:
+    testProject:
+      name: testProject
+      in: path
+      required: true
+      schema:
+        type: integer
+    testSuite:
+      name: testSuite
+      in: path
+      required: true
+      schema:
+        type: integer
+    testCase:
+      name: testCase
+      in: path
+      required: true
+      schema:
+        type: integer
+    testCaseVersion:
+      name: testCaseVersion
+      in: path
+      required: true
+      schema:
+        type: integer
+    testPlan:
+      name: testPlan
+      in: path
+      required: true
+      schema:
+        type: integer
+    execution:
+      name: execution
+      in: path
+      required: true
+      schema:
+        type: integer
+    attachment:
+      name: attachment
+      in: path
+      required: true
+      schema:
+        type: integer
+    limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 50
+        minimum: 1
+        maximum: 100
+    cursor:
+      name: cursor
+      in: query
+      description: Opaque cursor from `meta.next_cursor`. Do not send `page`.
+      schema:
+        type: string
+  requestBodies:
+    attachmentUpload:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required: [file]
+            properties:
+              file:
+                type: string
+                format: binary
+              title:
+                type: string

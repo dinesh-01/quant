@@ -1,0 +1,12 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "php",
+            "args": [
+                "/Applications/MAMP/htdocs/vv/quanta/artisan",
+                "boost:mcp"
+            ],
+            "cwd": "/Applications/MAMP/htdocs/vv/quanta"
+        }
+    }
+}
