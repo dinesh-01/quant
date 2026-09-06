@@ -45,8 +45,10 @@ use App\Models\TestPlanItem;
 use App\Models\TestProject;
 use App\Models\TestSuite;
 use App\Models\User;
+use Faker\Generator;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use RuntimeException;
 
 class DemoSeeder extends Seeder
 {
@@ -62,6 +64,10 @@ class DemoSeeder extends Seeder
      */
     public function run(): void
     {
+        if (! class_exists(Generator::class)) {
+            throw new RuntimeException('DemoSeeder needs fakerphp/faker. Keep it in composer require so Cloud --no-dev installs still seed.');
+        }
+
         if (TestProject::query()->where('prefix', self::CHECKOUT_PREFIX)->exists()) {
             $this->command?->warn('Demo data already present (prefix CO). Skipping.');
 

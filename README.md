@@ -48,7 +48,9 @@ Load the demo dataset:
 php artisan migrate --seed
 ```
 
-`DemoSeeder` is a no-op if a project with prefix `CO` already exists. To rebuild the demo from scratch:
+On Laravel Cloud, deploy installs `--no-dev`. `fakerphp/faker` is a production dependency because the demo is built through factories. After a deploy that includes that change, seed with `php artisan db:seed --force` (do not use `migrate:fresh` on Cloud).
+
+`DemoSeeder` is a no-op if a project with prefix `CO` already exists. To rebuild the demo from scratch locally:
 
 ```bash
 php artisan migrate:fresh --seed
