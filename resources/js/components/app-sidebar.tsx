@@ -27,6 +27,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarRail,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as customFieldIndex } from '@/routes/custom-fields';
@@ -211,7 +212,7 @@ export function AppSidebar() {
         : [];
 
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar collapsible="icon" variant="sidebar">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -225,7 +226,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent className="gap-4">
-                <NavMain items={mainNavItems} />
+                <NavMain items={mainNavItems} label="Overview" />
 
                 {currentProject && (
                     <NavMain
@@ -242,6 +243,7 @@ export function AppSidebar() {
             <SidebarFooter>
                 <NavUser />
             </SidebarFooter>
+            <SidebarRail />
         </Sidebar>
     );
 }

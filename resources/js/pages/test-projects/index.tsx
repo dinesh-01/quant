@@ -31,6 +31,7 @@ export default function TestProjectIndex({ projects, can }: ProjectIndexProps) {
             <div className="space-y-6 p-4">
                 <div className="flex items-start justify-between gap-4">
                     <Heading
+                        pretitle="Workspace"
                         title="Test projects"
                         description="Choose a project to work in."
                     />

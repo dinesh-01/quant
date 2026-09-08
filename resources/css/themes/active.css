@@ -4,4 +4,4 @@
  * Each theme must define the same :root / .dark variables as starter.css.
  * Do not put layout or component CSS here.
  */
-@import './starter.css';
+@import './tabler.css';
