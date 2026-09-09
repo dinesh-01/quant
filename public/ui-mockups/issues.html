@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Issues</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Insights</div>
+      <a href="code-tracker.html"><svg class="ico"><use href="#i-git"/></svg> Code Coverage</a>
+      <a href="issues.html" class="active"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">42</span></a>
+      <div class="group-label">Admin</div>
+      <a href="users.html"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="roles.html"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="settings.html"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><span>Insights</span><span class="sep">/</span><span class="cur">Issues</span></div>
+      <div class="search"><svg class="ico" style="width:16px"><use href="#i-search"/></svg><input placeholder="Search issues…" /><kbd>⌘K</kbd></div>
+      <div class="spacer"></div>
+      <button class="btn primary sm"><svg class="ico"><use href="#i-plus"/></svg> Log issue</button>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <main class="content">
+      <div class="page-head" style="margin-bottom:16px">
+        <div class="titles"><h1>Issues</h1><p>Defects linked from failed executions — where they sit by suite, their severity, and what's missing coverage.</p></div>
+        <div class="actions"><button class="btn"><svg class="ico"><use href="#i-download"/></svg> Export</button></div>
+      </div>
+
+      <div class="split with-ai">
+        <!-- ============ MAIN ============ -->
+        <div>
+          <!-- tiles -->
+          <div class="grid cols-4" style="margin-bottom:16px">
+            <div class="card stat"><span class="label">Total issues</span><div class="value">42</div><div class="pct-of">linked to Checkout</div></div>
+            <div class="card stat"><span class="label">Open</span><div class="value" style="color:var(--danger)">18</div><div class="pct-of">24 resolved</div></div>
+            <div class="card stat"><span class="label">Missing coverage</span><div class="value" style="color:var(--warning)">6</div><div class="pct-of">no test case yet</div></div>
+            <div class="card stat"><span class="label">Blocking 4.8</span><div class="value" style="color:var(--danger)">3</div><div class="pct-of">L1 · release gate</div></div>
+          </div>
+
+          <!-- severity distribution -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-body" style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+              <strong style="font-size:12.5px;color:var(--text-muted)">By severity</strong>
+              <div class="row" style="gap:8px"><span class="sev l1">L1</span> <span class="mono" style="font-weight:700">5</span> <span class="subtle">critical</span></div>
+              <div class="row" style="gap:8px"><span class="sev l2">L2</span> <span class="mono" style="font-weight:700">11</span> <span class="subtle">high</span></div>
+              <div class="row" style="gap:8px"><span class="sev l3">L3</span> <span class="mono" style="font-weight:700">17</span> <span class="subtle">medium</span></div>
+              <div class="row" style="gap:8px"><span class="sev l4">L4</span> <span class="mono" style="font-weight:700">9</span> <span class="subtle">low</span></div>
+              <div class="spacer"></div>
+              <div class="progress" style="width:260px;height:10px">
+                <span class="seg" style="width:12%;background:var(--danger)"></span>
+                <span class="seg" style="width:26%;background:#ea7a3c"></span>
+                <span class="seg" style="width:40%;background:var(--info)"></span>
+                <span class="seg" style="width:22%;background:var(--neutral)"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="seg-control" data-seg><button class="active">All 42</button><button>Open 18</button><button>Missing coverage 6</button></div>
+            <button class="filter"><svg class="ico" style="width:15px"><use href="#i-flag"/></svg> Severity <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+            <button class="filter"><svg class="ico" style="width:15px"><use href="#i-folder"/></svg> Suite <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+            <div class="spacer"></div>
+            <span class="muted" style="font-size:12.5px">grouped by suite</span>
+          </div>
+
+          <!-- grouped issues -->
+          <div class="card">
+            <div class="card-body flush">
+              <table class="table">
+                <thead><tr><th>Issue</th><th>Linked case</th><th>Severity</th><th>Priority</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                  <!-- MISSING COVERAGE group -->
+                  <tr class="grp warn"><td colspan="6"><svg class="ico" style="width:13px;vertical-align:-2px"><use href="#i-flag"/></svg> Missing coverage <span class="g-count">6 issues have no test case — pick a suite &amp; create one</span></td></tr>
+                  <tr>
+                    <td><div class="stack"><span class="title-cell">Discount not applied on mobile Safari</span><span class="id">JIRA-4855</span></div></td>
+                    <td><span class="pill fail" style="padding:1px 8px">No coverage → suggest <strong>Mobile</strong></span></td>
+                    <td><span class="sev l2">L2</span></td>
+                    <td><span class="prio high"><span class="dot"></span> High</span></td>
+                    <td><span class="pill running" style="padding:1px 8px">Triage</span></td>
+                    <td><a href="test-case-new.html" class="btn sm"><svg class="ico"><use href="#i-plus"/></svg> Create case</a></td>
+                  </tr>
+                  <tr>
+                    <td><div class="stack"><span class="title-cell">Tax rounding off by 1¢ on split shipment</span><span class="id">JIRA-4851</span></div></td>
+                    <td><span class="pill fail" style="padding:1px 8px">No coverage → suggest <strong>Shipping &amp; Tax</strong></span></td>
+                    <td><span class="sev l3">L3</span></td>
+                    <td><span class="prio med"><span class="dot"></span> Medium</span></td>
+                    <td><span class="pill running" style="padding:1px 8px">Triage</span></td>
+                    <td><a href="test-case-new.html" class="btn sm"><svg class="ico"><use href="#i-plus"/></svg> Create case</a></td>
+                  </tr>
+                  <tr>
+                    <td><div class="stack"><span class="title-cell">Apple Pay sheet dismisses on rotate</span><span class="id">JIRA-4848</span></div></td>
+                    <td><span class="pill fail" style="padding:1px 8px">No coverage → suggest <strong>Payments</strong></span></td>
+                    <td><span class="sev l1">L1</span></td>
+                    <td><span class="prio high"><span class="dot"></span> High</span></td>
+                    <td><span class="pill fail" style="padding:1px 8px">Open</span></td>
+                    <td><a href="test-case-new.html" class="btn sm"><svg class="ico"><use href="#i-plus"/></svg> Create case</a></td>
+                  </tr>
+
+                  <!-- PAYMENTS group -->
+                  <tr class="grp"><td colspan="6"><svg class="ico" style="width:13px;vertical-align:-2px"><use href="#i-folder"/></svg> Payments <span class="g-count">8 issues · 2 open</span></td></tr>
+                  <tr>
+                    <td><div class="stack"><span class="title-cell">Guest checkout with saved address fails</span><span class="id">JIRA-4820</span></div></td>
+                    <td><span class="mono" style="font-size:12px;color:var(--primary-700)">CO-TC-198</span></td>
+                    <td><span class="sev l1">L1</span></td>
+                    <td><span class="prio high"><span class="dot"></span> High</span></td>
+                    <td><span class="pill fail" style="padding:1px 8px">Open</span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="stack"><span class="title-cell">3-D Secure challenge times out on Visa</span><span class="id">JIRA-4812</span></div></td>
+                    <td><span class="mono" style="font-size:12px;color:var(--primary-700)">CO-TC-305</span></td>
+                    <td><span class="sev l2">L2</span></td>
+                    <td><span class="prio med"><span class="dot"></span> Medium</span></td>
+                    <td><span class="pill blocked" style="padding:1px 8px">In progress</span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+
+                  <!-- PROMOTIONS group -->
+                  <tr class="grp"><td colspan="6"><svg class="ico" style="width:13px;vertical-align:-2px"><use href="#i-folder"/></svg> Promotions <span class="g-count">5 issues · 1 open</span></td></tr>
+                  <tr>
+                    <td><div class="stack"><span class="title-cell">Apply expired promo code shows wrong error</span><span class="id">JIRA-4821</span></div></td>
+                    <td><span class="mono" style="font-size:12px;color:var(--primary-700)">CO-TC-241</span></td>
+                    <td><span class="sev l1">L1</span></td>
+                    <td><span class="prio high"><span class="dot"></span> High</span></td>
+                    <td><span class="pill fail" style="padding:1px 8px">Open</span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="stack"><span class="title-cell">Stacked promo total off by discount order</span><span class="id">JIRA-4799</span></div></td>
+                    <td><span class="mono" style="font-size:12px;color:var(--primary-700)">CO-TC-242</span></td>
+                    <td><span class="sev l3">L3</span></td>
+                    <td><span class="prio med"><span class="dot"></span> Medium</span></td>
+                    <td><span class="pill pass" style="padding:1px 8px">Resolved</span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+
+                  <!-- SHIPPING group -->
+                  <tr class="grp"><td colspan="6"><svg class="ico" style="width:13px;vertical-align:-2px"><use href="#i-folder"/></svg> Shipping &amp; Tax <span class="g-count">4 issues · 1 open</span></td></tr>
+                  <tr>
+                    <td><div class="stack"><span class="title-cell">Tax recalculates late on address change</span><span class="id">JIRA-4788</span></div></td>
+                    <td><span class="mono" style="font-size:12px;color:var(--primary-700)">CO-TC-277</span></td>
+                    <td><span class="sev l2">L2</span></td>
+                    <td><span class="prio med"><span class="dot"></span> Medium</span></td>
+                    <td><span class="pill fail" style="padding:1px 8px">Open</span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ AI CHAT DOCK ============ -->
+        <aside class="card ai-dock">
+          <div class="ai-dock-head">
+            <span class="ai-badge"><svg class="ico" style="width:17px"><use href="#i-sparkles"/></svg></span>
+            <div class="stack"><h3>Ask AI</h3><span class="sub">Triage &amp; coverage assistant</span></div>
+            <div class="spacer"></div>
+            <button class="btn ghost sm" style="padding:5px 7px" title="New chat"><svg class="ico"><use href="#i-edit"/></svg></button>
+          </div>
+
+          <div class="ai-dock-thread">
+            <div class="chat bot">
+              <span class="who"><svg class="ico" style="width:15px"><use href="#i-sparkles"/></svg></span>
+              <div class="msg"><p>Hi Maya 👋 I can see all 42 issues for <strong>Checkout</strong>. I can group them, find coverage gaps, or draft test cases. Try one of these:</p></div>
+            </div>
+            <div class="chat-suggest">
+              <button class="chat-chip"><svg class="ico"><use href="#i-flag"/></svg> Which suites have the most L1 issues?</button>
+              <button class="chat-chip"><svg class="ico"><use href="#i-flag"/></svg> List issues missing test coverage</button>
+              <button class="chat-chip"><svg class="ico"><use href="#i-plus"/></svg> Draft cases for uncovered issues</button>
+              <button class="chat-chip"><svg class="ico"><use href="#i-flag"/></svg> What's blocking the 4.8 release?</button>
+            </div>
+
+            <div class="chat user"><span class="who">MS</span><div class="msg">List issues missing test coverage</div></div>
+            <div class="chat bot">
+              <span class="who"><svg class="ico" style="width:15px"><use href="#i-sparkles"/></svg></span>
+              <div class="msg">
+                <p><strong>6 issues have no linked test case.</strong> Suggested suite based on the affected area:</p>
+                <ul>
+                  <li><span class="mono">JIRA-4848</span> Apple Pay rotate — <strong>Payments</strong> · L1</li>
+                  <li><span class="mono">JIRA-4855</span> Mobile Safari discount — <strong>Mobile</strong> · L2</li>
+                  <li><span class="mono">JIRA-4851</span> Tax rounding — <strong>Shipping &amp; Tax</strong> · L3</li>
+                </ul>
+                <p style="margin-top:8px">The L1 (Apple Pay) is also a 4.8 release gate. Want me to draft cases for all six?</p>
+              </div>
+            </div>
+            <div class="chat bot" style="margin-left:36px;margin-top:-8px">
+              <div class="row" style="gap:8px">
+                <button class="btn primary sm"><svg class="ico"><use href="#i-plus"/></svg> Draft 6 cases</button>
+                <button class="btn sm">Only the L1</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ai-dock-composer">
+            <div class="ai-inputbar">
+              <svg class="ico" style="width:17px"><use href="#i-sparkles"/></svg>
+              <input placeholder="Ask about these issues…" />
+              <button class="ai-send" title="Send"><svg class="ico" style="width:16px"><use href="#i-send"/></svg></button>
+            </div>
+            <div class="disclaimer">AI can be wrong — verify before creating cases or closing issues.</div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

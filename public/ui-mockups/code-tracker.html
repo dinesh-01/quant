@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Code Coverage</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Insights</div>
+      <a href="code-tracker.html" class="active"><svg class="ico"><use href="#i-git"/></svg> Code Coverage</a>
+      <a href="issues.html"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">42</span></a>
+      <div class="group-label">Admin</div>
+      <a href="users.html"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="roles.html"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="settings.html"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><span>Insights</span><span class="sep">/</span><span class="cur">Code Coverage</span></div>
+      <div class="spacer"></div>
+      <button class="btn sm"><svg class="ico"><use href="#i-git"/></svg> Manage repos</button>
+      <button class="btn sm"><svg class="ico"><use href="#i-download"/></svg> Export</button>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <main class="content">
+      <div class="page-head" style="margin-bottom:16px">
+        <div class="titles"><h1>Code Coverage</h1><p>How your test cases map to the codebase — across repos, with lines, coverage, automation and owners.</p></div>
+      </div>
+
+      <div class="split with-ai">
+        <!-- ============ MAIN ============ -->
+        <div>
+          <!-- repo filter bar -->
+          <div class="toolbar" style="margin-bottom:16px">
+            <div class="row" style="gap:8px">
+              <span class="flabel" style="margin:0">Repo</span>
+              <div class="select-wrap">
+                <select class="select" data-cov-filter="repo" style="min-width:210px">
+                  <option value="all">All repos (3)</option>
+                  <option value="checkout-e2e">freshdesk/checkout-e2e · web</option>
+                  <option value="checkout-mobile">freshdesk/checkout-mobile · mobile</option>
+                  <option value="pricing-service">freshdesk/pricing-service · api</option>
+                </select>
+                <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+              </div>
+            </div>
+            <div class="select-wrap">
+              <select class="select" data-cov-filter="automation">
+                <option value="all">Automation: any</option>
+                <option value="automated">Automated</option>
+                <option value="partial">Partial</option>
+                <option value="manual">Not automated</option>
+              </select>
+              <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+            </div>
+            <div class="spacer"></div>
+            <span class="muted" style="font-size:12.5px" data-cov-count>10 modules</span>
+          </div>
+
+          <!-- repo summary chips -->
+          <div class="grid cols-3" style="margin-bottom:16px">
+            <div class="card" style="padding:14px 16px"><div class="between"><div class="stack"><span class="mono" style="font-weight:700;font-size:13px">checkout-e2e</span><span class="subtle" style="font-size:11.5px">web · 7 modules · 92k lines</span></div><div class="stack" style="text-align:right"><span style="font-weight:800;font-size:18px;color:var(--warning)">68%</span></div></div></div>
+            <div class="card" style="padding:14px 16px"><div class="between"><div class="stack"><span class="mono" style="font-weight:700;font-size:13px">checkout-mobile</span><span class="subtle" style="font-size:11.5px">mobile · 2 modules · 17k lines</span></div><div class="stack" style="text-align:right"><span style="font-weight:800;font-size:18px;color:var(--danger)">40%</span></div></div></div>
+            <div class="card" style="padding:14px 16px"><div class="between"><div class="stack"><span class="mono" style="font-weight:700;font-size:13px">pricing-service</span><span class="subtle" style="font-size:11.5px">api · 2 modules · 14k lines</span></div><div class="stack" style="text-align:right"><span style="font-weight:800;font-size:18px;color:var(--warning)">64%</span></div></div></div>
+          </div>
+
+          <!-- tiles -->
+          <div class="grid cols-4" style="margin-bottom:16px">
+            <div class="card stat"><span class="label">Total lines of code</span><div class="value">128.4k</div><div class="pct-of">across 3 repos</div></div>
+            <div class="card stat"><span class="label">Lines covered by tests</span><div class="value" style="color:var(--success)">92.3k</div><div class="pct-of">via 482 cases</div></div>
+            <div class="card stat"><span class="label">Coverage</span><div class="value">71.9%</div><div class="delta down">▼ 2.1% vs last build</div></div>
+            <div class="card stat"><span class="label">Modules without tests</span><div class="value" style="color:var(--danger)">2</div><div class="pct-of">high risk</div></div>
+          </div>
+
+          <!-- coverage by module -->
+          <div class="card">
+            <div class="card-head"><h3>Coverage by module</h3><span class="sub">lines covered ÷ total · sorted low → high</span>
+              <div class="actions"><span class="row" style="gap:12px;font-size:11.5px;color:var(--text-muted)">
+                <span class="row" style="gap:5px"><span style="width:10px;height:10px;border-radius:3px;background:var(--danger);display:inline-block"></span> &lt;50%</span>
+                <span class="row" style="gap:5px"><span style="width:10px;height:10px;border-radius:3px;background:var(--warning);display:inline-block"></span> 50–79%</span>
+                <span class="row" style="gap:5px"><span style="width:10px;height:10px;border-radius:3px;background:var(--success);display:inline-block"></span> ≥80%</span>
+              </span></div>
+            </div>
+            <div class="card-body flush" style="overflow-x:auto">
+              <table class="table" style="min-width:760px">
+                <thead><tr><th style="width:180px">Module</th><th>Repo</th><th style="width:150px">Coverage</th><th>Lines</th><th>Cases</th><th>Automation</th><th>Owner</th><th></th></tr></thead>
+                <tbody data-cov-rows>
+                  <tr data-repo="pricing-service" data-automation="manual" data-owner="unassigned">
+                    <td><div class="stack"><span class="title-cell mono">legacy/coupons</span><span class="subtle" style="font-size:11px">no linked cases</span></div></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">pricing-service</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:8%;background:var(--danger)"></span></div><span class="pct" style="color:var(--danger)">8%</span></div></td>
+                    <td class="mono muted">3,200</td>
+                    <td><span class="pill fail" style="padding:1px 8px">0</span></td>
+                    <td><span class="pill skipped" style="padding:1px 8px">Not automated</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar" style="width:22px;height:22px;font-size:9px;background:var(--warning-bg);color:var(--warning);border:1px dashed var(--warning-br)">?</span> <span class="muted" style="font-size:12px">Unassigned</span></span></td>
+                    <td><a href="test-case-new.html" class="btn sm"><svg class="ico"><use href="#i-plus"/></svg> Add</a></td>
+                  </tr>
+                  <tr data-repo="checkout-e2e" data-automation="partial" data-owner="devon">
+                    <td><span class="title-cell mono">ui/components</span></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">checkout-e2e</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:34%;background:var(--danger)"></span></div><span class="pct" style="color:var(--danger)">34%</span></div></td>
+                    <td class="mono muted">21,000</td>
+                    <td class="muted">28</td>
+                    <td><span class="pill blocked" style="padding:1px 8px">Partial</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar a5" style="width:22px;height:22px;font-size:9px">DD</span> <span style="font-size:12px">Devon</span></span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr data-repo="checkout-mobile" data-automation="partial" data-owner="rina">
+                    <td><span class="title-cell mono">mobile/checkout</span></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">checkout-mobile</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:42%;background:var(--danger)"></span></div><span class="pct" style="color:var(--danger)">42%</span></div></td>
+                    <td class="mono muted">15,300</td>
+                    <td class="muted">72</td>
+                    <td><span class="pill blocked" style="padding:1px 8px">Partial</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar a3" style="width:22px;height:22px;font-size:9px">RT</span> <span style="font-size:12px">Rina</span></span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr data-repo="checkout-e2e" data-automation="partial" data-owner="rina">
+                    <td><span class="title-cell mono">checkout/shipping-tax</span></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">checkout-e2e</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:55%;background:var(--warning)"></span></div><span class="pct" style="color:var(--warning)">55%</span></div></td>
+                    <td class="mono muted">12,400</td>
+                    <td class="muted">64</td>
+                    <td><span class="pill blocked" style="padding:1px 8px">Partial</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar a3" style="width:22px;height:22px;font-size:9px">RT</span> <span style="font-size:12px">Rina</span></span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr data-repo="checkout-e2e" data-automation="partial" data-owner="alex">
+                    <td><span class="title-cell mono">checkout/payments</span></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">checkout-e2e</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:63%;background:var(--warning)"></span></div><span class="pct" style="color:var(--warning)">63%</span></div></td>
+                    <td class="mono muted">24,600</td>
+                    <td class="muted">120</td>
+                    <td><span class="pill blocked" style="padding:1px 8px">Partial</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar a4" style="width:22px;height:22px;font-size:9px">AR</span> <span style="font-size:12px">Alex</span></span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr data-repo="checkout-e2e" data-automation="automated" data-owner="sam">
+                    <td><span class="title-cell mono">checkout/guest</span></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">checkout-e2e</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:74%;background:var(--warning)"></span></div><span class="pct" style="color:var(--warning)">74%</span></div></td>
+                    <td class="mono muted">8,900</td>
+                    <td class="muted">52</td>
+                    <td><span class="pill pass" style="padding:1px 8px">Automated</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar a2" style="width:22px;height:22px;font-size:9px">SS</span> <span style="font-size:12px">Sam</span></span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr data-repo="pricing-service" data-automation="automated" data-owner="alex">
+                    <td><span class="title-cell mono">api/pricing</span></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">pricing-service</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:80%;background:var(--success)"></span></div><span class="pct" style="color:var(--success)">80%</span></div></td>
+                    <td class="mono muted">11,200</td>
+                    <td class="muted">46</td>
+                    <td><span class="pill pass" style="padding:1px 8px">Automated</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar a4" style="width:22px;height:22px;font-size:9px">AR</span> <span style="font-size:12px">Alex</span></span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr data-repo="checkout-e2e" data-automation="automated" data-owner="sam">
+                    <td><span class="title-cell mono">checkout/cart</span></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">checkout-e2e</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:88%;background:var(--success)"></span></div><span class="pct" style="color:var(--success)">88%</span></div></td>
+                    <td class="mono muted">18,200</td>
+                    <td class="muted">88</td>
+                    <td><span class="pill pass" style="padding:1px 8px">Automated</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar a2" style="width:22px;height:22px;font-size:9px">SS</span> <span style="font-size:12px">Sam</span></span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr data-repo="checkout-e2e" data-automation="automated" data-owner="devon">
+                    <td><span class="title-cell mono">checkout/promotions</span></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">checkout-e2e</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:91%;background:var(--success)"></span></div><span class="pct" style="color:var(--success)">91%</span></div></td>
+                    <td class="mono muted">9,800</td>
+                    <td class="muted">46</td>
+                    <td><span class="pill pass" style="padding:1px 8px">Automated</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar a5" style="width:22px;height:22px;font-size:9px">DD</span> <span style="font-size:12px">Devon</span></span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                  <tr data-repo="checkout-e2e" data-automation="automated" data-owner="maya">
+                    <td><span class="title-cell mono">utils/format</span></td>
+                    <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">checkout-e2e</span></td>
+                    <td><div class="cov-bar"><div class="track"><span class="fill" style="width:96%;background:var(--success)"></span></div><span class="pct" style="color:var(--success)">96%</span></div></td>
+                    <td class="mono muted">3,800</td>
+                    <td class="muted">18</td>
+                    <td><span class="pill pass" style="padding:1px 8px">Automated</span></td>
+                    <td><span class="row" style="gap:6px"><span class="avatar a1" style="width:22px;height:22px;font-size:9px">MS</span> <span style="font-size:12px">Maya</span></span></td>
+                    <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ AI CHAT DOCK ============ -->
+        <aside class="card ai-dock">
+          <div class="ai-dock-head">
+            <span class="ai-badge"><svg class="ico" style="width:17px"><use href="#i-sparkles"/></svg></span>
+            <div class="stack"><h3>Ask AI</h3><span class="sub">Coverage &amp; risk assistant</span></div>
+            <div class="spacer"></div>
+            <button class="btn ghost sm" style="padding:5px 7px" title="New chat"><svg class="ico"><use href="#i-edit"/></svg></button>
+          </div>
+
+          <div class="ai-dock-thread">
+            <div class="chat bot">
+              <span class="who"><svg class="ico" style="width:15px"><use href="#i-sparkles"/></svg></span>
+              <div class="msg"><p>I've read coverage for <strong>3 repos · 10 modules</strong>. Ask me where gaps, risk and un-automated code sit:</p></div>
+            </div>
+            <div class="chat-suggest">
+              <button class="chat-chip"><svg class="ico"><use href="#i-git"/></svg> Compare coverage across repos</button>
+              <button class="chat-chip"><svg class="ico"><use href="#i-chart"/></svg> Lowest-coverage modules by owner</button>
+              <button class="chat-chip"><svg class="ico"><use href="#i-play"/></svg> Which modules aren't automated?</button>
+              <button class="chat-chip"><svg class="ico"><use href="#i-flag"/></svg> Highest-risk untested code</button>
+            </div>
+
+            <div class="chat user"><span class="who">MS</span><div class="msg">Which modules aren't automated?</div></div>
+            <div class="chat bot">
+              <span class="who"><svg class="ico" style="width:15px"><use href="#i-sparkles"/></svg></span>
+              <div class="msg">
+                <p>Across all repos, <strong>1 module is fully manual</strong> and <strong>4 are partial</strong>:</p>
+                <ul>
+                  <li><span class="mono">legacy/coupons</span> — manual, no owner · <em>pricing-service</em></li>
+                  <li><span class="mono">ui/components</span> 34% · owner Devon</li>
+                  <li><span class="mono">mobile/checkout</span> 42% · owner Rina</li>
+                  <li><span class="mono">checkout/payments</span> 63% · owner Alex</li>
+                </ul>
+                <p style="margin-top:8px">Want me to assign an owner to <span class="mono">legacy/coupons</span> and draft its automation cases?</p>
+              </div>
+            </div>
+            <div class="chat bot" style="margin-left:36px;margin-top:-8px">
+              <div class="row" style="gap:8px">
+                <button class="btn primary sm"><svg class="ico"><use href="#i-plus"/></svg> Draft coupon cases</button>
+                <button class="btn sm">Assign owner</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ai-dock-composer">
+            <div class="ai-inputbar">
+              <svg class="ico" style="width:17px"><use href="#i-sparkles"/></svg>
+              <input placeholder="Ask about code coverage…" />
+              <button class="ai-send" title="Send"><svg class="ico" style="width:16px"><use href="#i-send"/></svg></button>
+            </div>
+            <div class="disclaimer">Coverage is from the last CI run — AI suggestions are estimates.</div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

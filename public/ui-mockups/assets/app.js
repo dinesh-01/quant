@@ -118,6 +118,35 @@ function wireInteractions() {
   // toggle switches
   document.querySelectorAll('.switch').forEach(s => s.addEventListener('click', () => s.classList.toggle('on')));
 
+  // docked AI chat: clicking a suggestion chip fills the composer input
+  document.querySelectorAll('.chat-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const dock = chip.closest('.ai-dock');
+      const input = dock && dock.querySelector('.ai-inputbar input');
+      if (input) { input.value = chip.getAttribute('data-chat-fill') || chip.textContent.trim(); input.focus(); }
+    });
+  });
+
+  // Code Tracker: client-side filtering of the module table by repo / automation / owner
+  const covRows = document.querySelector('[data-cov-rows]');
+  if (covRows) {
+    const selects = document.querySelectorAll('[data-cov-filter]');
+    const countEl = document.querySelector('[data-cov-count]');
+    const apply = () => {
+      const f = {};
+      selects.forEach(s => (f[s.getAttribute('data-cov-filter')] = s.value));
+      let shown = 0;
+      covRows.querySelectorAll('tr[data-repo]').forEach(tr => {
+        const ok = Object.entries(f).every(([k, v]) => v === 'all' || tr.getAttribute('data-' + k) === v);
+        tr.style.display = ok ? '' : 'none';
+        if (ok) shown++;
+      });
+      if (countEl) countEl.textContent = shown + ' module' + (shown === 1 ? '' : 's');
+    };
+    selects.forEach(s => s.addEventListener('change', apply));
+    apply();
+  }
+
   // Ask AI: suggestion chips fill the prompt; sending reveals the demo result
   const aiInput = document.querySelector('[data-ai-input]');
   const aiResult = document.querySelector('[data-ai-result]');
