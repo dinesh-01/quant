@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Custom Reports</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="requirements.html"><svg class="ico"><use href="#i-requirements"/></svg> Requirements <span class="count">64</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html" class="active"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Integrations</div>
+      <a href="#"><svg class="ico"><use href="#i-git"/></svg> Code Trackers</a>
+      <a href="#"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">7</span></a>
+      <div class="group-label">Admin</div>
+      <a href="#"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="#"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="#"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><span>Analytics</span><span class="sep">/</span><span class="cur">Custom Reports</span></div>
+      <div class="spacer"></div>
+      <button class="btn sm"><svg class="ico"><use href="#i-plus"/></svg> Blank report</button>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <main class="content">
+      <div class="page-head" style="margin-bottom:16px">
+        <div class="titles"><h1>Custom Reports</h1><p>Ask AI to build a report from your test data in plain English — then save, schedule or share it.</p></div>
+        <div class="actions">
+          <div class="seg-control">
+            <a href="reports-test-cases.html"><svg class="ico" style="width:14px"><use href="#i-chart"/></svg> Standard</a>
+            <a href="custom-reports.html" class="active"><svg class="ico" style="width:14px"><use href="#i-sparkles"/></svg> Custom</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ ASK AI ============ -->
+      <div class="ai-hero" style="margin-bottom:24px">
+        <div class="ai-title">
+          <span class="ai-badge"><svg class="ico" style="width:19px"><use href="#i-sparkles"/></svg></span>
+          <div class="stack">
+            <h2>Ask AI</h2>
+            <span class="sub">Describe the report you want. AI reads your suites, plans, runs and requirements.</span>
+          </div>
+        </div>
+
+        <div class="ai-inputbar">
+          <svg class="ico" style="width:18px"><use href="#i-sparkles"/></svg>
+          <input data-ai-input placeholder="e.g. Show me the latest run report for Checkout" />
+          <button class="ai-send" data-ai-send title="Ask"><svg class="ico" style="width:17px"><use href="#i-send"/></svg></button>
+        </div>
+
+        <div class="suggests">
+          <button class="suggest" data-ai-fill="Show latest run report"><svg class="ico"><use href="#i-play"/></svg> Show latest run report</button>
+          <button class="suggest" data-ai-fill="Automation coverage by suite"><svg class="ico"><use href="#i-chart"/></svg> Automation coverage by suite</button>
+          <button class="suggest" data-ai-fill="Failed cases this week"><svg class="ico"><use href="#i-x"/></svg> Failed cases this week</button>
+          <button class="suggest" data-ai-fill="Requirements without coverage"><svg class="ico"><use href="#i-requirements"/></svg> Requirements without coverage</button>
+          <button class="suggest" data-ai-fill="Flaky tests this month"><svg class="ico"><use href="#i-zap"/></svg> Flaky tests this month</button>
+        </div>
+      </div>
+
+      <!-- ============ AI RESULT (demo of "Show latest run report") ============ -->
+      <div class="ai-thread" data-ai-result style="margin-bottom:28px">
+        <div class="ai-msg user">
+          <span class="who">MS</span>
+          <div class="bubble">Show latest run report</div>
+        </div>
+
+        <div class="ai-msg bot">
+          <span class="who"><svg class="ico" style="width:17px"><use href="#i-sparkles"/></svg></span>
+          <div class="bubble">
+            <div class="ai-meta"><strong style="color:var(--text)">Quanta AI</strong> · built from run <span class="mono">CO-P12</span> · Build 4.8 · just now</div>
+
+            <div class="card">
+              <div class="card-head">
+                <div class="stack"><span class="id mono">CO-P12 · Build 4.8</span><h3 style="margin-top:2px">Latest run — Checkout · Regression</h3></div>
+                <div class="actions"><span class="pill running"><span class="dot"></span> In progress</span></div>
+              </div>
+              <div class="card-body">
+                <p style="margin:0 0 16px;color:var(--text-muted)">Here's the most recent run for <strong>Checkout</strong>. It's <strong>81% complete</strong> — 253 of 264 cases executed with an <strong>82% pass rate</strong>. Failures cluster in <strong>Payments</strong> (18) and are mostly tied to two open defects.</p>
+
+                <div class="grid cols-4" style="margin-bottom:18px">
+                  <div class="card stat" style="box-shadow:none"><span class="label">Executed</span><div class="value" style="font-size:24px">253<span class="subtle" style="font-size:14px;font-weight:600">/264</span></div></div>
+                  <div class="card stat" style="box-shadow:none"><span class="label">Pass rate</span><div class="value" style="font-size:24px;color:var(--success)">82%</div></div>
+                  <div class="card stat" style="box-shadow:none"><span class="label">Failed</span><div class="value" style="font-size:24px;color:var(--danger)">28</div></div>
+                  <div class="card stat" style="box-shadow:none"><span class="label">Blocked</span><div class="value" style="font-size:24px;color:var(--warning)">14</div></div>
+                </div>
+
+                <div class="meter-row" style="margin-bottom:20px">
+                  <div class="progress">
+                    <span class="seg pass" style="width:64%"></span><span class="seg fail" style="width:11%"></span>
+                    <span class="seg blocked" style="width:6%"></span><span class="seg untested" style="width:19%"></span>
+                  </div>
+                  <span class="pct">81%</span>
+                </div>
+
+                <div class="between" style="margin-bottom:8px"><strong style="font-size:13px">Top failing cases</strong><span class="subtle" style="font-size:12px">by priority</span></div>
+                <table class="table" style="border:1px solid var(--border);border-radius:var(--r);overflow:hidden">
+                  <tbody>
+                    <tr><td><span class="id">CO-TC-241</span></td><td class="title-cell">Apply expired promo code shows error</td><td><span class="prio high"><span class="dot"></span> High</span></td><td><span class="tag" style="background:var(--danger-bg);color:var(--danger)">JIRA-4821</span></td></tr>
+                    <tr><td><span class="id">CO-TC-198</span></td><td class="title-cell">Guest checkout with saved address</td><td><span class="prio high"><span class="dot"></span> High</span></td><td><span class="tag" style="background:var(--danger-bg);color:var(--danger)">JIRA-4820</span></td></tr>
+                    <tr><td><span class="id">CO-TC-277</span></td><td class="title-cell">Tax recalculates on address change</td><td><span class="prio med"><span class="dot"></span> Medium</span></td><td><span class="muted">— no issue</span></td></tr>
+                  </tbody>
+                </table>
+
+                <div class="ai-actions">
+                  <button class="btn primary"><svg class="ico"><use href="#i-bookmark"/></svg> Save as report</button>
+                  <button class="btn"><svg class="ico"><use href="#i-dashboard"/></svg> Add to dashboard</button>
+                  <button class="btn"><svg class="ico"><use href="#i-download"/></svg> Export</button>
+                  <button class="btn ghost"><svg class="ico"><use href="#i-sparkles"/></svg> Refine…</button>
+                </div>
+                <div class="ai-disclaimer"><svg class="ico" style="width:13px"><use href="#i-sparkles"/></svg> AI-generated from live run data — review figures before sharing externally.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ SAVED CUSTOM REPORTS ============ -->
+      <div class="between" style="margin-bottom:14px">
+        <div><h2 style="margin:0;font-size:16px;font-weight:700">Saved custom reports</h2><span class="muted" style="font-size:12.5px">Reusable reports your team has saved from Ask AI</span></div>
+        <button class="btn sm"><svg class="ico"><use href="#i-plus"/></svg> New from prompt</button>
+      </div>
+
+      <div class="grid cols-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="between" style="margin-bottom:10px">
+              <span class="ico-badge" style="background:var(--primary-050);color:var(--primary-700)"><svg class="ico" style="width:18px"><use href="#i-flag"/></svg></span>
+              <button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button>
+            </div>
+            <h3 style="margin:0 0 4px;font-size:14.5px">Release readiness — 4.8</h3>
+            <p class="muted" style="margin:0 0 12px;font-size:12.5px">Open blockers, pass rate and uncovered requirements for the current build.</p>
+            <div class="note" style="font-size:12px;margin-bottom:12px"><svg class="ico" style="width:12px;vertical-align:-2px;color:var(--primary)"><use href="#i-sparkles"/></svg> “readiness for Build 4.8 with blockers and coverage gaps”</div>
+            <div class="between">
+              <span class="subtle" style="font-size:12px"><svg class="ico" style="width:12px;vertical-align:-2px"><use href="#i-clock"/></svg> Updated 2h ago · Maya</span>
+              <button class="btn sm">Open</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="between" style="margin-bottom:10px">
+              <span class="ico-badge" style="background:var(--success-bg);color:var(--success)"><svg class="ico" style="width:18px"><use href="#i-chart"/></svg></span>
+              <button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button>
+            </div>
+            <h3 style="margin:0 0 4px;font-size:14.5px">Weekly automation coverage</h3>
+            <p class="muted" style="margin:0 0 12px;font-size:12.5px">Automated vs manual cases per suite, week over week.</p>
+            <div class="note" style="font-size:12px;margin-bottom:12px"><svg class="ico" style="width:12px;vertical-align:-2px;color:var(--primary)"><use href="#i-sparkles"/></svg> “automation coverage by suite, compare to last week”</div>
+            <div class="between">
+              <span class="subtle" style="font-size:12px"><svg class="ico" style="width:12px;vertical-align:-2px"><use href="#i-calendar"/></svg> Scheduled · every Mon 9am</span>
+              <button class="btn sm">Open</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="between" style="margin-bottom:10px">
+              <span class="ico-badge" style="background:var(--warning-bg);color:var(--warning)"><svg class="ico" style="width:18px"><use href="#i-zap"/></svg></span>
+              <button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button>
+            </div>
+            <h3 style="margin:0 0 4px;font-size:14.5px">Flaky tests watchlist</h3>
+            <p class="muted" style="margin:0 0 12px;font-size:12.5px">Cases that flipped pass/fail across the last 5 runs.</p>
+            <div class="note" style="font-size:12px;margin-bottom:12px"><svg class="ico" style="width:12px;vertical-align:-2px;color:var(--primary)"><use href="#i-sparkles"/></svg> “tests with inconsistent results over the last 5 runs”</div>
+            <div class="between">
+              <span class="subtle" style="font-size:12px"><svg class="ico" style="width:12px;vertical-align:-2px"><use href="#i-clock"/></svg> Updated yesterday · Sam</span>
+              <button class="btn sm">Open</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

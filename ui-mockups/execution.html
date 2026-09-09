@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Execution</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="requirements.html"><svg class="ico"><use href="#i-requirements"/></svg> Requirements <span class="count">64</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html" class="active"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Integrations</div>
+      <a href="#"><svg class="ico"><use href="#i-git"/></svg> Code Trackers</a>
+      <a href="#"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">7</span></a>
+      <div class="group-label">Admin</div>
+      <a href="#"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="#"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="#"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a3">RT</div><div class="stack"><span class="u-name">Rina Tester</span><span class="u-role">Tester</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><a href="test-plans.html">Test Plans</a><span class="sep">/</span><span>CO-P12 Regression</span><span class="sep">/</span><span class="cur">Run</span></div>
+      <div class="spacer"></div>
+      <span class="pill running" style="margin-right:6px"><span class="dot"></span> Build 4.8 · live run</span>
+      <button class="btn sm"><svg class="ico"><use href="#i-check"/></svg> Finish run</button>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <main class="content">
+      <!-- run header -->
+      <div class="page-head" style="margin-bottom:16px">
+        <div class="titles">
+          <h1>Regression run — Build 4.8</h1>
+          <p>Case <strong>3 of 264</strong> · assigned to you · <span class="mono">Chrome / Web</span></p>
+        </div>
+        <div class="actions" style="align-items:center">
+          <div class="meter-row" style="width:280px">
+            <div class="progress"><span class="seg pass" style="width:64%"></span><span class="seg fail" style="width:11%"></span><span class="seg blocked" style="width:6%"></span><span class="seg untested" style="width:19%"></span></div>
+            <span class="pct">81%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="split run">
+        <!-- left: case rail -->
+        <div class="card" style="align-self:start;max-height:calc(100vh - 190px);display:flex;flex-direction:column">
+          <div class="card-head" style="padding:12px 14px">
+            <h3 style="font-size:13px">Assigned cases</h3>
+            <div class="actions"><span class="subtle" style="font-size:12px">42 left</span></div>
+          </div>
+          <div class="toolbar" style="padding:10px 12px;margin:0;border-bottom:1px solid var(--border)">
+            <div class="seg-control" data-seg style="width:100%"><button class="active" style="flex:1">All</button><button style="flex:1">Untested</button><button style="flex:1">Failed</button></div>
+          </div>
+          <div class="run-case-list">
+            <div class="run-case"><span class="status-dot pass"></span><div class="stack"><span class="rc-id">CO-TC-238</span><span class="rc-title">Empty cart shows CTA</span></div><span class="rc-status pill pass" style="padding:1px 7px">Pass</span></div>
+            <div class="run-case"><span class="status-dot pass"></span><div class="stack"><span class="rc-id">CO-TC-239</span><span class="rc-title">Add item updates count</span></div><span class="rc-status pill pass" style="padding:1px 7px">Pass</span></div>
+            <div class="run-case active"><span class="status-dot running"></span><div class="stack"><span class="rc-id">CO-TC-240</span><span class="rc-title">Apply valid percentage promo</span></div><span class="rc-status pill running" style="padding:1px 7px">Now</span></div>
+            <div class="run-case"><span class="status-dot untested"></span><div class="stack"><span class="rc-id">CO-TC-241</span><span class="rc-title">Expired promo shows error</span></div></div>
+            <div class="run-case"><span class="status-dot untested"></span><div class="stack"><span class="rc-id">CO-TC-242</span><span class="rc-title">Stacking two codes rejected</span></div></div>
+            <div class="run-case"><span class="status-dot fail"></span><div class="stack"><span class="rc-id">CO-TC-198</span><span class="rc-title">Guest checkout saved address</span></div><span class="rc-status pill fail" style="padding:1px 7px">Fail</span></div>
+            <div class="run-case"><span class="status-dot blocked"></span><div class="stack"><span class="rc-id">CO-TC-305</span><span class="rc-title">3-D Secure on Visa</span></div><span class="rc-status pill blocked" style="padding:1px 7px">Blk</span></div>
+            <div class="run-case"><span class="status-dot untested"></span><div class="stack"><span class="rc-id">CO-TC-243</span><span class="rc-title">Free-shipping threshold</span></div></div>
+            <div class="run-case"><span class="status-dot untested"></span><div class="stack"><span class="rc-id">CO-TC-244</span><span class="rc-title">Promo case-insensitivity</span></div></div>
+          </div>
+        </div>
+
+        <!-- right: current case runner -->
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-head">
+              <div class="stack"><span class="id mono">CO-TC-240 · v4</span><h3 style="margin-top:2px">Apply valid percentage promo code</h3></div>
+              <div class="actions">
+                <span class="prio high"><span class="dot"></span> High</span>
+                <span class="tag">smoke</span>
+                <button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="note" style="margin-bottom:16px"><strong>Preconditions:</strong> Active cart, subtotal $120. Promo <span class="mono">SAVE20</span> active, not redeemed.</div>
+
+              <!-- step-by-step verdicts -->
+              <div data-verdict-group>
+                <div class="exec-step">
+                  <div class="es-head">
+                    <span class="num" style="background:var(--success-bg);color:var(--success)">1</span>
+                    <strong style="font-size:13.5px">Enter SAVE20 and click Apply</strong>
+                    <div class="spacer"></div>
+                    <div class="mini-verdict">
+                      <button class="pass on" title="Pass"><svg class="ico" style="width:16px;color:var(--success)"><use href="#i-check"/></svg></button>
+                      <button class="fail" title="Fail"><svg class="ico" style="width:16px;color:var(--danger)"><use href="#i-x"/></svg></button>
+                    </div>
+                  </div>
+                  <div class="es-body">
+                    <div><div class="lbl">Expected</div><div class="muted">Code accepted; 20% discount line appears.</div></div>
+                    <div><div class="lbl">Actual</div><div>Discount applied ✓</div></div>
+                  </div>
+                </div>
+
+                <div class="exec-step">
+                  <div class="es-head">
+                    <span class="num" style="background:var(--success-bg);color:var(--success)">2</span>
+                    <strong style="font-size:13.5px">Review order summary</strong>
+                    <div class="spacer"></div>
+                    <div class="mini-verdict">
+                      <button class="pass on" title="Pass"><svg class="ico" style="width:16px;color:var(--success)"><use href="#i-check"/></svg></button>
+                      <button class="fail" title="Fail"><svg class="ico" style="width:16px;color:var(--danger)"><use href="#i-x"/></svg></button>
+                    </div>
+                  </div>
+                  <div class="es-body">
+                    <div><div class="lbl">Expected</div><div class="muted">$120 − $24 = $96 before tax.</div></div>
+                    <div><div class="lbl">Actual</div><div>$96.00 ✓</div></div>
+                  </div>
+                </div>
+
+                <div class="exec-step" style="border-color:var(--primary-100)">
+                  <div class="es-head" style="background:var(--primary-050)">
+                    <span class="num">3</span>
+                    <strong style="font-size:13.5px">Proceed to checkout</strong>
+                    <div class="spacer"></div>
+                    <div class="mini-verdict">
+                      <button class="pass" title="Pass"><svg class="ico" style="width:16px;color:var(--success)"><use href="#i-check"/></svg></button>
+                      <button class="fail" title="Fail"><svg class="ico" style="width:16px;color:var(--danger)"><use href="#i-x"/></svg></button>
+                    </div>
+                  </div>
+                  <div class="es-body">
+                    <div><div class="lbl">Expected</div><div class="muted">Discounted total carries to payment step.</div></div>
+                    <div><div class="lbl">Actual — add note</div><textarea placeholder="What did you observe?" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;font-family:inherit;font-size:13px;resize:vertical;min-height:38px"></textarea></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- evidence -->
+              <div class="between" style="margin:18px 0 8px"><strong style="font-size:13px">Evidence</strong></div>
+              <div class="row" style="gap:10px;flex-wrap:wrap">
+                <div class="row" style="gap:8px;border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12.5px"><svg class="ico" style="width:14px"><use href="#i-paperclip"/></svg> summary_$96.png</div>
+                <button class="btn sm"><svg class="ico"><use href="#i-plus"/></svg> Attach screenshot</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- overall verdict bar -->
+          <div class="card">
+            <div class="card-body">
+              <div class="between" style="margin-bottom:12px">
+                <strong style="font-size:13.5px">Case verdict</strong>
+                <span class="subtle" style="font-size:12px"><svg class="ico" style="width:13px;vertical-align:-2px"><use href="#i-clock"/></svg> 2m 14s elapsed</span>
+              </div>
+              <div class="verdict-bar" data-verdict-group>
+                <button class="verdict-btn pass" data-verdict><svg class="ico vi"><use href="#i-check"/></svg> Pass</button>
+                <button class="verdict-btn fail" data-verdict><svg class="ico vi"><use href="#i-x"/></svg> Fail</button>
+                <button class="verdict-btn blocked" data-verdict><svg class="ico vi"><use href="#i-lock"/></svg> Blocked</button>
+                <button class="verdict-btn skipped" data-verdict><svg class="ico vi"><use href="#i-arrow-right"/></svg> Skip</button>
+              </div>
+              <div class="between" style="margin-top:16px">
+                <button class="btn"><svg class="ico"><use href="#i-bug"/></svg> Link / create issue</button>
+                <div class="row" style="gap:8px">
+                  <button class="btn">Save draft</button>
+                  <button class="btn primary">Submit &amp; next <svg class="ico"><use href="#i-arrow-right"/></svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

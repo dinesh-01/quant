@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Test Suites</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html" class="active"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="requirements.html"><svg class="ico"><use href="#i-requirements"/></svg> Requirements <span class="count">64</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Integrations</div>
+      <a href="#"><svg class="ico"><use href="#i-git"/></svg> Code Trackers</a>
+      <a href="#"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">7</span></a>
+      <div class="group-label">Admin</div>
+      <a href="#"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="#"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="#"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><span>Test Suites</span><span class="sep">/</span><span class="cur">Promotions</span></div>
+      <div class="search"><svg class="ico" style="width:16px"><use href="#i-search"/></svg><input placeholder="Search cases…" /><kbd>⌘K</kbd></div>
+      <div class="spacer"></div>
+      <a href="test-case-new.html" class="btn primary sm"><svg class="ico"><use href="#i-plus"/></svg> New case</a>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <main class="content">
+      <div class="page-head">
+        <div class="titles"><h1>Test Suites</h1><p>Suites, cases, steps and versions for the Checkout project.</p></div>
+        <div class="actions">
+          <button class="btn"><svg class="ico"><use href="#i-copy"/></svg> Import</button>
+          <button class="btn"><svg class="ico"><use href="#i-download"/></svg> Export</button>
+          <a href="test-case-new.html" class="btn primary"><svg class="ico"><use href="#i-plus"/></svg> New case</a>
+        </div>
+      </div>
+
+      <div class="split tree-list">
+        <!-- suite tree -->
+        <div class="card" style="align-self:start">
+          <div class="card-head" style="padding:12px 14px">
+            <h3 style="font-size:13px">Suites</h3>
+            <div class="actions"><button class="btn ghost sm" style="padding:4px 7px"><svg class="ico"><use href="#i-plus"/></svg></button></div>
+          </div>
+          <div class="tree">
+            <div class="node"><svg class="caret ico" style="width:14px"><use href="#i-chev-down"/></svg><svg class="ico" style="width:16px"><use href="#i-folder"/></svg> Checkout <span class="count">482</span></div>
+            <div class="node child"><svg class="ico" style="width:15px"><use href="#i-folder"/></svg> Cart <span class="count">88</span></div>
+            <div class="node child"><svg class="ico" style="width:15px"><use href="#i-folder"/></svg> Payments <span class="count">120</span></div>
+            <div class="node child active"><svg class="ico" style="width:15px"><use href="#i-folder"/></svg> Promotions <span class="count">46</span></div>
+            <div class="node child"><svg class="ico" style="width:15px"><use href="#i-folder"/></svg> Shipping &amp; Tax <span class="count">64</span></div>
+            <div class="node child"><svg class="ico" style="width:15px"><use href="#i-folder"/></svg> Guest Flow <span class="count">52</span></div>
+            <div class="node child"><svg class="ico" style="width:15px"><use href="#i-folder"/></svg> Mobile <span class="count">72</span></div>
+            <div class="node child"><svg class="ico" style="width:15px"><use href="#i-folder"/></svg> Accessibility <span class="count">40</span></div>
+          </div>
+        </div>
+
+        <!-- case list + detail -->
+        <div class="split list-detail">
+          <div>
+            <div class="toolbar">
+              <div class="seg-control" data-seg>
+                <button class="active">All 46</button><button>Active 41</button><button>Frozen 5</button>
+              </div>
+              <button class="filter"><svg class="ico" style="width:15px"><use href="#i-flag"/></svg> Priority <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+              <button class="filter"><svg class="ico" style="width:15px"><use href="#i-tag"/></svg> Keywords <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+              <div class="spacer"></div>
+              <span class="muted" style="font-size:12.5px">46 cases</span>
+            </div>
+
+            <div class="card">
+              <div class="card-body flush">
+                <table class="table">
+                  <thead><tr><th style="width:26px"><span class="check"></span></th><th>Case</th><th>Priority</th><th>Keywords</th><th>Ver</th></tr></thead>
+                  <tbody>
+                    <tr style="background:var(--primary-050)">
+                      <td><span class="check"></span></td>
+                      <td><div class="stack"><span class="title-cell">Apply valid percentage promo code</span><span class="id">CO-TC-240</span></div></td>
+                      <td><span class="prio high"><span class="dot"></span> High</span></td>
+                      <td><span class="tag">smoke</span></td>
+                      <td class="mono muted">v4</td>
+                    </tr>
+                    <tr>
+                      <td><span class="check"></span></td>
+                      <td><div class="stack"><span class="title-cell">Apply expired promo code shows error</span><span class="id">CO-TC-241</span></div></td>
+                      <td><span class="prio high"><span class="dot"></span> High</span></td>
+                      <td><span class="tag">regression</span></td>
+                      <td class="mono muted">v2</td>
+                    </tr>
+                    <tr>
+                      <td><span class="check"></span></td>
+                      <td><div class="stack"><span class="title-cell">Stacking two promo codes is rejected</span><span class="id">CO-TC-242</span></div></td>
+                      <td><span class="prio med"><span class="dot"></span> Medium</span></td>
+                      <td><span class="tag">regression</span></td>
+                      <td class="mono muted">v1</td>
+                    </tr>
+                    <tr>
+                      <td><span class="check"></span></td>
+                      <td><div class="stack"><span class="title-cell">Free-shipping threshold promo</span><span class="id">CO-TC-243</span> <span class="pill skipped" style="margin-left:6px"><svg class="ico" style="width:11px"><use href="#i-lock"/></svg> Frozen</span></div></td>
+                      <td><span class="prio med"><span class="dot"></span> Medium</span></td>
+                      <td><span class="tag">smoke</span></td>
+                      <td class="mono muted">v3</td>
+                    </tr>
+                    <tr>
+                      <td><span class="check"></span></td>
+                      <td><div class="stack"><span class="title-cell">Promo code case-insensitivity</span><span class="id">CO-TC-244</span></div></td>
+                      <td><span class="prio low"><span class="dot"></span> Low</span></td>
+                      <td><span class="tag">edge</span></td>
+                      <td class="mono muted">v1</td>
+                    </tr>
+                    <tr>
+                      <td><span class="check"></span></td>
+                      <td><div class="stack"><span class="title-cell">Remove applied promo restores total</span><span class="id">CO-TC-245</span></div></td>
+                      <td><span class="prio med"><span class="dot"></span> Medium</span></td>
+                      <td><span class="tag">regression</span></td>
+                      <td class="mono muted">v2</td>
+                    </tr>
+                    <tr>
+                      <td><span class="check"></span></td>
+                      <td><div class="stack"><span class="title-cell">First-order-only promo for returning user</span><span class="id">CO-TC-246</span></div></td>
+                      <td><span class="prio high"><span class="dot"></span> High</span></td>
+                      <td><span class="tag">regression</span></td>
+                      <td class="mono muted">v1</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- detail panel -->
+          <aside class="card detail">
+            <div class="card-head">
+              <div class="stack"><span class="id mono">CO-TC-240 · v4</span><h3 style="margin-top:2px">Apply valid percentage promo code</h3></div>
+              <div class="actions"><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></div>
+            </div>
+            <div class="card-body">
+              <div class="row" style="gap:8px;margin-bottom:14px;flex-wrap:wrap">
+                <span class="prio high"><span class="dot"></span> High</span>
+                <span class="tag">smoke</span>
+                <span class="pill pass"><span class="dot"></span> Last run: Passed</span>
+              </div>
+
+              <div class="kv" style="margin-bottom:16px">
+                <span class="k">Suite</span><span>Promotions</span>
+                <span class="k">Owner</span><span class="row" style="gap:6px"><span class="avatar a5" style="width:20px;height:20px;font-size:9px">DD</span> Devon Designer</span>
+                <span class="k">Updated</span><span>2 days ago</span>
+                <span class="k">Automation</span><span class="row" style="gap:6px"><svg class="ico" style="width:13px"><use href="#i-git"/></svg> <a style="color:var(--primary-700)">promo_percent_spec.ts</a></span>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="between" style="margin-bottom:8px"><strong style="font-size:13px">Preconditions</strong></div>
+              <p class="muted" style="margin:0 0 14px">User has an active cart with a $120 subtotal. Promo code <span class="mono">SAVE20</span> is active and not yet redeemed.</p>
+
+              <div class="between" style="margin-bottom:6px"><strong style="font-size:13px">Steps</strong><span class="subtle" style="font-size:12px">3 steps</span></div>
+
+              <div class="step">
+                <span class="num">1</span>
+                <div class="body">
+                  <div class="lbl">Action</div>
+                  <div>Open the cart and enter <span class="mono">SAVE20</span> in the promo field, click Apply.</div>
+                  <div class="lbl" style="margin-top:8px">Expected</div>
+                  <div class="muted">Code is accepted; a 20% discount line appears.</div>
+                </div>
+              </div>
+              <div class="step">
+                <span class="num">2</span>
+                <div class="body">
+                  <div class="lbl">Action</div>
+                  <div>Review the order summary.</div>
+                  <div class="lbl" style="margin-top:8px">Expected</div>
+                  <div class="muted">Subtotal $120 → discount −$24 → total reflects $96 before tax.</div>
+                </div>
+              </div>
+              <div class="step">
+                <span class="num">3</span>
+                <div class="body">
+                  <div class="lbl">Action</div>
+                  <div>Proceed to checkout.</div>
+                  <div class="lbl" style="margin-top:8px">Expected</div>
+                  <div class="muted">Discounted total carries through to the payment step.</div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+              <div class="note"><svg class="ico" style="width:13px;vertical-align:-2px"><use href="#i-link"/></svg> Covers requirement <strong>CO-RQ-18</strong> — “Percentage promotions apply to subtotal before tax.”</div>
+
+              <div class="row" style="margin-top:16px;gap:8px">
+                <button class="btn primary sm" style="flex:1"><svg class="ico"><use href="#i-edit"/></svg> Edit</button>
+                <button class="btn sm" style="flex:1"><svg class="ico"><use href="#i-play"/></svg> Run</button>
+                <button class="btn sm"><svg class="ico"><use href="#i-copy"/></svg></button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

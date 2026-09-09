@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Reports · Test Cases</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="requirements.html"><svg class="ico"><use href="#i-requirements"/></svg> Requirements <span class="count">64</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html" class="active"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Integrations</div>
+      <a href="#"><svg class="ico"><use href="#i-git"/></svg> Code Trackers</a>
+      <a href="#"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">7</span></a>
+      <div class="group-label">Admin</div>
+      <a href="#"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="#"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="#"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><span>Reports</span><span class="sep">/</span><span class="cur">Test Cases</span></div>
+      <div class="spacer"></div>
+      <button class="btn sm"><svg class="ico"><use href="#i-download"/></svg> CSV</button>
+      <button class="btn primary sm"><svg class="ico"><use href="#i-download"/></svg> XLSX</button>
+    </header>
+
+    <main class="content">
+      <div class="page-head" style="margin-bottom:16px">
+        <div class="titles"><h1>Reports</h1><p>Automation coverage snapshot. Click any tile to inspect the matching cases.</p></div>
+        <div class="actions">
+          <!-- report switcher: Reports is no longer execution-only -->
+          <div class="seg-control">
+            <a href="reports-test-cases.html" class="active"><svg class="ico" style="width:14px"><use href="#i-cases"/></svg> Test Cases</a>
+            <a href="reports.html"><svg class="ico" style="width:14px"><use href="#i-play"/></svg> Execution</a>
+            <a href="requirements.html"><svg class="ico" style="width:14px"><use href="#i-requirements"/></svg> Requirements</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="split report">
+        <!-- ============ FILTER RAIL ============ -->
+        <aside class="card filter-panel">
+          <div class="fp-head"><span class="t">Filters</span><a href="#">Clear all</a></div>
+          <div class="filter-group">
+            <div class="fg-label">Test case severity <span class="n">4</span></div>
+            <div class="select-wrap">
+              <select class="select"><option>2 selected</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+              <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+            </div>
+          </div>
+          <div class="filter-group">
+            <div class="fg-label">Theme <span class="n">53</span></div>
+            <div class="select-wrap">
+              <select class="select"><option>All themes</option><option>Self Service</option><option>Admin</option><option>Automation</option></select>
+              <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+            </div>
+          </div>
+          <div class="filter-group">
+            <div class="fg-label">Automation state</div>
+            <div class="select-wrap">
+              <select class="select"><option>Any</option><option>Automated</option><option>In progress</option><option>Not automated</option><option>Manual</option></select>
+              <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+            </div>
+          </div>
+          <div class="filter-group" style="margin-bottom:0">
+            <div class="fg-label">Suite</div>
+            <div class="select-wrap">
+              <select class="select"><option>All suites</option><option>Cart</option><option>Payments</option><option>Promotions</option></select>
+              <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+            </div>
+          </div>
+        </aside>
+
+        <!-- ============ REPORT BODY ============ -->
+        <div>
+          <!-- active filters -->
+          <div class="chips" style="margin-bottom:20px">
+            <span class="muted" style="font-size:12.5px;font-weight:600">Filtered by</span>
+            <span class="chip">severity: Critical <span class="x"><svg class="ico" style="width:11px"><use href="#i-x"/></svg></span></span>
+            <span class="chip">severity: High <span class="x"><svg class="ico" style="width:11px"><use href="#i-x"/></svg></span></span>
+          </div>
+
+          <!-- TOTAL -->
+          <div class="section-label">Total test cases · Checkout</div>
+          <div class="grid cols-5" style="margin-bottom:8px">
+            <div class="card stat clickable">
+              <div class="between"><span class="label">Total test cases</span><span class="ico-badge" style="background:var(--info-bg);color:var(--info)"><svg class="ico"><use href="#i-cases"/></svg></span></div>
+              <div class="value">482</div><div class="pct-of">100% of project</div>
+            </div>
+            <div class="card stat clickable">
+              <div class="between"><span class="label">Automated</span><span class="ico-badge" style="background:var(--success-bg);color:var(--success)"><svg class="ico"><use href="#i-check"/></svg></span></div>
+              <div class="value">421</div><div class="pct-of">87.3% of total</div>
+            </div>
+            <div class="card stat clickable">
+              <div class="between"><span class="label">In progress</span><span class="ico-badge" style="background:var(--warning-bg);color:var(--warning)"><svg class="ico"><use href="#i-clock"/></svg></span></div>
+              <div class="value">30</div><div class="pct-of">6.2% of total</div>
+            </div>
+            <div class="card stat clickable">
+              <div class="between"><span class="label">Not automated</span><span class="ico-badge" style="background:var(--danger-bg);color:var(--danger)"><svg class="ico"><use href="#i-x"/></svg></span></div>
+              <div class="value">22</div><div class="pct-of">4.6% of total</div>
+            </div>
+            <div class="card stat clickable">
+              <div class="between"><span class="label">Manual</span><span class="ico-badge" style="background:var(--primary-050);color:var(--primary-700)"><svg class="ico"><use href="#i-edit"/></svg></span></div>
+              <div class="value">9</div><div class="pct-of">1.9% of total</div>
+            </div>
+          </div>
+
+          <!-- JOURNEY -->
+          <div class="section-label">Journey test cases <span class="subtle" style="text-transform:none;letter-spacing:0;font-weight:500">· automated + in progress + not automated = total</span></div>
+          <div class="grid cols-4" style="margin-bottom:8px">
+            <div class="card stat clickable">
+              <div class="between"><span class="label">Total journeys</span><span class="ico-badge" style="background:var(--info-bg);color:var(--info)"><svg class="ico"><use href="#i-target"/></svg></span></div>
+              <div class="value">64</div><div class="pct-of">end-to-end</div>
+            </div>
+            <div class="card stat clickable">
+              <div class="between"><span class="label">Automated</span><span class="ico-badge" style="background:var(--success-bg);color:var(--success)"><svg class="ico"><use href="#i-check"/></svg></span></div>
+              <div class="value">52</div><div class="pct-of">81.3% of total</div>
+            </div>
+            <div class="card stat clickable">
+              <div class="between"><span class="label">In progress</span><span class="ico-badge" style="background:var(--warning-bg);color:var(--warning)"><svg class="ico"><use href="#i-clock"/></svg></span></div>
+              <div class="value">7</div><div class="pct-of">10.9% of total</div>
+            </div>
+            <div class="card stat clickable">
+              <div class="between"><span class="label">Not automated</span><span class="ico-badge" style="background:var(--danger-bg);color:var(--danger)"><svg class="ico"><use href="#i-x"/></svg></span></div>
+              <div class="value">5</div><div class="pct-of">7.8% of total</div>
+            </div>
+          </div>
+
+          <!-- COVERAGE RATIOS -->
+          <div class="section-label">Coverage ratios</div>
+          <div class="grid cols-2" style="margin-bottom:8px">
+            <div class="card"><div class="card-body">
+              <div class="ratio">
+                <svg class="ring" viewBox="0 0 42 42">
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--neutral-bg)" stroke-width="5"/>
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--primary)" stroke-width="5" stroke-dasharray="87.3 12.7" stroke-dashoffset="25" stroke-linecap="round"/>
+                </svg>
+                <div>
+                  <div class="r-label">Integration coverage</div>
+                  <div class="r-val">87.3%</div>
+                  <div class="r-sub">automated ÷ integration cases</div>
+                </div>
+              </div>
+            </div></div>
+            <div class="card"><div class="card-body">
+              <div class="ratio">
+                <svg class="ring" viewBox="0 0 42 42">
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--neutral-bg)" stroke-width="5"/>
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--success)" stroke-width="5" stroke-dasharray="81.3 18.7" stroke-dashoffset="25" stroke-linecap="round"/>
+                </svg>
+                <div>
+                  <div class="r-label">Journey automation</div>
+                  <div class="r-val">81.3%</div>
+                  <div class="r-sub">automated ÷ journey cases</div>
+                </div>
+              </div>
+            </div></div>
+          </div>
+
+          <!-- COVERAGE & DISTRIBUTION -->
+          <div class="section-label">Coverage &amp; distribution</div>
+          <div class="grid cols-2">
+            <!-- donut + legend -->
+            <div class="card">
+              <div class="card-head"><h3>Test case distribution</h3><span class="sub">by coverage detail</span></div>
+              <div class="card-body">
+                <div class="donut-wrap">
+                  <div class="donut" style="width:150px;height:150px">
+                    <svg viewBox="0 0 42 42" width="150" height="150">
+                      <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--neutral-bg)" stroke-width="5.5"/>
+                      <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--primary)" stroke-width="5.5" stroke-dasharray="61 39" stroke-dashoffset="25"/>
+                      <circle cx="21" cy="21" r="15.9" fill="none" stroke="#a99cff" stroke-width="5.5" stroke-dasharray="37 63" stroke-dashoffset="-36"/>
+                      <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--warning)" stroke-width="5.5" stroke-dasharray="2 98" stroke-dashoffset="-73"/>
+                    </svg>
+                    <div class="center"><div><div class="big" style="font-size:22px">482</div><div class="sm">test cases</div></div></div>
+                  </div>
+                  <div class="legend-table" style="flex:1">
+                    <div class="lr"><span class="sw" style="background:var(--primary)"></span><span>Integration</span><span class="v">294 · 61%</span></div>
+                    <div class="lr"><span class="sw" style="background:#a99cff"></span><span>Not specified</span><span class="v">180 · 37%</span></div>
+                    <div class="lr"><span class="sw" style="background:var(--warning)"></span><span>Covered in frontend test</span><span class="v">5 · 1%</span></div>
+                    <div class="lr"><span class="sw" style="background:var(--danger)"></span><span>Covered in backend test</span><span class="v">2 · 0%</span></div>
+                    <div class="lr"><span class="sw" style="background:var(--neutral)"></span><span>None</span><span class="v">1 · 0%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- horizontal bars by product area -->
+            <div class="card">
+              <div class="card-head"><h3>Test cases by product area</h3><span class="sub">integration cases, top suites</span></div>
+              <div class="card-body">
+                <div class="hbars">
+                  <div class="hbar-row"><span class="hbar-label">Payments</span><div class="hbar-track"><span class="hbar-fill" style="width:100%"></span></div><span class="hbar-val">120</span></div>
+                  <div class="hbar-row"><span class="hbar-label">Cart</span><div class="hbar-track"><span class="hbar-fill" style="width:73%"></span></div><span class="hbar-val">88</span></div>
+                  <div class="hbar-row"><span class="hbar-label">Mobile</span><div class="hbar-track"><span class="hbar-fill" style="width:60%"></span></div><span class="hbar-val">72</span></div>
+                  <div class="hbar-row"><span class="hbar-label">Shipping &amp; Tax</span><div class="hbar-track"><span class="hbar-fill" style="width:53%"></span></div><span class="hbar-val">64</span></div>
+                  <div class="hbar-row"><span class="hbar-label">Guest Flow</span><div class="hbar-track"><span class="hbar-fill" style="width:43%"></span></div><span class="hbar-val">52</span></div>
+                  <div class="hbar-row"><span class="hbar-label">Promotions</span><div class="hbar-track"><span class="hbar-fill" style="width:38%"></span></div><span class="hbar-val">46</span></div>
+                  <div class="hbar-row"><span class="hbar-label">Accessibility</span><div class="hbar-track"><span class="hbar-fill" style="width:33%"></span></div><span class="hbar-val">40</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Users</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="requirements.html"><svg class="ico"><use href="#i-requirements"/></svg> Requirements <span class="count">64</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Integrations</div>
+      <a href="#"><svg class="ico"><use href="#i-git"/></svg> Code Trackers</a>
+      <a href="#"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">7</span></a>
+      <div class="group-label">Admin</div>
+      <a href="users.html" class="active"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="roles.html"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="settings.html"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><span>Admin</span><span class="sep">/</span><span class="cur">Users</span></div>
+      <div class="search"><svg class="ico" style="width:16px"><use href="#i-search"/></svg><input placeholder="Search users…" /><kbd>⌘K</kbd></div>
+      <div class="spacer"></div>
+      <button class="btn primary sm"><svg class="ico"><use href="#i-plus"/></svg> Invite user</button>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <main class="content">
+      <div class="page-head">
+        <div class="titles"><h1>Users</h1><p>People with access to this workspace and their project-scoped roles.</p></div>
+        <div class="actions"><button class="btn primary"><svg class="ico"><use href="#i-plus"/></svg> Invite user</button></div>
+      </div>
+
+      <!-- summary tiles -->
+      <div class="grid cols-4" style="margin-bottom:18px">
+        <div class="card stat"><span class="label">Total users</span><div class="value">7</div><div class="pct-of">across 3 projects</div></div>
+        <div class="card stat"><span class="label">Active</span><div class="value" style="color:var(--success)">6</div><div class="pct-of">signed in ≤ 30 days</div></div>
+        <div class="card stat"><span class="label">Deactivated</span><div class="value" style="color:var(--text-muted)">1</div><div class="pct-of">no access</div></div>
+        <div class="card stat"><span class="label">Pending invites</span><div class="value" style="color:var(--warning)">1</div><div class="pct-of">awaiting sign-up</div></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="seg-control" data-seg><button class="active">All 7</button><button>Active 6</button><button>Deactivated 1</button><button>Invited 1</button></div>
+        <button class="filter"><svg class="ico" style="width:15px"><use href="#i-shield"/></svg> Role <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+        <div class="spacer"></div>
+        <button class="btn sm"><svg class="ico"><use href="#i-download"/></svg> Export</button>
+      </div>
+
+      <div class="card">
+        <div class="card-body flush">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:26px"><span class="check"></span></th>
+                <th>User</th><th>Role</th><th>Projects</th><th>Status</th><th>Last active</th><th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="check"></span></td>
+                <td><div class="row" style="gap:11px"><span class="avatar a6">TE</span><div class="stack"><span class="title-cell">Test Admin</span><span class="muted" style="font-size:12px">test@example.com</span></div></div></td>
+                <td><span class="role-badge admin"><svg class="ico" style="width:12px"><use href="#i-shield"/></svg> Admin</span></td>
+                <td class="muted">All projects</td>
+                <td><span class="pill pass"><span class="dot"></span> Active</span></td>
+                <td class="muted">2 min ago</td>
+                <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="check"></span></td>
+                <td><div class="row" style="gap:11px"><span class="avatar a1">MS</span><div class="stack"><span class="title-cell">Maya Singh</span><span class="muted" style="font-size:12px">maya.leader@example.com</span></div></div></td>
+                <td><span class="role-badge leader">Leader</span></td>
+                <td class="muted">Checkout, Payments</td>
+                <td><span class="pill pass"><span class="dot"></span> Active</span></td>
+                <td class="muted">just now</td>
+                <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="check"></span></td>
+                <td><div class="row" style="gap:11px"><span class="avatar a2">SS</span><div class="stack"><span class="title-cell">Sam Senior</span><span class="muted" style="font-size:12px">sam.senior@example.com</span></div></div></td>
+                <td><span class="role-badge senior">Senior Tester</span></td>
+                <td class="muted">Checkout</td>
+                <td><span class="pill pass"><span class="dot"></span> Active</span></td>
+                <td class="muted">18 min ago</td>
+                <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="check"></span></td>
+                <td><div class="row" style="gap:11px"><span class="avatar a3">RT</span><div class="stack"><span class="title-cell">Rina Tester</span><span class="muted" style="font-size:12px">rina.tester@example.com</span></div></div></td>
+                <td><span class="role-badge tester">Tester</span></td>
+                <td class="muted">Checkout</td>
+                <td><span class="pill pass"><span class="dot"></span> Active</span></td>
+                <td class="muted">1 hr ago</td>
+                <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="check"></span></td>
+                <td><div class="row" style="gap:11px"><span class="avatar a5">DD</span><div class="stack"><span class="title-cell">Devon Designer</span><span class="muted" style="font-size:12px">devon.designer@example.com</span></div></div></td>
+                <td><span class="role-badge designer">Test Designer</span></td>
+                <td class="muted">Checkout, Mobile</td>
+                <td><span class="pill pass"><span class="dot"></span> Active</span></td>
+                <td class="muted">3 hr ago</td>
+                <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="check"></span></td>
+                <td><div class="row" style="gap:11px"><span class="avatar a4">GV</span><div class="stack"><span class="title-cell">Guest Viewer</span><span class="muted" style="font-size:12px">guest.viewer@example.com</span></div></div></td>
+                <td><span class="role-badge guest">Guest</span></td>
+                <td class="muted">Checkout (read-only)</td>
+                <td><span class="pill pass"><span class="dot"></span> Active</span></td>
+                <td class="muted">2 days ago</td>
+                <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+              </tr>
+              <tr style="opacity:.62">
+                <td><span class="check"></span></td>
+                <td><div class="row" style="gap:11px"><span class="avatar" style="background:var(--neutral)">IU</span><div class="stack"><span class="title-cell">Inactive User</span><span class="muted" style="font-size:12px">inactive.user@example.com</span></div></div></td>
+                <td><span class="role-badge tester">Tester</span></td>
+                <td class="muted">Checkout</td>
+                <td><span class="pill skipped"><span class="dot"></span> Deactivated</span></td>
+                <td class="muted">42 days ago</td>
+                <td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="check"></span></td>
+                <td><div class="row" style="gap:11px"><span class="avatar" style="background:var(--warning-bg);color:var(--warning);border:1px dashed var(--warning-br)">?</span><div class="stack"><span class="title-cell">priya.qa@example.com</span><span class="muted" style="font-size:12px">Invited by Maya · Sep 8</span></div></div></td>
+                <td><span class="role-badge senior">Senior Tester</span></td>
+                <td class="muted">Checkout</td>
+                <td><span class="pill blocked"><span class="dot"></span> Invited</span></td>
+                <td class="muted">—</td>
+                <td><button class="btn ghost sm">Resend</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

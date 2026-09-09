@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Settings</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="requirements.html"><svg class="ico"><use href="#i-requirements"/></svg> Requirements <span class="count">64</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Integrations</div>
+      <a href="#"><svg class="ico"><use href="#i-git"/></svg> Code Trackers</a>
+      <a href="#"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">7</span></a>
+      <div class="group-label">Admin</div>
+      <a href="users.html"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="roles.html"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="settings.html" class="active"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><span>Admin</span><span class="sep">/</span><span class="cur">Settings</span></div>
+      <div class="spacer"></div>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <main class="content">
+      <div class="page-head" style="margin-bottom:18px">
+        <div class="titles"><h1>Settings</h1><p>Configure the Checkout project — fields, tokens, integrations and housekeeping.</p></div>
+      </div>
+
+      <div class="split settings" data-tabs="settings">
+        <!-- vertical menu -->
+        <div class="card"><div class="vmenu">
+          <a class="active" data-tab="general"><svg class="ico"><use href="#i-settings"/></svg> General</a>
+          <a data-tab="fields"><svg class="ico"><use href="#i-cases"/></svg> Custom fields <span class="count">6</span></a>
+          <a data-tab="tokens"><svg class="ico"><use href="#i-lock"/></svg> API tokens <span class="count">3</span></a>
+          <a data-tab="integrations"><svg class="ico"><use href="#i-git"/></svg> Integrations</a>
+          <a data-tab="notifications"><svg class="ico"><use href="#i-bell"/></svg> Notifications</a>
+          <a data-tab="housekeeping"><svg class="ico"><use href="#i-clock"/></svg> Housekeeping</a>
+        </div></div>
+
+        <!-- panels -->
+        <div>
+          <!-- GENERAL -->
+          <div data-panel="settings" data-key="general">
+            <div class="card">
+              <div class="card-head"><h3>General</h3><span class="sub">Project identity and defaults</span></div>
+              <div class="card-body">
+                <div class="grid cols-2">
+                  <div class="field"><label>Project name</label><input class="input" value="Checkout" /></div>
+                  <div class="field"><label>Case prefix</label><input class="input mono" value="CO" /><div class="help">Used for IDs like <span class="mono">CO-TC-240</span>. Changing it won't rewrite existing IDs.</div></div>
+                </div>
+                <div class="field"><label>Description</label><textarea class="textarea">End-to-end checkout flows — cart, payments, promotions, shipping, tax and mobile.</textarea></div>
+                <div class="grid cols-2">
+                  <div class="field"><label>Default timezone</label><div class="select-wrap"><select class="select"><option>Asia/Kolkata (GMT+5:30)</option><option>UTC</option><option>America/New_York</option></select><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div></div>
+                  <div class="field"><label>Default case priority</label><div class="select-wrap"><select class="select"><option>Medium</option><option>High</option><option>Low</option></select><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div></div>
+                </div>
+                <div class="setting-row" style="border-top:1px solid var(--border);border-bottom:0;padding-bottom:0">
+                  <div class="sr-main"><div class="t">Allow public sign-up</div><div class="d">When off, only admins can create accounts (<span class="mono">AUTH_SELF_SIGNUP=false</span>).</div></div>
+                  <div class="sr-control"><span class="switch"></span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:18px;border-color:var(--danger-br)">
+              <div class="card-head" style="border-color:var(--danger-br)"><h3 style="color:var(--danger)">Danger zone</h3></div>
+              <div class="card-body">
+                <div class="setting-row" style="padding-top:0">
+                  <div class="sr-main"><div class="t">Archive project</div><div class="d">Hide from the switcher and make read-only. Reversible.</div></div>
+                  <div class="sr-control"><button class="btn sm">Archive</button></div>
+                </div>
+                <div class="setting-row">
+                  <div class="sr-main"><div class="t">Delete project</div><div class="d">Permanently removes suites, cases, runs and reports. Cannot be undone.</div></div>
+                  <div class="sr-control"><button class="btn sm danger">Delete…</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CUSTOM FIELDS -->
+          <div data-panel="settings" data-key="fields" style="display:none">
+            <div class="card">
+              <div class="card-head"><h3>Custom fields</h3><span class="sub">Extra fields shown on cases and runs</span><div class="actions"><button class="btn primary sm"><svg class="ico"><use href="#i-plus"/></svg> Add field</button></div></div>
+              <div class="card-body flush">
+                <table class="table">
+                  <thead><tr><th>Field</th><th>Type</th><th>Applies to</th><th>Required</th><th>Options</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td class="title-cell">Test type</td><td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Dropdown</span></td><td class="muted">Test case</td><td><span class="switch sm on"></span></td><td class="muted">Functional, Regression, Edge, Negative</td><td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td></tr>
+                    <tr><td class="title-cell">Estimated duration</td><td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Text</span></td><td class="muted">Test case</td><td><span class="switch sm"></span></td><td class="muted">—</td><td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td></tr>
+                    <tr><td class="title-cell">Automation owner</td><td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">User</span></td><td class="muted">Test case</td><td><span class="switch sm"></span></td><td class="muted">—</td><td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td></tr>
+                    <tr><td class="title-cell">Regression candidate</td><td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Checkbox</span></td><td class="muted">Test case</td><td><span class="switch sm"></span></td><td class="muted">—</td><td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td></tr>
+                    <tr><td class="title-cell">Environment</td><td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Dropdown</span></td><td class="muted">Run</td><td><span class="switch sm on"></span></td><td class="muted">Staging, Pre-prod, Prod</td><td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td></tr>
+                    <tr><td class="title-cell">Sign-off by</td><td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">User</span></td><td class="muted">Run</td><td><span class="switch sm"></span></td><td class="muted">—</td><td><button class="btn ghost sm" style="padding:5px 7px"><svg class="ico"><use href="#i-more"/></svg></button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- API TOKENS -->
+          <div data-panel="settings" data-key="tokens" style="display:none">
+            <div class="card">
+              <div class="card-head"><h3>API tokens</h3><span class="sub">Sanctum personal access tokens for CI — inherit your roles &amp; abilities</span><div class="actions"><button class="btn primary sm"><svg class="ico"><use href="#i-plus"/></svg> Create token</button></div></div>
+              <div class="card-body">
+                <div class="banner" style="margin-bottom:16px"><svg class="ico" style="width:16px"><use href="#i-lock"/></svg> A token's value is shown once at creation. Call <span class="mono">/api/v1</span> with <span class="mono">Authorization: Bearer &lt;token&gt;</span>.</div>
+              </div>
+              <div class="card-body flush">
+                <table class="table">
+                  <thead><tr><th>Name</th><th>Token</th><th>Created</th><th>Last used</th><th>Expires</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td class="title-cell">CI · nightly regression</td><td class="mono muted">qta_••••••4f2a</td><td class="muted">Aug 12</td><td class="muted">4 hr ago</td><td class="muted">in 60 days</td><td><button class="btn ghost sm danger">Revoke</button></td></tr>
+                    <tr><td class="title-cell">GitHub Actions · PR checks</td><td class="mono muted">qta_••••••9c17</td><td class="muted">Jul 30</td><td class="muted">yesterday</td><td class="muted">in 44 days</td><td><button class="btn ghost sm danger">Revoke</button></td></tr>
+                    <tr><td class="title-cell">Local · Maya laptop</td><td class="mono muted">qta_••••••1b8e</td><td class="muted">Sep 1</td><td class="muted">never</td><td><span class="pill blocked" style="padding:1px 8px">no expiry</span></td><td><button class="btn ghost sm danger">Revoke</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTEGRATIONS -->
+          <div data-panel="settings" data-key="integrations" style="display:none">
+            <div class="card">
+              <div class="card-head"><h3>Integrations</h3><span class="sub">Connect code trackers for automation and an issue tracker for defects</span></div>
+              <div class="card-body">
+                <div class="setting-row" style="padding-top:0">
+                  <span class="ico-badge" style="background:var(--neutral-bg);color:var(--text)"><svg class="ico" style="width:18px"><use href="#i-git"/></svg></span>
+                  <div class="sr-main"><div class="t">GitHub</div><div class="d">Link automation scripts to cases · <span style="color:var(--success)">Connected</span> as <span class="mono">freshdesk/checkout-e2e</span></div></div>
+                  <div class="sr-control"><span class="switch on"></span><button class="btn sm">Configure</button></div>
+                </div>
+                <div class="setting-row">
+                  <span class="ico-badge" style="background:var(--neutral-bg);color:var(--text)"><svg class="ico" style="width:18px"><use href="#i-git"/></svg></span>
+                  <div class="sr-main"><div class="t">GitLab</div><div class="d">Alternative code tracker · not connected</div></div>
+                  <div class="sr-control"><span class="switch"></span><button class="btn sm">Connect</button></div>
+                </div>
+                <div class="setting-row">
+                  <span class="ico-badge" style="background:var(--info-bg);color:var(--info)"><svg class="ico" style="width:18px"><use href="#i-bug"/></svg></span>
+                  <div class="sr-main"><div class="t">Jira</div><div class="d">Create &amp; link defects from failed executions · <span style="color:var(--success)">Connected</span> to <span class="mono">JIRA</span></div></div>
+                  <div class="sr-control"><span class="switch on"></span><button class="btn sm">Configure</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NOTIFICATIONS -->
+          <div data-panel="settings" data-key="notifications" style="display:none">
+            <div class="card">
+              <div class="card-head"><h3>Notifications</h3><span class="sub">What this project notifies watchers about</span></div>
+              <div class="card-body">
+                <div class="setting-row" style="padding-top:0"><div class="sr-main"><div class="t">Run completed</div><div class="d">Notify the plan owner when a run finishes</div></div><div class="sr-control"><span class="switch on"></span></div></div>
+                <div class="setting-row"><div class="sr-main"><div class="t">Case failed with a linked defect</div><div class="d">Ping the case owner and defect assignee</div></div><div class="sr-control"><span class="switch on"></span></div></div>
+                <div class="setting-row"><div class="sr-main"><div class="t">Requirement changed</div><div class="d">Notify watchers when a linked requirement is updated</div></div><div class="sr-control"><span class="switch on"></span></div></div>
+                <div class="setting-row"><div class="sr-main"><div class="t">Weekly digest</div><div class="d">A Monday summary of coverage and open defects</div></div><div class="sr-control"><span class="switch"></span></div></div>
+                <div class="setting-row"><div class="sr-main"><div class="t">Slack delivery</div><div class="d">Send the above to <span class="mono">#checkout-qa</span></div></div><div class="sr-control"><span class="switch on"></span><button class="btn sm">Channel</button></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HOUSEKEEPING -->
+          <div data-panel="settings" data-key="housekeeping" style="display:none">
+            <div class="card">
+              <div class="card-head"><h3>Housekeeping</h3><span class="sub">Retention windows — the daily scheduler prunes old data (<span class="mono">RETENTION_*</span>)</span></div>
+              <div class="card-body">
+                <div class="setting-row" style="padding-top:0">
+                  <div class="sr-main"><div class="t">Event log retention</div><div class="d">Floor is 30 days — the scheduler never prunes below this.</div></div>
+                  <div class="sr-control"><input class="input" style="width:90px" value="90" /><span class="muted">days</span></div>
+                </div>
+                <div class="setting-row">
+                  <div class="sr-main"><div class="t">Stale execution drafts</div><div class="d">Discard unsubmitted run drafts after this window</div></div>
+                  <div class="sr-control"><input class="input" style="width:90px" value="14" /><span class="muted">days</span></div>
+                </div>
+                <div class="setting-row">
+                  <div class="sr-main"><div class="t">Expired API tokens</div><div class="d">Purge tokens past their expiry</div></div>
+                  <div class="sr-control"><input class="input" style="width:90px" value="7" /><span class="muted">days</span></div>
+                </div>
+                <div class="setting-row">
+                  <div class="sr-main"><div class="t">Keep completed runs forever</div><div class="d">Completed runs are never pruned</div></div>
+                  <div class="sr-control"><span class="switch on"></span></div>
+                </div>
+                <div class="note" style="margin-top:8px"><svg class="ico" style="width:13px;vertical-align:-2px"><use href="#i-clock"/></svg> Last prune ran Sep 9, 02:00 · removed 1,204 event-log rows and 3 expired tokens.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-footer" style="margin-top:18px;position:static;background:transparent;border:0;padding:0;justify-content:flex-end">
+            <button class="btn">Cancel</button>
+            <button class="btn primary"><svg class="ico"><use href="#i-check"/></svg> Save changes</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

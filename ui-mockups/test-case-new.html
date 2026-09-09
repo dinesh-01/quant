@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · New Test Case</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html" class="active"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="requirements.html"><svg class="ico"><use href="#i-requirements"/></svg> Requirements <span class="count">64</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Integrations</div>
+      <a href="#"><svg class="ico"><use href="#i-git"/></svg> Code Trackers</a>
+      <a href="#"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">7</span></a>
+      <div class="group-label">Admin</div>
+      <a href="#"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="#"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="#"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><a href="test-cases.html">Test Suites</a><span class="sep">/</span><span>Promotions</span><span class="sep">/</span><span class="cur">New case</span></div>
+      <div class="spacer"></div>
+      <button class="btn sm"><svg class="ico"><use href="#i-x"/></svg> Cancel</button>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <main class="content">
+      <div class="page-head" style="margin-bottom:18px">
+        <div class="titles">
+          <h1>New test case</h1>
+          <p>Adding to <strong>Checkout / Promotions</strong> · will be created as <span class="mono">v1 (draft)</span>.</p>
+        </div>
+      </div>
+
+      <form class="split list-detail" onsubmit="return false">
+        <!-- ============ MAIN FORM ============ -->
+        <div>
+          <div class="card">
+            <div class="card-body">
+              <!-- title -->
+              <div class="field">
+                <label>Title <span class="req">*</span></label>
+                <input class="input lg" placeholder="e.g. Apply valid percentage promo code" value="" />
+                <div class="help">A short, action-oriented summary. This becomes the case name in runs and reports.</div>
+              </div>
+
+              <!-- preconditions -->
+              <div class="field">
+                <label>Preconditions <span class="opt">optional</span></label>
+                <textarea class="textarea" placeholder="System / data state required before the first step. e.g. Active cart with $120 subtotal; promo SAVE20 is active and not yet redeemed."></textarea>
+              </div>
+
+              <div class="divider"></div>
+
+              <!-- steps builder -->
+              <div class="between" style="margin-bottom:12px">
+                <div><strong style="font-size:14px">Steps</strong> <span class="subtle" style="font-size:12.5px">· action &amp; expected result</span></div>
+                <span class="subtle" style="font-size:12px">Drag <svg class="ico" style="width:13px;vertical-align:-2px"><use href="#i-more"/></svg> to reorder</span>
+              </div>
+
+              <div class="step-builder" data-step-list="new-case">
+                <div class="builder-step">
+                  <div class="handle" title="Drag to reorder">1</div>
+                  <div>
+                    <div class="mini-lbl">Action</div>
+                    <textarea class="textarea" style="min-height:64px" placeholder="What does the tester do?">Open the cart, enter SAVE20 in the promo field and click Apply.</textarea>
+                  </div>
+                  <div>
+                    <div class="mini-lbl">Expected result</div>
+                    <textarea class="textarea" style="min-height:64px" placeholder="What should happen?">Code is accepted and a 20% discount line appears.</textarea>
+                  </div>
+                  <button type="button" class="del" title="Remove step"><svg class="ico" style="width:15px"><use href="#i-x"/></svg></button>
+                </div>
+
+                <div class="builder-step">
+                  <div class="handle">2</div>
+                  <div>
+                    <div class="mini-lbl">Action</div>
+                    <textarea class="textarea" style="min-height:64px" placeholder="What does the tester do?">Review the order summary.</textarea>
+                  </div>
+                  <div>
+                    <div class="mini-lbl">Expected result</div>
+                    <textarea class="textarea" style="min-height:64px" placeholder="What should happen?">Subtotal $120 → discount −$24 → total $96 before tax.</textarea>
+                  </div>
+                  <button type="button" class="del" title="Remove step"><svg class="ico" style="width:15px"><use href="#i-x"/></svg></button>
+                </div>
+              </div>
+
+              <button type="button" class="btn" data-add-step="new-case" style="margin-top:12px"><svg class="ico"><use href="#i-plus"/></svg> Add step</button>
+
+              <div class="divider"></div>
+
+              <!-- attachments -->
+              <div class="field" style="margin-bottom:0">
+                <label>Attachments <span class="opt">optional</span></label>
+                <div class="note" style="display:flex;align-items:center;gap:12px;border-style:dashed;padding:18px;justify-content:center">
+                  <svg class="ico" style="width:18px"><use href="#i-paperclip"/></svg>
+                  <span>Drag files here or <a style="color:var(--primary-700);font-weight:600">browse</a> — screenshots, specs, sample data.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ METADATA SIDEBAR ============ -->
+        <aside>
+          <div class="card side-card">
+            <div class="card-head" style="padding:14px 16px"><h3 style="font-size:13.5px">Details</h3></div>
+            <div class="card-body">
+              <!-- suite -->
+              <div class="field">
+                <label>Suite <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select class="select">
+                    <option>Checkout / Promotions</option>
+                    <option>Checkout / Cart</option>
+                    <option>Checkout / Payments</option>
+                    <option>Checkout / Shipping &amp; Tax</option>
+                    <option>Checkout / Guest Flow</option>
+                    <option>Checkout / Mobile</option>
+                  </select>
+                  <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+                </div>
+              </div>
+
+              <!-- priority -->
+              <div class="field">
+                <label>Priority <span class="req">*</span></label>
+                <div class="choice" data-choice>
+                  <button type="button" class="opt-btn on"><span class="dot" style="background:var(--danger)"></span> High</button>
+                  <button type="button" class="opt-btn"><span class="dot" style="background:var(--warning)"></span> Medium</button>
+                  <button type="button" class="opt-btn"><span class="dot" style="background:var(--neutral)"></span> Low</button>
+                </div>
+              </div>
+
+              <!-- owner -->
+              <div class="field">
+                <label>Owner</label>
+                <div class="select-wrap">
+                  <select class="select">
+                    <option>Devon Designer</option>
+                    <option>Maya Singh</option>
+                    <option>Sam Senior</option>
+                    <option>Rina Tester</option>
+                  </select>
+                  <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+                </div>
+              </div>
+
+              <!-- keywords -->
+              <div class="field" style="margin-bottom:0">
+                <label>Keywords <span class="opt">optional</span></label>
+                <div class="tag-input">
+                  <span class="tag">smoke <span class="x"><svg class="ico" style="width:11px"><use href="#i-x"/></svg></span></span>
+                  <span class="tag">promo <span class="x"><svg class="ico" style="width:11px"><use href="#i-x"/></svg></span></span>
+                  <input placeholder="Add keyword…" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- links -->
+          <div class="card side-card">
+            <div class="card-head" style="padding:14px 16px"><h3 style="font-size:13.5px">Links</h3></div>
+            <div class="card-body">
+              <div class="field">
+                <label><svg class="ico" style="width:14px"><use href="#i-link"/></svg> Requirement coverage <span class="opt">optional</span></label>
+                <div class="select-wrap">
+                  <select class="select">
+                    <option>CO-RQ-18 · Percentage promo before tax</option>
+                    <option>CO-RQ-19 · Invalid codes rejected</option>
+                    <option>— none —</option>
+                  </select>
+                  <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+                </div>
+                <div class="help">Linking marks this requirement as covered in the traceability matrix.</div>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <label><svg class="ico" style="width:14px"><use href="#i-git"/></svg> Automation script <span class="opt">optional</span></label>
+                <input class="input" placeholder="e.g. promo_percent_spec.ts" />
+                <div class="help">Path in the connected code tracker.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- custom fields -->
+          <div class="card side-card">
+            <div class="card-head" style="padding:14px 16px"><h3 style="font-size:13.5px">Custom fields</h3><span class="sub" style="margin-left:auto;font-size:11.5px">from admin</span></div>
+            <div class="card-body">
+              <div class="field">
+                <label>Test type</label>
+                <div class="select-wrap">
+                  <select class="select"><option>Functional</option><option>Regression</option><option>Edge case</option><option>Negative</option></select>
+                  <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+                </div>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <label>Estimated duration</label>
+                <input class="input" placeholder="e.g. 3m" value="2m" />
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- ============ STICKY FOOTER (spans full width via grid) ============ -->
+        <div class="form-footer" style="grid-column:1 / -1">
+          <span class="subtle" style="font-size:12.5px"><svg class="ico" style="width:14px;vertical-align:-3px"><use href="#i-clock"/></svg> Autosaved as draft · just now</span>
+          <div class="spacer"></div>
+          <button type="button" class="btn">Save draft</button>
+          <button type="button" class="btn">Create &amp; add another</button>
+          <button type="submit" class="btn primary"><svg class="ico"><use href="#i-check"/></svg> Create case</button>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

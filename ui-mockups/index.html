@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Overview</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">Q</div>
+      <div>
+        <div class="name">Quanta</div>
+        <div class="tag">Test Management</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html" class="active"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="requirements.html"><svg class="ico"><use href="#i-requirements"/></svg> Requirements <span class="count">64</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Integrations</div>
+      <a href="#"><svg class="ico"><use href="#i-git"/></svg> Code Trackers</a>
+      <a href="#"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">7</span></a>
+      <div class="group-label">Admin</div>
+      <a href="#"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="#"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="#"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user">
+      <div class="avatar a1">MS</div>
+      <div class="stack">
+        <span class="u-name">Maya Singh</span>
+        <span class="u-role">Team Leader</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+    <!-- topbar -->
+    <header class="topbar">
+      <div class="project-switch">
+        <span class="dot"></span> Checkout <span class="prefix">CO</span>
+        <svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg>
+      </div>
+      <div class="breadcrumb"><span class="cur">Overview</span></div>
+      <div class="search">
+        <svg class="ico" style="width:16px"><use href="#i-search"/></svg>
+        <input placeholder="Search cases, requirements, runs…" />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn primary sm"><svg class="ico"><use href="#i-plus"/></svg> New</button>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <!-- content -->
+    <main class="content">
+      <div class="page-head">
+        <div class="titles">
+          <h1>Good afternoon, Maya 👋</h1>
+          <p>Here's where the <strong>Checkout</strong> QA cycle stands today — 2 runs are still in progress.</p>
+        </div>
+        <div class="actions">
+          <button class="btn"><svg class="ico"><use href="#i-download"/></svg> Export</button>
+          <button class="btn primary"><svg class="ico"><use href="#i-play"/></svg> Start a run</button>
+        </div>
+      </div>
+
+      <!-- stat tiles -->
+      <div class="grid cols-4" style="margin-bottom:18px">
+        <div class="card stat">
+          <div class="between">
+            <span class="label"><svg class="ico" style="width:15px"><use href="#i-cases"/></svg> Total test cases</span>
+            <span class="ico-badge" style="background:var(--primary-050);color:var(--primary-700)"><svg class="ico" style="width:18px"><use href="#i-cases"/></svg></span>
+          </div>
+          <div class="value">482</div>
+          <div class="delta up"><svg class="ico" style="width:13px;vertical-align:-2px"><use href="#i-trend-up"/></svg> +18 this week</div>
+        </div>
+        <div class="card stat">
+          <div class="between">
+            <span class="label"><svg class="ico" style="width:15px"><use href="#i-requirements"/></svg> Requirement coverage</span>
+            <span class="ico-badge" style="background:var(--success-bg);color:var(--success)"><svg class="ico" style="width:18px"><use href="#i-target"/></svg></span>
+          </div>
+          <div class="value">87%</div>
+          <div class="delta up">56 of 64 requirements covered</div>
+        </div>
+        <div class="card stat">
+          <div class="between">
+            <span class="label"><svg class="ico" style="width:15px"><use href="#i-play"/></svg> Active runs</span>
+            <span class="ico-badge" style="background:var(--info-bg);color:var(--info)"><svg class="ico" style="width:18px"><use href="#i-zap"/></svg></span>
+          </div>
+          <div class="value">3</div>
+          <div class="delta">2 in progress · 1 blocked</div>
+        </div>
+        <div class="card stat">
+          <div class="between">
+            <span class="label"><svg class="ico" style="width:15px"><use href="#i-chart"/></svg> Pass rate · Build 4.8</span>
+            <span class="ico-badge" style="background:var(--success-bg);color:var(--success)"><svg class="ico" style="width:18px"><use href="#i-check"/></svg></span>
+          </div>
+          <div class="value">82%</div>
+          <div class="delta down">▼ 4% vs Build 4.7</div>
+        </div>
+      </div>
+
+      <!-- two-column: active runs + latest build donut -->
+      <div class="grid cols-3" style="margin-bottom:18px">
+        <div class="card" style="grid-column: span 2">
+          <div class="card-head">
+            <h3>Active runs</h3>
+            <span class="sub">Execution progress across current plans</span>
+            <div class="actions"><a href="test-plans.html" class="btn ghost sm">View all plans <svg class="ico"><use href="#i-arrow-right"/></svg></a></div>
+          </div>
+          <div class="card-body flush">
+            <table class="table">
+              <thead><tr><th>Run</th><th>Build</th><th style="width:34%">Progress</th><th>Assignees</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="stack"><span class="title-cell">Checkout · Regression</span><span class="id">Plan CO-P12</span></div>
+                  </td>
+                  <td><span class="tag">Build 4.8</span></td>
+                  <td>
+                    <div class="meter-row">
+                      <div class="progress">
+                        <span class="seg pass" style="width:64%"></span>
+                        <span class="seg fail" style="width:11%"></span>
+                        <span class="seg blocked" style="width:6%"></span>
+                        <span class="seg untested" style="width:19%"></span>
+                      </div>
+                      <span class="pct">81%</span>
+                    </div>
+                  </td>
+                  <td><div class="avatar-stack"><span class="avatar a2">SS</span><span class="avatar a3">RT</span><span class="avatar a5">DD</span></div></td>
+                  <td><a href="execution.html" class="btn sm">Resume</a></td>
+                </tr>
+                <tr>
+                  <td><div class="stack"><span class="title-cell">Payments · Smoke</span><span class="id">Plan CO-P14</span></div></td>
+                  <td><span class="tag">Build 4.8</span></td>
+                  <td>
+                    <div class="meter-row">
+                      <div class="progress">
+                        <span class="seg pass" style="width:40%"></span>
+                        <span class="seg fail" style="width:5%"></span>
+                        <span class="seg untested" style="width:55%"></span>
+                      </div>
+                      <span class="pct">45%</span>
+                    </div>
+                  </td>
+                  <td><div class="avatar-stack"><span class="avatar a4">AR</span><span class="avatar a2">SS</span></div></td>
+                  <td><a href="execution.html" class="btn sm">Resume</a></td>
+                </tr>
+                <tr>
+                  <td><div class="stack"><span class="title-cell">Mobile Checkout · Sanity</span><span class="id">Plan CO-P15</span></div></td>
+                  <td><span class="tag">Build 4.8-rc</span></td>
+                  <td>
+                    <div class="meter-row">
+                      <div class="progress">
+                        <span class="seg pass" style="width:22%"></span>
+                        <span class="seg blocked" style="width:18%"></span>
+                        <span class="seg untested" style="width:60%"></span>
+                      </div>
+                      <span class="pct">40%</span>
+                    </div>
+                  </td>
+                  <td><div class="avatar-stack"><span class="avatar a3">RT</span></div></td>
+                  <td><a href="execution.html" class="btn sm">Resume</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- latest build donut -->
+        <div class="card">
+          <div class="card-head"><h3>Latest build result</h3><span class="sub">Build 4.8</span></div>
+          <div class="card-body">
+            <div class="donut-wrap" style="flex-direction:column">
+              <div class="donut">
+                <!-- conic gradient donut: pass/fail/blocked/untested -->
+                <svg viewBox="0 0 42 42" width="160" height="160">
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--neutral-bg)" stroke-width="6"/>
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--success)" stroke-width="6"
+                          stroke-dasharray="66 34" stroke-dashoffset="25" stroke-linecap="butt"/>
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--danger)" stroke-width="6"
+                          stroke-dasharray="14 86" stroke-dashoffset="-41" stroke-linecap="butt"/>
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--warning)" stroke-width="6"
+                          stroke-dasharray="8 92" stroke-dashoffset="-55" stroke-linecap="butt"/>
+                </svg>
+                <div class="center"><div><div class="big">82%</div><div class="sm">pass</div></div></div>
+              </div>
+              <div class="legend" style="width:100%;margin-top:14px">
+                <div class="li"><span class="sw" style="background:var(--success)"></span> Passed <span class="val">211</span></div>
+                <div class="li"><span class="sw" style="background:var(--danger)"></span> Failed <span class="val">28</span></div>
+                <div class="li"><span class="sw" style="background:var(--warning)"></span> Blocked <span class="val">14</span></div>
+                <div class="li"><span class="sw" style="background:var(--neutral-bg)"></span> Untested <span class="val">45</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- bottom: failing cases + activity -->
+      <div class="grid cols-3">
+        <div class="card" style="grid-column: span 2">
+          <div class="card-head">
+            <h3>Needs attention</h3><span class="sub">Failing & blocked cases in current runs</span>
+            <div class="actions"><button class="btn ghost sm"><svg class="ico"><use href="#i-filter"/></svg> Filter</button></div>
+          </div>
+          <div class="card-body flush">
+            <table class="table">
+              <thead><tr><th>Case</th><th>Status</th><th>Priority</th><th>Owner</th><th>Issue</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><div class="stack"><span class="title-cell">Apply expired promo code shows error</span><span class="id">CO-TC-241</span></div></td>
+                  <td><span class="pill fail"><span class="dot"></span> Failed</span></td>
+                  <td><span class="prio high"><span class="dot"></span> High</span></td>
+                  <td><span class="avatar a3">RT</span></td>
+                  <td><span class="tag" style="background:var(--danger-bg);color:var(--danger)"><svg class="ico" style="width:12px"><use href="#i-bug"/></svg> JIRA-4821</span></td>
+                </tr>
+                <tr>
+                  <td><div class="stack"><span class="title-cell">Guest checkout with saved address</span><span class="id">CO-TC-198</span></div></td>
+                  <td><span class="pill fail"><span class="dot"></span> Failed</span></td>
+                  <td><span class="prio high"><span class="dot"></span> High</span></td>
+                  <td><span class="avatar a2">SS</span></td>
+                  <td><span class="tag" style="background:var(--danger-bg);color:var(--danger)"><svg class="ico" style="width:12px"><use href="#i-bug"/></svg> JIRA-4820</span></td>
+                </tr>
+                <tr>
+                  <td><div class="stack"><span class="title-cell">3-D Secure challenge on Visa</span><span class="id">CO-TC-305</span></div></td>
+                  <td><span class="pill blocked"><span class="dot"></span> Blocked</span></td>
+                  <td><span class="prio med"><span class="dot"></span> Medium</span></td>
+                  <td><span class="avatar a4">AR</span></td>
+                  <td><span class="muted">— sandbox down</span></td>
+                </tr>
+                <tr>
+                  <td><div class="stack"><span class="title-cell">Tax recalculates on address change</span><span class="id">CO-TC-277</span></div></td>
+                  <td><span class="pill fail"><span class="dot"></span> Failed</span></td>
+                  <td><span class="prio med"><span class="dot"></span> Medium</span></td>
+                  <td><span class="avatar a5">DD</span></td>
+                  <td><button class="btn ghost sm"><svg class="ico"><use href="#i-plus"/></svg> Log issue</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Recent activity</h3></div>
+          <div class="card-body">
+            <div class="stack" style="gap:16px">
+              <div class="row" style="align-items:flex-start;gap:11px">
+                <span class="avatar a2">SS</span>
+                <div class="stack"><span><strong>Sam</strong> passed <span class="mono subtle">CO-TC-190</span></span><span class="subtle" style="font-size:12px">12 min ago</span></div>
+              </div>
+              <div class="row" style="align-items:flex-start;gap:11px">
+                <span class="avatar a3">RT</span>
+                <div class="stack"><span><strong>Rina</strong> failed <span class="mono subtle">CO-TC-241</span> → JIRA-4821</span><span class="subtle" style="font-size:12px">28 min ago</span></div>
+              </div>
+              <div class="row" style="align-items:flex-start;gap:11px">
+                <span class="avatar a5">DD</span>
+                <div class="stack"><span><strong>Devon</strong> added 6 cases to <em>Promotions</em></span><span class="subtle" style="font-size:12px">1 hr ago</span></div>
+              </div>
+              <div class="row" style="align-items:flex-start;gap:11px">
+                <span class="avatar a1">MS</span>
+                <div class="stack"><span><strong>You</strong> froze version <span class="mono subtle">v3</span> of CO-TC-100</span><span class="subtle" style="font-size:12px">2 hr ago</span></div>
+              </div>
+              <div class="row" style="align-items:flex-start;gap:11px">
+                <span class="avatar a4">AR</span>
+                <div class="stack"><span><strong>Alex</strong> created build <span class="tag">Build 4.8-rc</span></span><span class="subtle" style="font-size:12px">3 hr ago</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

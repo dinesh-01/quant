@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Reports</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Management</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="requirements.html"><svg class="ico"><use href="#i-requirements"/></svg> Requirements <span class="count">64</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html" class="active"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Integrations</div>
+      <a href="#"><svg class="ico"><use href="#i-git"/></svg> Code Trackers</a>
+      <a href="#"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">7</span></a>
+      <div class="group-label">Admin</div>
+      <a href="#"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="#"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="#"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><span class="cur">Reports</span></div>
+      <div class="spacer"></div>
+      <button class="filter"><svg class="ico" style="width:15px"><use href="#i-calendar"/></svg> Last 30 days <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+      <button class="btn sm"><svg class="ico"><use href="#i-download"/></svg> CSV</button>
+      <button class="btn primary sm"><svg class="ico"><use href="#i-download"/></svg> XLSX</button>
+    </header>
+
+    <main class="content">
+      <div class="page-head">
+        <div class="titles"><h1>Reports</h1><p>Execution results — plan status, pass/fail trends and baselines for Checkout.</p></div>
+        <div class="actions">
+          <div class="seg-control">
+            <a href="reports-test-cases.html"><svg class="ico" style="width:14px"><use href="#i-cases"/></svg> Test Cases</a>
+            <a href="reports.html" class="active"><svg class="ico" style="width:14px"><use href="#i-play"/></svg> Execution</a>
+            <a href="requirements.html"><svg class="ico" style="width:14px"><use href="#i-requirements"/></svg> Requirements</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="seg-control" data-seg><button class="active">Build 4.8</button><button>Build 4.7</button><button>Compare</button></div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- KPI row -->
+      <div class="grid cols-4" style="margin-bottom:18px">
+        <div class="card stat"><span class="label">Executed</span><div class="value">253</div><div class="delta muted">of 264 planned</div></div>
+        <div class="card stat"><span class="label">Pass rate</span><div class="value" style="color:var(--success)">82%</div><div class="delta down">▼ 4% vs 4.7</div></div>
+        <div class="card stat"><span class="label">Defects logged</span><div class="value" style="color:var(--danger)">28</div><div class="delta up">7 still open</div></div>
+        <div class="card stat"><span class="label">Avg. exec time</span><div class="value">3m 08s</div><div class="delta up">per case</div></div>
+      </div>
+
+      <!-- donut + suite breakdown -->
+      <div class="grid cols-3" style="margin-bottom:18px">
+        <div class="card">
+          <div class="card-head"><h3>Result distribution</h3><span class="sub">Build 4.8</span></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <div class="donut">
+                <svg viewBox="0 0 42 42" width="170" height="170">
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--neutral-bg)" stroke-width="5"/>
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--success)" stroke-width="5" stroke-dasharray="66 34" stroke-dashoffset="25"/>
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--danger)" stroke-width="5" stroke-dasharray="14 86" stroke-dashoffset="-41"/>
+                  <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--warning)" stroke-width="5" stroke-dasharray="8 92" stroke-dashoffset="-55"/>
+                </svg>
+                <div class="center"><div><div class="big">253</div><div class="sm">executed</div></div></div>
+              </div>
+              <div class="legend" style="width:100%;margin-top:16px">
+                <div class="li"><span class="sw" style="background:var(--success)"></span> Passed <span class="val">211 · 83%</span></div>
+                <div class="li"><span class="sw" style="background:var(--danger)"></span> Failed <span class="val">28 · 11%</span></div>
+                <div class="li"><span class="sw" style="background:var(--warning)"></span> Blocked <span class="val">14 · 6%</span></div>
+                <div class="li"><span class="sw" style="background:var(--neutral-bg)"></span> Untested <span class="val">11</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- stacked bars by suite -->
+        <div class="card" style="grid-column: span 2">
+          <div class="card-head"><h3>Results by suite</h3><span class="sub">Pass / fail / blocked per suite</span></div>
+          <div class="card-body">
+            <div class="bars">
+              <div class="bar-col">
+                <div class="stack-bar" style="height:78%">
+                  <span style="height:82%;background:var(--success)"></span><span style="height:12%;background:var(--danger)"></span><span style="height:6%;background:var(--warning)"></span>
+                </div><span class="x-lbl">Cart</span>
+              </div>
+              <div class="bar-col">
+                <div class="stack-bar" style="height:96%">
+                  <span style="height:74%;background:var(--success)"></span><span style="height:18%;background:var(--danger)"></span><span style="height:8%;background:var(--warning)"></span>
+                </div><span class="x-lbl">Payments</span>
+              </div>
+              <div class="bar-col">
+                <div class="stack-bar" style="height:60%">
+                  <span style="height:88%;background:var(--success)"></span><span style="height:12%;background:var(--danger)"></span>
+                </div><span class="x-lbl">Promotions</span>
+              </div>
+              <div class="bar-col">
+                <div class="stack-bar" style="height:70%">
+                  <span style="height:70%;background:var(--success)"></span><span style="height:20%;background:var(--danger)"></span><span style="height:10%;background:var(--warning)"></span>
+                </div><span class="x-lbl">Shipping</span>
+              </div>
+              <div class="bar-col">
+                <div class="stack-bar" style="height:66%">
+                  <span style="height:86%;background:var(--success)"></span><span style="height:14%;background:var(--danger)"></span>
+                </div><span class="x-lbl">Guest</span>
+              </div>
+              <div class="bar-col">
+                <div class="stack-bar" style="height:52%">
+                  <span style="height:60%;background:var(--success)"></span><span style="height:10%;background:var(--danger)"></span><span style="height:30%;background:var(--warning)"></span>
+                </div><span class="x-lbl">Mobile</span>
+              </div>
+              <div class="bar-col">
+                <div class="stack-bar" style="height:48%">
+                  <span style="height:90%;background:var(--success)"></span><span style="height:10%;background:var(--danger)"></span>
+                </div><span class="x-lbl">A11y</span>
+              </div>
+            </div>
+            <div class="trend-legend" style="justify-content:center">
+              <div class="li"><span class="sw" style="background:var(--success)"></span> Passed</div>
+              <div class="li"><span class="sw" style="background:var(--danger)"></span> Failed</div>
+              <div class="li"><span class="sw" style="background:var(--warning)"></span> Blocked</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- trend line + baselines -->
+      <div class="grid cols-3">
+        <div class="card" style="grid-column: span 2">
+          <div class="card-head"><h3>Pass-rate trend</h3><span class="sub">Last 6 builds</span></div>
+          <div class="card-body">
+            <svg class="line-chart" viewBox="0 0 620 200" preserveAspectRatio="none">
+              <!-- grid -->
+              <g stroke="var(--border)" stroke-width="1">
+                <line x1="0" y1="20" x2="620" y2="20"/><line x1="0" y1="70" x2="620" y2="70"/>
+                <line x1="0" y1="120" x2="620" y2="120"/><line x1="0" y1="170" x2="620" y2="170"/>
+              </g>
+              <!-- pass rate area + line: values 74,79,86,90,86,82 mapped -->
+              <polyline fill="none" stroke="var(--primary)" stroke-width="3"
+                points="30,72 148,60 266,38 384,28 502,38 600,52"/>
+              <polygon fill="rgba(109,94,252,0.10)" points="30,72 148,60 266,38 384,28 502,38 600,52 600,180 30,180"/>
+              <!-- points -->
+              <g fill="var(--primary)">
+                <circle cx="30" cy="72" r="4"/><circle cx="148" cy="60" r="4"/><circle cx="266" cy="38" r="4"/>
+                <circle cx="384" cy="28" r="4"/><circle cx="502" cy="38" r="4"/><circle cx="600" cy="52" r="5" stroke="#fff" stroke-width="2"/>
+              </g>
+            </svg>
+            <div class="between" style="margin-top:6px;font-size:11.5px;color:var(--text-muted)">
+              <span>4.3</span><span>4.4</span><span>4.5</span><span>4.6</span><span>4.7</span><span>4.8</span>
+            </div>
+            <div class="trend-legend"><div class="li"><span class="sw" style="background:var(--primary)"></span> Pass rate %</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Baselines</h3><span class="sub">Saved snapshots</span></div>
+          <div class="card-body flush">
+            <table class="table">
+              <tbody>
+                <tr><td><div class="stack"><span class="title-cell">4.7 GA baseline</span><span class="subtle" style="font-size:12px">Sep 2 · 88% pass</span></div></td><td style="text-align:right"><button class="btn ghost sm"><svg class="ico"><use href="#i-arrow-right"/></svg></button></td></tr>
+                <tr><td><div class="stack"><span class="title-cell">4.6 GA baseline</span><span class="subtle" style="font-size:12px">Aug 18 · 90% pass</span></div></td><td style="text-align:right"><button class="btn ghost sm"><svg class="ico"><use href="#i-arrow-right"/></svg></button></td></tr>
+                <tr><td><div class="stack"><span class="title-cell">4.5 GA baseline</span><span class="subtle" style="font-size:12px">Aug 1 · 86% pass</span></div></td><td style="text-align:right"><button class="btn ghost sm"><svg class="ico"><use href="#i-arrow-right"/></svg></button></td></tr>
+              </tbody>
+            </table>
+            <div class="card-body">
+              <button class="btn" style="width:100%"><svg class="ico"><use href="#i-plus"/></svg> Save current as baseline</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>
