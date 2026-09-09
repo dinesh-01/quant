@@ -16,13 +16,14 @@ from feedback.
 Just open the files in a browser — no server required.
 
 ```bash
-open ui-mockups/index.html
+open public/ui-mockups/index.html
 ```
 
-Or serve the folder (already under MAMP htdocs):
+The folder lives under `public/` so Laravel (local and Cloud) can serve it:
 
 ```
-http://localhost/vv/quanta/ui-mockups/index.html
+http://localhost:8001/ui-mockups/index.html
+http://localhost/vv/quanta/public/ui-mockups/index.html
 ```
 
 ## Files

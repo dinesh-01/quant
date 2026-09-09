@@ -47,6 +47,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | app/Actions/TesterAssignments/** | .ai/rules/tester-assignments.md |
 | tests/** | .ai/rules/tests.md |
 | resources/css/themes/** | .ai/rules/themes.md |
+| public/ui-mockups/** | .ai/rules/ui-mockups.md |
 | resources/js/components/ui/input.tsx | .ai/rules/ui.md |
 | app/Actions/Users/**, app/Http/Controllers/Users/**, app/Http/Requests/Users/**, app/Concerns/PreventsAdministratorLockout.php, app/Concerns/UserValidationRules.php, app/Actions/Users/SetUserPassword.php | .ai/rules/users.md |
 | .github/workflows/** | .ai/rules/workflows.md |
