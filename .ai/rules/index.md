@@ -22,7 +22,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | app/Http/Controllers/TestSpecification/** | .ai/rules/controllers-test-specification.md |
 | resources/css/** | .ai/rules/css.md |
 | app/Actions/CustomFields/**, app/Http/Controllers/CustomFields/**, app/Http/Requests/CustomFields/**, app/Models/CustomField.php, app/Models/CustomFieldValue.php, app/Models/CustomFieldSubject.php, app/Enums/CustomFieldType.php, app/Enums/CustomFieldEntity.php, app/Concerns/HasCustomFieldValues.php, app/Concerns/CustomFieldValidationRules.php, app/Concerns/ValidatesCustomFieldValues.php, app/Concerns/PresentsCustomFields.php, app/Concerns/ScopesCustomFieldSubjects.php, resources/js/components/custom-fields/**, resources/js/pages/custom-fields/** | .ai/rules/custom-fields.md |
-| app/Actions/Executions/** | .ai/rules/executions.md |
+| app/Actions/Executions/**, app/Jobs/ProcessReportedExecutions.php | .ai/rules/executions.md |
 | vite.config.ts | .ai/rules/general.md |
 | app/Actions/IssueTrackers/** | .ai/rules/issue-trackers.md |
 | resources/js/{pages,components,lib}/**specification** | .ai/rules/js-test-specification.md |

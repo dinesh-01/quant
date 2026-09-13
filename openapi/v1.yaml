@@ -195,6 +195,59 @@ paths:
           description: No execute_tests
         "422":
           description: Item, build, or platform could not be resolved
+  /plans/{testPlan}/executions/batch:
+    post:
+      operationId: reportExecutionBatch
+      summary: Queue many execution results
+      description: >
+        Same item and build identifiers as a single report. Resolves and
+        validates on the request (cap 100), then queues writes. The single
+        POST remains the way to get an execution id back for attachments.
+      parameters:
+        - $ref: "#/components/parameters/testPlan"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [results]
+              properties:
+                results:
+                  type: array
+                  minItems: 1
+                  maxItems: 100
+                  items:
+                    type: object
+                    required: [status]
+                    properties:
+                      test_plan_item_id:
+                        type: integer
+                      full_external_id:
+                        type: string
+                      platform:
+                        type: string
+                      build_id:
+                        type: integer
+                      build:
+                        type: string
+                      status:
+                        type: string
+                        enum: [not_run, passed, failed, blocked]
+                      notes:
+                        type: string
+                      duration:
+                        type: number
+                      complete:
+                        type: boolean
+                        default: true
+      responses:
+        "202":
+          description: Accepted count (`data.accepted`)
+        "403":
+          description: No execute_tests
+        "422":
+          description: A result could not be resolved
   /projects/{testProject}/attachments:
     post:
       operationId: uploadProjectAttachment

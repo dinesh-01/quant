@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1;
 
+use App\Actions\Executions\ResolveReportedExecution;
 use App\Enums\ExecutionStatus;
 use App\Models\Build;
 use App\Models\TestPlan;
@@ -13,6 +14,11 @@ use Illuminate\Validation\ValidationException;
 
 class StoreExecutionRequest extends FormRequest
 {
+    /**
+     * @var array{item: TestPlanItem, build: Build, attributes: array{status: ExecutionStatus, notes: string|null, duration: string|null, steps: list<array{test_case_step_id: int, status: ExecutionStatus, notes: string|null}>}, complete: bool}|null
+     */
+    private ?array $resolved = null;
+
     protected function prepareForValidation(): void
     {
         if (! $this->exists('complete')) {
@@ -53,24 +59,7 @@ class StoreExecutionRequest extends FormRequest
      */
     public function planItem(): TestPlanItem
     {
-        $plan = $this->routePlan();
-
-        if ($this->filled('test_plan_item_id')) {
-            $item = TestPlanItem::query()
-                ->where('test_plan_id', $plan->getKey())
-                ->whereKey($this->integer('test_plan_item_id'))
-                ->first();
-
-            if ($item === null) {
-                throw ValidationException::withMessages([
-                    'test_plan_item_id' => 'That plan item is not on this plan.',
-                ]);
-            }
-
-            return $item;
-        }
-
-        return $this->itemFromExternalId($plan);
+        return $this->resolved()['item'];
     }
 
     /**
@@ -78,110 +67,43 @@ class StoreExecutionRequest extends FormRequest
      */
     public function build(): Build
     {
-        $plan = $this->routePlan();
-
-        $query = Build::query()->where('test_plan_id', $plan->getKey());
-
-        $build = $this->filled('build_id')
-            ? $query->whereKey($this->integer('build_id'))->first()
-            : $query->where('name', (string) $this->input('build'))->first();
-
-        if ($build === null) {
-            throw ValidationException::withMessages([
-                $this->filled('build_id') ? 'build_id' : 'build' => 'That build does not belong to this plan.',
-            ]);
-        }
-
-        return $build;
+        return $this->resolved()['build'];
     }
 
     /**
      * @return array{status: ExecutionStatus, notes: string|null, duration: string|null, steps: list<array{test_case_step_id: int, status: ExecutionStatus, notes: string|null}>}
+     *
+     * @throws ValidationException
      */
     public function executionAttributes(): array
     {
-        $steps = [];
-
-        foreach ((array) $this->input('steps', []) as $step) {
-            if (! is_array($step)) {
-                continue;
-            }
-
-            $steps[] = [
-                'test_case_step_id' => (int) $step['test_case_step_id'],
-                'status' => ExecutionStatus::from((string) $step['status']),
-                'notes' => isset($step['notes']) && is_string($step['notes']) && $step['notes'] !== ''
-                    ? $step['notes']
-                    : null,
-            ];
-        }
-
-        return [
-            'status' => ExecutionStatus::from((string) $this->input('status')),
-            'notes' => $this->filled('notes') ? (string) $this->input('notes') : null,
-            'duration' => $this->filled('duration') ? (string) $this->input('duration') : null,
-            'steps' => $steps,
-        ];
+        return $this->resolved()['attributes'];
     }
 
     public function shouldComplete(): bool
     {
-        return $this->boolean('complete');
+        return $this->resolved()['complete'];
     }
 
     /**
+     * @return array{item: TestPlanItem, build: Build, attributes: array{status: ExecutionStatus, notes: string|null, duration: string|null, steps: list<array{test_case_step_id: int, status: ExecutionStatus, notes: string|null}>}, complete: bool}
+     *
      * @throws ValidationException
      */
-    private function itemFromExternalId(TestPlan $plan): TestPlanItem
+    private function resolved(): array
     {
-        $externalId = (string) $this->input('full_external_id');
-
-        if (preg_match('/^([A-Za-z0-9]+)-(\d+)$/', $externalId, $matches) !== 1) {
-            throw ValidationException::withMessages([
-                'full_external_id' => 'Use the PREFIX-N identifier, for example QA-12.',
-            ]);
-        }
-
-        $items = TestPlanItem::query()
-            ->where('test_plan_id', $plan->getKey())
-            ->whereHas('testCaseVersion.testCase', function ($query) use ($matches): void {
-                $query->where('external_id', (int) $matches[2])
-                    ->whereHas('testProject', function ($project) use ($matches): void {
-                        $project->where('prefix', $matches[1]);
-                    });
-            })
-            ->with('platform')
-            ->get();
-
-        if ($items->isEmpty()) {
-            throw ValidationException::withMessages([
-                'full_external_id' => 'That test case is not on this plan.',
-            ]);
-        }
-
-        if ($items->count() === 1) {
-            return $items->firstOrFail();
-        }
-
-        $platform = $this->input('platform');
-
-        if (! is_string($platform) || $platform === '') {
-            throw ValidationException::withMessages([
-                'platform' => 'This case is on more than one platform. Name the platform.',
-            ]);
-        }
-
-        $matched = $items->first(
-            fn (TestPlanItem $item): bool => $item->platform?->name === $platform,
-        );
-
-        if ($matched === null) {
-            throw ValidationException::withMessages([
-                'platform' => 'That platform is not linked to this case on this plan.',
-            ]);
-        }
-
-        return $matched;
+        return $this->resolved ??= app(ResolveReportedExecution::class)($this->routePlan(), [
+            'test_plan_item_id' => $this->input('test_plan_item_id'),
+            'full_external_id' => $this->input('full_external_id'),
+            'platform' => $this->input('platform'),
+            'build_id' => $this->input('build_id'),
+            'build' => $this->input('build'),
+            'status' => $this->input('status'),
+            'notes' => $this->input('notes'),
+            'duration' => $this->input('duration'),
+            'complete' => $this->input('complete'),
+            'steps' => $this->input('steps', []),
+        ]);
     }
 
     private function routePlan(): TestPlan
