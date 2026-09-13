@@ -11,3 +11,5 @@ Public automation is `/api/v1` (bootstrap `apiPrefix`) with Sanctum personal acc
 List endpoints use `cursorPaginate` ordered by `id`, cap `limit` at 100 (default 50), and return `meta.next_cursor` plus `meta.has_more`. Do not add offset `page=`.
 
 Authorize in the existing domain actions. Uploads stay one route per parent type, same as the web attachments. Write the committed `openapi/v1.yaml` when routes change; do not add Scramble or l5-swagger without asking.
+
+POST `/plans/{testPlan}/executions` stays synchronous so CI can attach evidence to the returned id. POST `/plans/{testPlan}/executions/batch` validates and resolves up to 100 results on the request, authorizes `execute_tests` on the plan, then dispatches `ProcessReportedExecutions`. Return 202 with `data.accepted`. Do not persist from the batch controller.

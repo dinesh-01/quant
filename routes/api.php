@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AttachmentController;
 use App\Http\Controllers\Api\V1\CaseController;
+use App\Http\Controllers\Api\V1\ExecutionBatchController;
 use App\Http\Controllers\Api\V1\ExecutionController;
 use App\Http\Controllers\Api\V1\MeController;
 use App\Http\Controllers\Api\V1\PlanBuildController;
@@ -37,6 +38,7 @@ Route::middleware(['auth:sanctum', EnsureUserIsActive::class, 'throttle:api'])->
     Route::get('plans/{testPlan}/cases', [PlanCaseController::class, 'index'])->name('api.v1.plans.cases.index');
     Route::get('plans/{testPlan}/builds', [PlanBuildController::class, 'index'])->name('api.v1.plans.builds.index');
     Route::post('plans/{testPlan}/executions', [ExecutionController::class, 'store'])->name('api.v1.executions.store');
+    Route::post('plans/{testPlan}/executions/batch', [ExecutionBatchController::class, 'store'])->name('api.v1.executions.batch');
 
     Route::post('projects/{testProject}/attachments', [AttachmentController::class, 'storeForProject'])
         ->name('api.v1.attachments.projects.store');

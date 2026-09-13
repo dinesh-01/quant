@@ -84,7 +84,7 @@ The walkable demo project is **Checkout** (`CO`).
 
 Create a token in **Settings → Tokens**, then call `/api/v1` with `Authorization: Bearer <token>`. The token inherits that user's roles and abilities — there is no second permission list.
 
-The contract lives in [`openapi/v1.yaml`](openapi/v1.yaml). Lists are cursor-paginated (`meta.next_cursor`, `meta.has_more`). Typical uses: list projects and cases, create a case, post an execution from CI, upload an attachment.
+The contract lives in [`openapi/v1.yaml`](openapi/v1.yaml). Lists are cursor-paginated (`meta.next_cursor`, `meta.has_more`). Typical uses: list projects and cases, create a case, post one execution from CI (`201` and an id, so you can attach evidence), or `POST /api/v1/plans/{id}/executions/batch` for up to 100 results (`202`, then a queue worker). Production should set `QUEUE_CONNECTION` to `redis` or `sqs` and run `php artisan queue:work`.
 
 ## Housekeeping
 
