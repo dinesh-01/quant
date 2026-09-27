@@ -1,5 +1,5 @@
 import type { Auth } from '@/types/auth';
-import type { CurrentProject } from '@/types/test-project';
+import type { AvailableProject, CurrentProject } from '@/types/test-project';
 
 declare module 'react' {
     interface InputHTMLAttributes<T> {
@@ -13,6 +13,7 @@ declare module '@inertiajs/core' {
             name: string;
             auth: Auth;
             currentProject: CurrentProject | null;
+            availableProjects: AvailableProject[];
             sidebarOpen: boolean;
             [key: string]: unknown;
         };

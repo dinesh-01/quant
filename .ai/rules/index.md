@@ -8,7 +8,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | app/Http/Controllers/Api/**, app/Http/Resources/Api/**, app/Http/Requests/Api/**, routes/api.php, openapi/** | .ai/rules/api.md |
 | app/Actions/Attachments/**, app/Models/{Attachment,Attachable}.php, app/Concerns/HasAttachments.php, app/Http/Controllers/Attachments/**, app/Http/Requests/Attachments/**, config/attachments.php | .ai/rules/attachments.md |
 | app/Actions/Audit/** | .ai/rules/audit.md |
-| app/Enums/Ability.php, app/Actions/Authorization/**, app/Providers/AppServiceProvider.php, app/Policies/**, app/Models/{Role,TestProject,TestPlan,User}.php, app/Models/Attachable.php | .ai/rules/authorization.md |
+| app/Enums/Ability.php, app/Actions/Authorization/**, app/Providers/AppServiceProvider.php, app/Policies/**, app/Models/{Role,TestProject,TestPlan,User}.php, app/Models/Attachable.php, app/Models/TestPlan.php, app/Models/{TestCase,TestCaseVersion}.php | .ai/rules/authorization.md |
 | app/Actions/Builds/** | .ai/rules/builds.md |
 | app/Casts/** | .ai/rules/casts.md |
 | app/Actions/CodeTrackers/** | .ai/rules/code-trackers.md |
@@ -30,6 +30,8 @@ Before planning or editing, find the row whose globs match the file's path and r
 | app/Actions/Keywords/**, app/Http/Controllers/Keywords/**, app/Http/Requests/Keywords/**, app/Models/Keyword.php, app/Concerns/HasKeywords.php, app/Concerns/ResolvesProjectKeywords.php, app/Concerns/KeywordValidationRules.php | .ai/rules/keywords.md |
 | app/Http/Middleware/HandleInertiaRequests.php, app/Http/Middleware/** | .ai/rules/middleware.md |
 | app/Models/TestCase.php, app/Models/{TestSuite,TestCase,TestCaseVersion,TestCaseStep}.php, app/Models/TestProject.php | .ai/rules/models.md |
+| resources/js/pages/overview/** | .ai/rules/overview.md |
+| resources/js/pages/executions/** | .ai/rules/pages-executions.md |
 | app/Actions/Platforms/** | .ai/rules/platforms.md |
 | app/Reports/** | .ai/rules/reports.md |
 | app/Actions/Users/**, app/Http/Controllers/Users/**, app/Http/Requests/Users/** | .ai/rules/requests-users.md |

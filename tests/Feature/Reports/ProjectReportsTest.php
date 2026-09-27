@@ -62,6 +62,7 @@ class ProjectReportsTest extends TestCase
                 ->where('plans.0.items', 1)
                 ->where('plans.0.build.name', 'Test Run')
                 ->where('plans.0.counts.passed', 1)
+                ->has('case_stats')
                 ->where('currentProject.can.viewReports', true)
             );
     }

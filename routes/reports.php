@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Reports\CustomReportsController;
 use App\Http\Controllers\Reports\PlanReportsController;
 use App\Http\Controllers\Reports\ProjectReportsController;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('projects/{testProject}/reports', [ProjectReportsController::class, 'index'])
         ->name('reports.project');
+
+    Route::get('projects/{testProject}/reports/custom', [CustomReportsController::class, 'index'])
+        ->name('custom-reports.index');
 
     Route::get('plans/{testPlan}/reports', [PlanReportsController::class, 'show'])
         ->name('reports.plan');

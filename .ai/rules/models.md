@@ -42,3 +42,9 @@ This is not cosmetic. `whereLike` does not escape anything, so an interpolated t
 A term of all digits also matches `external_id`, so pasting `42` finds `PREFIX-42`. That is why the search request allows a one-character term: requiring two would make every id below 10 unsearchable, and the escaping already makes a short term harmless.
 
 The escaping assumes MySQL's default backslash escape character. Under `NO_BACKSLASH_ESCAPES` it would need an explicit `ESCAPE` clause, which `whereLike` cannot express.
+
+## Newest case version is versions->last
+TestCase::versions() is ordered by version ASC. `$case->versions->first()` is v1; `$case->versions->last()` is the newest. Do not chain `orderByDesc('version')` onto the relation — that becomes ASC then DESC and `first()` is still v1. Use the collection `last()` or `versions()->reorder()->orderByDesc('version')->first()`.
+
+## Plans and cases carry per-project numbers
+Cases read as CO-TC-241 and plans as CO-P12. Both come from per-project counters on test_projects (test_case_counter, test_plan_counter) handed out by AllocateExternalId — __invoke() for cases, forPlan() for plans. Never derive either from the primary key. TestCase::formatExternalId() exists for callers that hold a prefix and number and should not load the project.

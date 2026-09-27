@@ -2,6 +2,7 @@
 
 namespace App\Concerns;
 
+use App\Enums\TestPlanStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rule;
 
@@ -29,22 +30,25 @@ trait TestPlanValidationRules
             'is_active' => ['boolean'],
             'is_open' => ['boolean'],
             'is_public' => ['boolean'],
+            'status' => ['nullable', Rule::enum(TestPlanStatus::class)],
         ];
     }
 
     /**
-     * @return array{name: string, description: string|null, is_active: bool, is_open: bool, is_public: bool}
+     * @return array{name: string, description: string|null, is_active: bool, is_open: bool, is_public: bool, status: TestPlanStatus}
      */
     protected function testPlanAttributes(): array
     {
         $description = $this->input('description');
+        $status = $this->enum('status', TestPlanStatus::class) ?? TestPlanStatus::Active;
 
         return [
             'name' => (string) $this->input('name'),
             'description' => is_string($description) && $description !== '' ? $description : null,
-            'is_active' => $this->boolean('is_active'),
+            'is_active' => $status->isListed(),
             'is_open' => $this->boolean('is_open'),
             'is_public' => $this->boolean('is_public'),
+            'status' => $status,
         ];
     }
 

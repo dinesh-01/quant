@@ -1,4 +1,4 @@
-import type { SuiteBranch, TreeSuite } from '@/types/test-specification';
+import type { SuiteBranch, TreeCase, TreeSuite } from '@/types/test-specification';
 
 /**
  * Queries over the specification tree.
@@ -198,6 +198,54 @@ export function suitesRevealingSelection(
 /**
  * Roots start open, and so does the branch that holds the selected node.
  */
+export function findSuite(
+    suites: TreeSuite[],
+    suiteId: number,
+): TreeSuite | null {
+    for (const suite of suites) {
+        if (suite.id === suiteId) {
+            return suite;
+        }
+
+        const found = findSuite(suite.children, suiteId);
+
+        if (found !== null) {
+            return found;
+        }
+    }
+
+    return null;
+}
+
+export function casesForSuite(
+    suites: TreeSuite[],
+    suiteId: number,
+): TreeCase[] {
+    return findSuite(suites, suiteId)?.cases ?? [];
+}
+
+/**
+ * The suite that holds a case, walking children the same way the tree renders.
+ */
+export function suiteIdHoldingCase(
+    suites: TreeSuite[],
+    caseId: number,
+): number | null {
+    for (const suite of suites) {
+        if (suite.cases.some((testCase) => testCase.id === caseId)) {
+            return suite.id;
+        }
+
+        const nested = suiteIdHoldingCase(suite.children, caseId);
+
+        if (nested !== null) {
+            return nested;
+        }
+    }
+
+    return null;
+}
+
 export function initiallyExpandedSuiteIds(
     suites: TreeSuite[],
     selected: TreeSelection,

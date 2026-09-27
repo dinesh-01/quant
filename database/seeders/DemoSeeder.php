@@ -83,7 +83,7 @@ class DemoSeeder extends Seeder
 
         $this->command?->info('Demo accounts (password: password)');
         $this->command?->info('  test@example.com          Admin');
-        $this->command?->info('  maya.leader@example.com   Leader');
+        $this->command?->info('  maya.leader@example.com   Team Leader');
         $this->command?->info('  sam.senior@example.com    Senior Tester');
         $this->command?->info('  rina.tester@example.com   Tester (assigned-only)');
         $this->command?->info('  devon.designer@example.com Test Designer');
@@ -97,7 +97,7 @@ class DemoSeeder extends Seeder
     private function rolesByName(): array
     {
         return Role::query()
-            ->whereIn('name', ['Admin', 'Leader', 'Senior Tester', 'Tester', 'Test Designer', 'Guest'])
+            ->whereIn('name', ['Admin', 'Team Leader', 'Senior Tester', 'Tester', 'Test Designer', 'Guest'])
             ->get()
             ->keyBy('name')
             ->all();
@@ -111,10 +111,10 @@ class DemoSeeder extends Seeder
     {
         $users = [
             'admin' => $this->user('Test User', 'test@example.com', $roles['Admin']),
-            'leader' => $this->user('Maya Chen', 'maya.leader@example.com', $roles['Leader']),
-            'senior' => $this->user('Sam Okonkwo', 'sam.senior@example.com', $roles['Senior Tester']),
-            'tester' => $this->user('Rina Patel', 'rina.tester@example.com', $roles['Tester']),
-            'designer' => $this->user('Devon Walsh', 'devon.designer@example.com', $roles['Test Designer']),
+            'leader' => $this->user('Maya Singh', 'maya.leader@example.com', $roles['Team Leader']),
+            'senior' => $this->user('Sam Sharma', 'sam.senior@example.com', $roles['Senior Tester']),
+            'tester' => $this->user('Rina Thakur', 'rina.tester@example.com', $roles['Tester']),
+            'designer' => $this->user('Devon Diaz', 'devon.designer@example.com', $roles['Test Designer']),
             'guest' => $this->user('Guest Viewer', 'guest.viewer@example.com', $roles['Guest']),
         ];
 
@@ -178,7 +178,7 @@ class DemoSeeder extends Seeder
 
         foreach (['leader', 'senior', 'tester', 'designer'] as $key) {
             $users[$key]->projectRoles()->attach($roles[match ($key) {
-                'leader' => 'Leader',
+                'leader' => 'Team Leader',
                 'senior' => 'Senior Tester',
                 'tester' => 'Tester',
                 'designer' => 'Test Designer',
@@ -979,7 +979,7 @@ class DemoSeeder extends Seeder
             'is_active' => true,
         ]);
 
-        $users['leader']->projectRoles()->attach($roles['Leader'], [
+        $users['leader']->projectRoles()->attach($roles['Team Leader'], [
             'test_project_id' => $project->id,
         ]);
 

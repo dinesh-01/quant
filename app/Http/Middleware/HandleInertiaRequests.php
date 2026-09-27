@@ -26,6 +26,8 @@ use App\Models\TestProject;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Middleware;
 
@@ -63,7 +65,17 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
+                'user' => tap($request->user(), function (?User $user): void {
+                    $user?->loadMissing('role');
+                    $user?->role?->makeHidden([
+                        'abilities',
+                        'description',
+                        'is_super_admin',
+                        'is_default',
+                        'created_at',
+                        'updated_at',
+                    ]);
+                }),
                 /**
                  * Application-wide abilities, as distinct from the
                  * project-scoped ones on `currentProject`. Named under `auth`
@@ -78,6 +90,7 @@ class HandleInertiaRequests extends Middleware
                 ],
             ],
             'currentProject' => fn (): ?array => $this->currentProject($request, app(RoleResolver::class)),
+            'availableProjects' => fn (): array => $this->availableProjects($request, app(RoleResolver::class)),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }
@@ -96,7 +109,7 @@ class HandleInertiaRequests extends Middleware
      * the user would only be refused at. All of them resolve from a role that
      * is already loaded.
      *
-     * @return array{id: int, name: string, prefix: string, can: array{viewSpecification: bool, viewRequirements: bool, manageTestPlans: bool, viewKeywords: bool, viewPlatforms: bool, assignCustomFields: bool, manageMembers: bool, selectPlans: bool, viewReports: bool, viewCodeTrackers: bool, viewIssueTrackers: bool}}|null
+     * @return array{id: int, name: string, prefix: string, can: array{viewSpecification: bool, viewRequirements: bool, manageTestPlans: bool, viewKeywords: bool, viewPlatforms: bool, assignCustomFields: bool, manageMembers: bool, selectPlans: bool, viewReports: bool, viewCodeTrackers: bool, viewIssueTrackers: bool, manageProject: bool}, counts: array{suites: int, plans: int, issues: int}}|null
      */
     private function currentProject(Request $request, RoleResolver $roleResolver): ?array
     {
@@ -125,8 +138,95 @@ class HandleInertiaRequests extends Middleware
                 'viewReports' => $this->canViewReports($user, $project, $gate, $roleResolver),
                 'viewCodeTrackers' => $gate->allows(Ability::ViewCodeTrackers->value, $project),
                 'viewIssueTrackers' => $gate->allows(Ability::ViewIssueTrackers->value, $project),
+                'manageProject' => $gate->allows(Ability::ManageTestProjects->value),
             ],
+            'counts' => $this->projectCounts($project),
         ];
+    }
+
+    /**
+     * What the sidebar shows beside Test Suites, Test Plans and Issues.
+     *
+     * One query with three sub-selects rather than three round trips, since
+     * every project-scoped page pays for this.
+     *
+     * @return array{suites: int, plans: int, issues: int}
+     */
+    private function projectCounts(TestProject $project): array
+    {
+        $counts = DB::query()
+            ->selectSub(
+                DB::table('test_suites')->selectRaw('count(*)')->whereColumn('test_project_id', 'test_projects.id'),
+                'suites',
+            )
+            ->selectSub(
+                DB::table('test_plans')->selectRaw('count(*)')->whereColumn('test_project_id', 'test_projects.id'),
+                'plans',
+            )
+            ->selectSub(
+                DB::table('execution_issues')
+                    ->join('executions', 'executions.id', '=', 'execution_issues.execution_id')
+                    ->join('test_plans', 'test_plans.id', '=', 'executions.test_plan_id')
+                    ->selectRaw('count(*)')
+                    ->whereColumn('test_plans.test_project_id', 'test_projects.id'),
+                'issues',
+            )
+            ->from('test_projects')
+            ->where('test_projects.id', $project->id)
+            ->first();
+
+        return [
+            'suites' => (int) ($counts->suites ?? 0),
+            'plans' => (int) ($counts->plans ?? 0),
+            'issues' => (int) ($counts->issues ?? 0),
+        ];
+    }
+
+    /**
+     * Projects this user may open from the topbar switcher.
+     *
+     * Same visibility as the project list: administrators see every active
+     * project; everyone else sees the ones `view_test_cases` (or execute /
+     * view-executions / create-plans) already opens.
+     *
+     * @return list<array{id: int, name: string, prefix: string}>
+     */
+    private function availableProjects(Request $request, RoleResolver $roleResolver): array
+    {
+        $user = $request->user();
+
+        if (! $user instanceof User) {
+            return [];
+        }
+
+        $projects = TestProject::query()
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get(['id', 'name', 'prefix', 'is_active', 'is_public']);
+
+        if (Gate::forUser($user)->allows(Ability::ManageTestProjects->value)) {
+            return $this->projectSwitcherRows($projects);
+        }
+
+        return $this->projectSwitcherRows(
+            $roleResolver->projectsAllowing($user, Ability::ViewTestCases, $projects),
+        );
+    }
+
+    /**
+     * @param  Collection<int, TestProject>|\Illuminate\Database\Eloquent\Collection<int, TestProject>  $projects
+     * @return list<array{id: int, name: string, prefix: string}>
+     */
+    private function projectSwitcherRows($projects): array
+    {
+        return $projects
+            ->map(fn (TestProject $project): array => [
+                'id' => $project->id,
+                'name' => $project->name,
+                'prefix' => $project->prefix,
+            ])
+            ->values()
+            ->all();
     }
 
     /**

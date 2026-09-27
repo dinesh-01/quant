@@ -1,7 +1,7 @@
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { Search, Terminal, Trash2 } from 'lucide-react';
 import EventLogController from '@/actions/App/Http/Controllers/Audit/EventLogController';
-import Heading from '@/components/heading';
+import { PageHead } from '@/components/chrome/page-head';
 import InputError from '@/components/input-error';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -43,8 +43,8 @@ export default function EventLog({
         <>
             <Head title="Event log" />
 
-            <div className="space-y-6 p-4">
-                <Heading
+            <div className="space-y-6 p-6">
+                <PageHead
                     title="Event log"
                     description="Who changed what, and when. Records cannot be edited."
                 />

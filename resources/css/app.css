@@ -27,6 +27,11 @@
 
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
+    --color-primary-50: var(--primary-50);
+    --color-primary-100: var(--primary-100);
+    --color-primary-600: var(--primary-600);
+    --color-primary-700: var(--primary-700);
+    --color-primary-glow: var(--primary-glow);
 
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
@@ -39,15 +44,28 @@
 
     --color-destructive: var(--destructive);
     --color-destructive-foreground: var(--destructive-foreground);
+    --color-destructive-bg: var(--destructive-bg);
+    --color-destructive-border: var(--destructive-border);
 
     --color-success: var(--success);
     --color-success-foreground: var(--success-foreground);
+    --color-success-bg: var(--success-bg);
+    --color-success-border: var(--success-border);
     --color-warning: var(--warning);
     --color-warning-foreground: var(--warning-foreground);
+    --color-warning-bg: var(--warning-bg);
+    --color-warning-border: var(--warning-border);
     --color-info: var(--info);
     --color-info-foreground: var(--info-foreground);
+    --color-info-bg: var(--info-bg);
+    --color-info-border: var(--info-border);
+    --color-neutral: var(--neutral);
+    --color-neutral-bg: var(--neutral-bg);
+    --color-neutral-border: var(--neutral-border);
 
     --color-border: var(--border);
+    --color-border-strong: var(--border-strong);
+    --color-text-subtle: var(--text-subtle);
     --color-input: var(--input);
     --color-ring: var(--ring);
 
@@ -73,7 +91,7 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground text-[14px] antialiased;
     }
 }
 

@@ -89,7 +89,7 @@ class TestPlanContentsController extends Controller
             ->map(fn (TestCase $case): array => [
                 'version_id' => $case->latestVersion->id,
                 'name' => $case->name,
-                'full_external_id' => "{$project->prefix}-{$case->external_id}",
+                'full_external_id' => TestCase::formatExternalId($project->prefix, $case->external_id),
                 'version' => $case->latestVersion->version,
             ])
             ->values()

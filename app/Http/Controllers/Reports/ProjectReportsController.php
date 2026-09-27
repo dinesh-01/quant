@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Reports;
 use App\Actions\Authorization\RoleResolver;
 use App\Enums\Ability;
 use App\Http\Controllers\Controller;
+use App\Models\TestCaseScriptLink;
 use App\Models\TestPlan;
 use App\Models\TestProject;
 use App\Reports\ProjectDashboardReport;
@@ -36,6 +37,15 @@ class ProjectReportsController extends Controller
 
         abort_unless($canSeeDashboard || $visible->isNotEmpty(), 403);
 
+        $cases = $testProject->testCases()->count();
+        $automated = TestCaseScriptLink::query()
+            ->whereHas(
+                'testCaseVersion.testCase',
+                fn ($query) => $query->where('test_project_id', $testProject->id),
+            )
+            ->distinct()
+            ->count('test_case_version_id');
+
         return Inertia::render('reports/project', [
             'project' => [
                 'id' => $testProject->id,
@@ -43,6 +53,11 @@ class ProjectReportsController extends Controller
             ],
             'can' => [
                 'dashboard' => $canSeeDashboard,
+            ],
+            'case_stats' => [
+                'total' => $cases,
+                'automated' => $automated,
+                'manual' => max(0, $cases - $automated),
             ],
             'plans' => $canSeeDashboard
                 ? $projectDashboardReport($all)

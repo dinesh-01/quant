@@ -4,6 +4,7 @@ namespace App\Http\Requests\TestPlans;
 
 use App\Concerns\TestPlanValidationRules;
 use App\Concerns\ValidatesCustomFieldValues;
+use App\Enums\TestPlanStatus;
 use App\Models\TestPlan;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -35,7 +36,7 @@ class TestPlanUpdateRequest extends FormRequest
     }
 
     /**
-     * @return array{name: string, description: string|null, is_active: bool, is_open: bool, is_public: bool}
+     * @return array{name: string, description: string|null, is_active: bool, is_open: bool, is_public: bool, status: TestPlanStatus}
      */
     public function planAttributes(): array
     {

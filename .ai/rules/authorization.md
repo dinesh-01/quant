@@ -6,6 +6,8 @@ paths:
   - 'app/Policies/**'
   - 'app/Models/{Role,TestProject,TestPlan,User}.php'
   - app/Models/Attachable.php
+  - app/Models/TestPlan.php
+  - 'app/Models/{TestCase,TestCaseVersion}.php'
 ---
 
 # Authorization
@@ -81,3 +83,6 @@ attachmentScope() is TestProject|TestPlan. Plan and execution files answer with 
 
 ## Restriction abilities do not apply to super admins
 ExecuteOnlyAssignedTestCases is a restriction (Ability::isRestriction()), not a grant. RoleResolver::allows() returns false for restrictions when the global role is_super_admin, otherwise Gate::allows() treats the admin as assigned-only and the execute list is empty. Do not check this ability with a super-admin bypass that returns true.
+
+## Plan listing status is Active/Draft/Archived
+test_plans.status is the mockup lifecycle (active/draft/archived). is_open still decides whether executions can be recorded; is_active is synced from status (archived is not listed). The plans index defaults to ?status=active.

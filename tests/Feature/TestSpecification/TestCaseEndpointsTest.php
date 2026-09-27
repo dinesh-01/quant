@@ -9,12 +9,43 @@ use App\Models\TestCaseVersion;
 use App\Models\TestProject;
 use App\Models\TestSuite;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
 class TestCaseEndpointsTest extends TestCase
 {
     use InteractsWithSpecificationRoles;
     use RefreshDatabase;
+
+    public function test_the_new_case_form_opens_on_the_named_suite()
+    {
+        $project = TestProject::factory()->create();
+        $user = $this->userWhoCan($project, Ability::ManageTestCases);
+        TestSuite::factory()->for($project)->create(['name' => 'Cart']);
+        $promotions = TestSuite::factory()->for($project)->create(['name' => 'Promotions']);
+
+        $this->actingAs($user)
+            ->get(route('test-cases.create', $project).'?suite='.$promotions->id)
+            ->assertOk()
+            ->assertInertia(fn (AssertableInertia $page) => $page
+                ->where('suite_id', $promotions->id)
+            );
+    }
+
+    public function test_the_new_case_form_ignores_a_suite_from_another_project()
+    {
+        $project = TestProject::factory()->create();
+        $user = $this->userWhoCan($project, Ability::ManageTestCases);
+        $mine = TestSuite::factory()->for($project)->create(['name' => 'Cart']);
+        $foreign = TestSuite::factory()->create();
+
+        $this->actingAs($user)
+            ->get(route('test-cases.create', $project).'?suite='.$foreign->id)
+            ->assertOk()
+            ->assertInertia(fn (AssertableInertia $page) => $page
+                ->where('suite_id', $mine->id)
+            );
+    }
 
     public function test_a_case_is_created_with_its_first_version_and_an_external_id()
     {
@@ -35,7 +66,7 @@ class TestCaseEndpointsTest extends TestCase
             ->assertRedirect(route('specification.cases.show', [$project, $case]));
 
         $this->assertSame(1, $case->external_id);
-        $this->assertSame('QA-1', $case->fullExternalId());
+        $this->assertSame('QA-TC-1', $case->fullExternalId());
         $this->assertSame('Sign in with a valid password', $case->latestVersion->summary);
         $this->assertSame(TestCaseImportance::High, $case->latestVersion->importance);
         $this->assertSame($user->id, $case->latestVersion->author_id);

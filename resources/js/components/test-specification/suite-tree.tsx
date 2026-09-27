@@ -19,19 +19,14 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Link, router } from '@inertiajs/react';
-import {
-    ChevronDown,
-    ChevronRight,
-    FileText,
-    Folder,
-    GripVertical,
-} from 'lucide-react';
+import { FileText, GripVertical } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import TestCaseController from '@/actions/App/Http/Controllers/TestSpecification/TestCaseController';
 import TestSuiteController from '@/actions/App/Http/Controllers/TestSpecification/TestSuiteController';
+import { MockIcon } from '@/components/chrome/mock-icon';
 import {
     initiallyExpandedSuiteIds,
-    suiteIds,
+    suiteIdHoldingCase,
     suitesRevealingSelection,
 } from '@/lib/specification-tree';
 import { cn } from '@/lib/utils';
@@ -64,6 +59,13 @@ function caseItemId(id: number): string {
 
 function suiteContainer(parentId: number | null): string {
     return parentId === null ? 'suites:root' : `suites:${parentId}`;
+}
+
+function countCases(suite: TreeSuite): number {
+    return (
+        suite.cases.length +
+        suite.children.reduce((sum, child) => sum + countCases(child), 0)
+    );
 }
 
 function caseContainer(suiteId: number): string {
@@ -109,7 +111,6 @@ export default function SuiteTree({
     selected: Selected;
     canManage: boolean;
 }) {
-    const allIds = useMemo(() => suiteIds(suites), [suites]);
     const selectedKey =
         selected === null ? '' : `${selected.type}:${selected.id}`;
 
@@ -219,8 +220,33 @@ export default function SuiteTree({
         );
     }
 
+    const totalCases = useMemo(
+        () => suites.reduce((sum, suite) => sum + countCases(suite), 0),
+        [suites],
+    );
+
+    const highlightedSuiteId =
+        selected === null
+            ? null
+            : selected.type === 'suite'
+              ? selected.id
+              : suiteIdHoldingCase(suites, selected.id);
+
     const tree = (
-        <ul className="space-y-0.5">
+        <ul>
+            <li>
+                <div className="flex items-center gap-2 rounded-lg px-2.5 py-[7px] text-[13.5px]">
+                    <MockIcon
+                        name="chev-down"
+                        className="text-text-subtle size-3.5 shrink-0"
+                    />
+                    <MockIcon name="folder" className="size-4 shrink-0" />
+                    <span className="truncate">{project.name}</span>
+                    <span className="text-text-subtle ml-auto text-[11.5px]">
+                        {totalCases}
+                    </span>
+                </div>
+            </li>
             <SortableContext
                 items={rootSuiteIds.map(suiteItemId)}
                 strategy={verticalListSortingStrategy}
@@ -233,7 +259,8 @@ export default function SuiteTree({
                         parentId={null}
                         siblingIds={rootSuiteIds}
                         selected={selected}
-                        depth={0}
+                        highlightedSuiteId={highlightedSuiteId}
+                        depth={1}
                         expanded={expanded}
                         canManage={canManage}
                         onToggle={onToggle}
@@ -244,24 +271,7 @@ export default function SuiteTree({
     );
 
     return (
-        <div className="space-y-1">
-            <div className="flex gap-3 px-2">
-                <button
-                    type="button"
-                    onClick={() => setExpandedIds(allIds)}
-                    className="text-muted-foreground hover:text-foreground text-xs"
-                >
-                    Expand all
-                </button>
-                <button
-                    type="button"
-                    onClick={() => setExpandedIds([])}
-                    className="text-muted-foreground hover:text-foreground text-xs"
-                >
-                    Collapse all
-                </button>
-            </div>
-
+        <div>
             <DndContext
                 sensors={sensors}
                 collisionDetection={sameContainerCollision}
@@ -274,7 +284,10 @@ export default function SuiteTree({
                     {active ? (
                         <div className="bg-background flex items-center gap-2 rounded border px-2 py-1 text-sm shadow-sm">
                             {active.kind === 'suite' ? (
-                                <Folder className="text-muted-foreground size-4" />
+                                <MockIcon
+                                    name="folder"
+                                    className="text-muted-foreground size-4"
+                                />
                             ) : (
                                 <FileText className="text-muted-foreground size-4" />
                             )}
@@ -293,6 +306,7 @@ function SuiteNode({
     parentId,
     siblingIds,
     selected,
+    highlightedSuiteId,
     depth,
     expanded,
     canManage,
@@ -303,16 +317,16 @@ function SuiteNode({
     parentId: number | null;
     siblingIds: number[];
     selected: Selected;
+    highlightedSuiteId: number | null;
     depth: number;
     expanded: ReadonlySet<number>;
     canManage: boolean;
     onToggle: (id: number) => void;
 }) {
     const isExpanded = expanded.has(suite.id);
-    const hasChildren = suite.children.length > 0 || suite.cases.length > 0;
-    const isSelected = selected?.type === 'suite' && selected.id === suite.id;
+    const hasChildren = suite.children.length > 0;
+    const isSelected = highlightedSuiteId === suite.id;
     const childSuiteIds = suite.children.map((child) => child.id);
-    const caseIds = suite.cases.map((testCase) => testCase.id);
     const {
         attributes,
         listeners,
@@ -343,33 +357,38 @@ function SuiteNode({
             className={cn(isDragging && 'opacity-40')}
         >
             <div
-                className="flex items-center gap-1"
-                style={{ paddingLeft: `${depth * 12}px` }}
+                className="group/node relative flex items-center"
+                style={{
+                    paddingLeft: depth === 0 ? 0 : 20 + (depth - 1) * 12,
+                }}
             >
                 {canManage && siblingIds.length > 1 && (
-                    <DragHandle
-                        label={suite.name}
-                        listeners={listeners}
-                        attributes={attributes}
-                    />
+                    <span className="absolute top-1/2 left-0 z-10 hidden -translate-y-1/2 group-hover/node:block">
+                        <DragHandle
+                            label={suite.name}
+                            listeners={listeners}
+                            attributes={attributes}
+                        />
+                    </span>
                 )}
 
-                <button
-                    type="button"
-                    onClick={() => onToggle(suite.id)}
-                    className={cn(
-                        'text-muted-foreground hover:text-foreground shrink-0 rounded p-0.5',
-                        !hasChildren && 'invisible',
-                    )}
-                    aria-label={isExpanded ? 'Collapse' : 'Expand'}
-                    aria-expanded={isExpanded}
-                >
-                    {isExpanded ? (
-                        <ChevronDown className="size-4" />
-                    ) : (
-                        <ChevronRight className="size-4" />
-                    )}
-                </button>
+                {hasChildren ? (
+                    <button
+                        type="button"
+                        onClick={() => onToggle(suite.id)}
+                        className="text-text-subtle hover:text-foreground shrink-0 rounded p-0.5"
+                        aria-label={isExpanded ? 'Collapse' : 'Expand'}
+                        aria-expanded={isExpanded}
+                    >
+                        <MockIcon
+                            name="chev-down"
+                            className={cn(
+                                'size-3.5',
+                                !isExpanded && '-rotate-90',
+                            )}
+                        />
+                    </button>
+                ) : null}
 
                 <Link
                     href={suiteShow([project.id, suite.id])}
@@ -377,12 +396,17 @@ function SuiteNode({
                     preserveState
                     preserveScroll
                     className={cn(
-                        'hover:bg-muted flex min-w-0 flex-1 items-center gap-2 rounded px-2 py-1 text-sm',
-                        isSelected && 'bg-muted font-medium',
+                        'flex min-w-0 flex-1 items-center gap-2 rounded-lg px-2.5 py-[7px] text-[13px]',
+                        isSelected
+                            ? 'bg-primary-50 text-primary-700 font-semibold'
+                            : 'hover:bg-muted text-foreground',
                     )}
                 >
-                    <Folder className="text-muted-foreground size-4 shrink-0" />
+                    <MockIcon name="folder" className="size-[15px] shrink-0" />
                     <span className="truncate">{suite.name}</span>
+                    <span className="text-text-subtle ml-auto text-[11.5px]">
+                        {countCases(suite)}
+                    </span>
                 </Link>
             </div>
 
@@ -400,6 +424,7 @@ function SuiteNode({
                                 parentId={suite.id}
                                 siblingIds={childSuiteIds}
                                 selected={selected}
+                                highlightedSuiteId={highlightedSuiteId}
                                 depth={depth + 1}
                                 expanded={expanded}
                                 canManage={canManage}
@@ -408,23 +433,6 @@ function SuiteNode({
                         ))}
                     </SortableContext>
 
-                    <SortableContext
-                        items={caseIds.map(caseItemId)}
-                        strategy={verticalListSortingStrategy}
-                    >
-                        {suite.cases.map((testCase) => (
-                            <CaseNode
-                                key={testCase.id}
-                                project={project}
-                                testCase={testCase}
-                                suiteId={suite.id}
-                                siblingIds={caseIds}
-                                selected={selected}
-                                depth={depth}
-                                canManage={canManage}
-                            />
-                        ))}
-                    </SortableContext>
                 </ul>
             )}
         </li>

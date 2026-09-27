@@ -26,3 +26,8 @@ RoleResolver keeps its own isActive() check as defence in depth; it is the only 
 
 ## Inactive API callers get 401 without a session wipe
 EnsureUserIsActive on `/api/*` (or any request without a session) must return 401 JSON and must not call `logout()`, `session()->invalidate()`, or regenerate the CSRF token. Those steps belong to cookie sessions. On API routes the middleware must run after `auth:sanctum` so `$request->user()` is already set — put it on the route group, not the `api` middleware group.
+
+## Sidebar counts ride on currentProject
+The sidebar pills beside Test Suites, Test Plans and Issues come from `currentProject.counts`, built by `projectCounts()` as one query with three sub-selects. Every project-scoped page pays for it, so keep it to a single query and do not add per-item lookups.
+
+Because it is an aggregate, query-count guards that watch `test_suites` / `test_cases` must ignore `count(*)` statements (see `SpecificationPageTest::treeQueries()`).

@@ -26,6 +26,10 @@ export type TreeCase = {
     id: number;
     name: string;
     full_external_id: string;
+    importance?: string | null;
+    version?: number | null;
+    is_open?: boolean;
+    keyword?: string | null;
 };
 
 export type SuiteBranch = {
@@ -121,6 +125,8 @@ export type CaseDetail = {
     full_external_id: string;
     test_suite_id: number;
     suite_name: string;
+    updated: string | null;
+    last_run: string | null;
     versions: VersionSummary[];
     version: VersionDetail | null;
     relations: CaseRelation[];
@@ -144,7 +150,7 @@ export type RelatableCase = {
 };
 
 export type Selection =
-    | { type: 'suite'; suite: SuiteDetail }
+    | { type: 'suite'; suite: SuiteDetail; preview: CaseDetail | null }
     | { type: 'case'; case: CaseDetail }
     | null;
 

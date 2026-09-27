@@ -20,6 +20,7 @@ export type RoleSummary = {
     description: string | null;
     is_super_admin: boolean;
     is_default: boolean;
+    abilities: string[];
     abilities_count: number;
     /** Users for whom this is their global role. */
     users_count: number;

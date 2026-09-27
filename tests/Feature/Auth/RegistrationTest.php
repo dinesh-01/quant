@@ -39,7 +39,7 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('projects.index', absolute: false));
+        $response->assertRedirect(route('dashboard', absolute: false));
     }
 
     public function test_new_users_receive_the_default_role()

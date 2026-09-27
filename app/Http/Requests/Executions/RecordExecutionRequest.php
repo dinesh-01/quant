@@ -42,7 +42,8 @@ class RecordExecutionRequest extends FormRequest
             ...$this->customFieldRules(
                 app(ResolveCustomFields::class)->forSubject($this->executionSubject()),
                 onExecution: true,
-                enforceRequired: $this->boolean('complete'),
+                enforceRequired: $this->boolean('complete')
+                    && $this->input('status') !== ExecutionStatus::NotRun->value,
             ),
         ];
     }

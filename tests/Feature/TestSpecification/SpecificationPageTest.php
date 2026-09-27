@@ -3,6 +3,8 @@
 namespace Tests\Feature\TestSpecification;
 
 use App\Enums\Ability;
+use App\Enums\TestCaseImportance;
+use App\Models\Keyword;
 use App\Models\TestCase as TestCaseModel;
 use App\Models\TestCaseStep;
 use App\Models\TestCaseVersion;
@@ -36,8 +38,33 @@ class SpecificationPageTest extends TestCase
                 ->where('tree.0.name', 'Authentication')
                 ->where('tree.0.children.0.name', 'Passwords')
                 ->where('tree.0.children.0.cases.0.name', 'Reset works')
-                ->where('tree.0.children.0.cases.0.full_external_id', 'QA-1')
+                ->where('tree.0.children.0.cases.0.full_external_id', 'QA-TC-1')
                 ->where('selected', null)
+            );
+    }
+
+    public function test_the_tree_describes_each_case_for_the_table()
+    {
+        $project = TestProject::factory()->create(['prefix' => 'QA']);
+        $user = $this->userWhoCan($project, Ability::ViewTestCases);
+        $suite = TestSuite::factory()->for($project)->create(['name' => 'Promotions']);
+        $case = TestCaseModel::factory()->for($suite, 'testSuite')->create(['name' => 'Free-shipping threshold promo']);
+        TestCaseVersion::factory()->for($case, 'testCase')->version(3)->frozen()->create([
+            'importance' => TestCaseImportance::High,
+        ]);
+        $case->keywords()->attach(
+            Keyword::factory()->for($project)->named('smoke')->create(),
+        );
+
+        $this->actingAs($user)
+            ->get(route('specification.suites.show', [$project, $suite]))
+            ->assertOk()
+            ->assertInertia(fn (AssertableInertia $page) => $page
+                ->where('tree.0.cases.0.name', 'Free-shipping threshold promo')
+                ->where('tree.0.cases.0.version', 3)
+                ->where('tree.0.cases.0.is_open', false)
+                ->where('tree.0.cases.0.importance', 'high')
+                ->where('tree.0.cases.0.keyword', 'smoke')
             );
     }
 
@@ -65,6 +92,59 @@ class SpecificationPageTest extends TestCase
 
         $this->assertSame(2, $this->treeQueries($small));
         $this->assertSame(2, $this->treeQueries($large));
+    }
+
+    public function test_a_promotions_suite_is_opened_when_the_tree_is_visited()
+    {
+        $project = TestProject::factory()->create(['prefix' => 'CO']);
+        $user = $this->userWhoCan($project, Ability::ViewTestCases);
+        $suite = TestSuite::factory()->for($project)->create(['name' => 'Promotions']);
+
+        $this->actingAs($user)
+            ->get(route('specification.show', $project))
+            ->assertRedirect(route('specification.suites.show', [$project, $suite]));
+    }
+
+    public function test_a_promotions_redirect_keeps_the_keyword_filter()
+    {
+        $project = TestProject::factory()->create(['prefix' => 'CO']);
+        $user = $this->userWhoCan($project, Ability::ViewTestCases);
+        $suite = TestSuite::factory()->for($project)->create(['name' => 'Promotions']);
+        $keyword = Keyword::factory()->for($project)->named('smoke')->create();
+
+        $location = $this->actingAs($user)
+            ->get(route('specification.show', $project).'?keywords[]='.$keyword->id.'&keyword_match=all')
+            ->assertRedirect()
+            ->headers
+            ->get('Location');
+
+        $this->assertNotNull($location);
+        $this->assertStringContainsString(
+            route('specification.suites.show', [$project, $suite], false),
+            $location,
+        );
+        $this->assertStringContainsString('keywords', $location);
+        $this->assertStringContainsString((string) $keyword->id, $location);
+        $this->assertStringContainsString('keyword_match=all', $location);
+    }
+
+    public function test_selecting_a_suite_includes_its_first_case_as_a_preview()
+    {
+        $project = TestProject::factory()->create(['prefix' => 'QA']);
+        $user = $this->userWhoCan($project, Ability::ViewTestCases);
+        $suite = TestSuite::factory()->for($project)->create(['name' => 'Cart']);
+        TestCaseModel::factory()->for($suite, 'testSuite')->create(['name' => 'Second', 'sort_order' => 2]);
+        $first = TestCaseModel::factory()->for($suite, 'testSuite')->create(['name' => 'First', 'sort_order' => 1]);
+
+        $this->actingAs($user)
+            ->get(route('specification.suites.show', [$project, $suite]))
+            ->assertOk()
+            ->assertInertia(fn (AssertableInertia $page) => $page
+                ->where('selected.type', 'suite')
+                ->where('selected.preview.id', $first->id)
+                ->where('selected.preview.name', 'First')
+                ->where('selected.preview.last_run', null)
+            );
     }
 
     public function test_selecting_a_suite_includes_its_path()
@@ -99,7 +179,8 @@ class SpecificationPageTest extends TestCase
             ->assertOk()
             ->assertInertia(fn (AssertableInertia $page) => $page
                 ->where('selected.type', 'case')
-                ->where('selected.case.full_external_id', 'QA-1')
+                ->where('selected.case.full_external_id', 'QA-TC-1')
+                ->where('selected.case.last_run', null)
                 ->where('selected.case.version.version', 2)
                 ->where('selected.case.version.summary', 'Current')
                 ->where('selected.case.version.steps.0.actions', 'Open the page')
@@ -387,7 +468,14 @@ class SpecificationPageTest extends TestCase
 
         DB::disableQueryLog();
 
-        return count(array_filter($queries, fn (string $query): bool => str_contains($query, 'test_suites')
-            || str_contains($query, 'test_cases')));
+        /**
+         * Aggregates are left out: the sidebar's suite count is one such query
+         * and is a fixed cost that has nothing to do with the tree's size.
+         */
+        return count(array_filter(
+            $queries,
+            fn (string $query): bool => (str_contains($query, 'test_suites') || str_contains($query, 'test_cases'))
+                && ! str_contains($query, 'count(*)'),
+        ));
     }
 }

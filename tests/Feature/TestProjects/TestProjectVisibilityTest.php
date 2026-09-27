@@ -204,9 +204,9 @@ class TestProjectVisibilityTest extends TestCase
             DB::disableQueryLog();
 
             $this->assertCount(
-                2,
+                4,
                 $projectQueries,
-                "Listing {$projectCount} projects should take one query for the projects and one for the user's project roles.",
+                "Listing {$projectCount} projects must stay a constant query count (list + switcher), not one query per project.",
             );
         }
     }

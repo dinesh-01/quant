@@ -11,6 +11,7 @@ type PlanFormFieldsProps = {
         is_active: boolean;
         is_open: boolean;
         is_public: boolean;
+        status?: string;
     };
 };
 
@@ -84,19 +85,23 @@ export default function PlanFormFields({
                 </div>
             </div>
 
-            <div className="flex items-start gap-3">
-                <Checkbox
-                    id="is_active"
-                    name="is_active"
-                    defaultChecked={defaults?.is_active ?? true}
-                />
-
-                <div className="grid gap-1">
-                    <Label htmlFor="is_active">Active</Label>
-                    <p className="text-muted-foreground text-xs">
-                        Inactive plans stay intact but are left out of listings.
-                    </p>
-                </div>
+            <div className="grid gap-2">
+                <Label htmlFor="status">Status</Label>
+                <select
+                    id="status"
+                    name="status"
+                    defaultValue={defaults?.status ?? 'active'}
+                    className="border-input h-9 w-full rounded-md border bg-transparent px-3 text-sm"
+                >
+                    <option value="active">Active</option>
+                    <option value="draft">Draft</option>
+                    <option value="archived">Archived</option>
+                </select>
+                <p className="text-muted-foreground text-xs">
+                    Drafts are not offered for execution. Archived plans stay
+                    intact but leave the default listing.
+                </p>
+                <InputError message={errors.status} />
             </div>
         </>
     );

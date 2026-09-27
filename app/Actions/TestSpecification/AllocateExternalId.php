@@ -27,16 +27,33 @@ final class AllocateExternalId
      */
     public function __invoke(TestProject $project): int
     {
-        return DB::transaction(function () use ($project): int {
+        return $this->next($project, 'test_case_counter');
+    }
+
+    /**
+     * Reserve and return the next plan number for the project, as in `CO-P12`.
+     *
+     * Plans are numbered from their own counter rather than their primary key,
+     * so a project's plan numbers do not skip whenever another project creates
+     * a plan.
+     */
+    public function forPlan(TestProject $project): int
+    {
+        return $this->next($project, 'test_plan_counter');
+    }
+
+    private function next(TestProject $project, string $column): int
+    {
+        return DB::transaction(function () use ($project, $column): int {
             $locked = TestProject::query()
                 ->whereKey($project->getKey())
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            $locked->test_case_counter = $locked->test_case_counter + 1;
+            $locked->{$column} = $locked->{$column} + 1;
             $locked->save();
 
-            return $locked->test_case_counter;
+            return $locked->{$column};
         });
     }
 }

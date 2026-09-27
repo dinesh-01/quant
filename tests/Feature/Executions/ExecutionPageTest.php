@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Executions;
 
+use App\Actions\Executions\RecordExecution;
 use App\Actions\TesterAssignments\AssignTester;
 use App\Actions\TestSpecification\CreateTestCase;
 use App\Actions\TestSpecification\CreateTestCaseStep;
@@ -39,9 +40,15 @@ class ExecutionPageTest extends TestCase
             ->assertInertia(fn (AssertableInertia $page) => $page
                 ->component('executions/index')
                 ->where('plan.name', 'Sprint')
+                ->where('plan.external_id', $plan->loadMissing('testProject')->fullExternalId())
                 ->where('selectedBuildId', $build->id)
                 ->has('items', 1)
                 ->where('items.0.id', $item->id)
+                ->where('items.0.priority', 'medium')
+                ->where('items.0.assigned_to_viewer', false)
+                ->has('items.0.suite')
+                ->has('items.0.keywords')
+                ->has('counts')
             );
     }
 
@@ -59,7 +66,10 @@ class ExecutionPageTest extends TestCase
                 'status' => ExecutionStatus::Passed->value,
                 'complete' => '1',
             ])
-            ->assertRedirect()
+            ->assertRedirect(route('executions.index', [
+                'testPlan' => $plan,
+                'build' => $build->id,
+            ]))
             ->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('executions', [
@@ -77,6 +87,14 @@ class ExecutionPageTest extends TestCase
                 ->has('history', 1)
                 ->where('history.0.status', 'passed')
                 ->where('draft', null)
+                ->where('item.priority', 'medium')
+                ->has('item.keywords')
+                ->where('item.assigned_to_viewer', false)
+                ->has('item.test_case_id')
+                ->has('builds')
+                ->where('openIssue', false)
+                ->has('items')
+                ->has('counts')
             );
     }
 
@@ -172,6 +190,7 @@ class ExecutionPageTest extends TestCase
             ->assertInertia(fn (AssertableInertia $page) => $page
                 ->has('items', 1)
                 ->where('items.0.id', $assigned->id)
+                ->where('items.0.assigned_to_viewer', true)
             );
     }
 
@@ -184,5 +203,157 @@ class ExecutionPageTest extends TestCase
         $this->actingAs($user)
             ->get(route('executions.index', $plan))
             ->assertForbidden();
+    }
+
+    public function test_opening_a_plan_with_start_opens_the_first_untested_case(): void
+    {
+        $project = TestProject::factory()->create();
+        $plan = TestPlan::factory()->for($project)->create();
+        $done = TestPlanItem::factory()->for($plan, 'testPlan')->create(['sort_order' => 1]);
+        $next = TestPlanItem::factory()->for($plan, 'testPlan')->create(['sort_order' => 2]);
+        $build = Build::factory()->for($plan, 'testPlan')->create();
+        $user = $this->userWhoCanOnPlan($plan, Ability::ExecuteTests, Ability::ViewExecutions);
+
+        app(RecordExecution::class)($user, $done, $build, [
+            'status' => ExecutionStatus::Passed,
+            'steps' => [],
+        ], true);
+
+        $this->actingAs($user)
+            ->get(route('executions.index', ['testPlan' => $plan, 'build' => $build->id, 'start' => 1]))
+            ->assertRedirect(route('executions.show', [
+                'testPlan' => $plan,
+                'testPlanItem' => $next,
+                'build' => $build->id,
+            ]));
+    }
+
+    public function test_completing_a_passed_run_opens_the_next_untested_case(): void
+    {
+        $project = TestProject::factory()->create();
+        $plan = TestPlan::factory()->for($project)->create();
+        $first = TestPlanItem::factory()->for($plan, 'testPlan')->create(['sort_order' => 1]);
+        $second = TestPlanItem::factory()->for($plan, 'testPlan')->create(['sort_order' => 2]);
+        $build = Build::factory()->for($plan, 'testPlan')->create();
+        $user = $this->userWhoCanOnPlan($plan, Ability::ExecuteTests, Ability::ViewExecutions);
+
+        $this->actingAs($user)
+            ->post(route('executions.store', $first), [
+                'build_id' => $build->id,
+                'status' => ExecutionStatus::Passed->value,
+                'complete' => '1',
+            ])
+            ->assertRedirect(route('executions.show', [
+                'testPlan' => $plan,
+                'testPlanItem' => $second,
+                'build' => $build->id,
+            ]));
+
+        $this->assertDatabaseHas('executions', [
+            'test_plan_item_id' => $first->id,
+            'build_id' => $build->id,
+            'is_draft' => false,
+            'status' => ExecutionStatus::Passed->value,
+        ]);
+    }
+
+    public function test_completing_a_failed_run_stays_so_an_issue_can_be_linked(): void
+    {
+        $project = TestProject::factory()->create();
+        $plan = TestPlan::factory()->for($project)->create();
+        $item = TestPlanItem::factory()->for($plan, 'testPlan')->create();
+        TestPlanItem::factory()->for($plan, 'testPlan')->create();
+        $build = Build::factory()->for($plan, 'testPlan')->create();
+        $user = $this->userWhoCanOnPlan($plan, Ability::ExecuteTests, Ability::ViewExecutions);
+
+        $this->actingAs($user)
+            ->post(route('executions.store', $item), [
+                'build_id' => $build->id,
+                'status' => ExecutionStatus::Failed->value,
+                'complete' => '1',
+            ])
+            ->assertRedirect(route('executions.show', [
+                'testPlan' => $plan,
+                'testPlanItem' => $item,
+                'build' => $build->id,
+                'issue' => 1,
+            ]));
+
+        $this->assertDatabaseHas('executions', [
+            'test_plan_item_id' => $item->id,
+            'is_draft' => false,
+            'status' => ExecutionStatus::Failed->value,
+        ]);
+    }
+
+    public function test_skipping_a_case_opens_the_next_untested_case_without_recording(): void
+    {
+        $project = TestProject::factory()->create();
+        $plan = TestPlan::factory()->for($project)->create();
+        $first = TestPlanItem::factory()->for($plan, 'testPlan')->create(['sort_order' => 1]);
+        $second = TestPlanItem::factory()->for($plan, 'testPlan')->create(['sort_order' => 2]);
+        $build = Build::factory()->for($plan, 'testPlan')->create();
+        $user = $this->userWhoCanOnPlan($plan, Ability::ExecuteTests, Ability::ViewExecutions);
+
+        $this->actingAs($user)
+            ->post(route('executions.store', $first), [
+                'build_id' => $build->id,
+                'status' => ExecutionStatus::NotRun->value,
+                'complete' => '1',
+            ])
+            ->assertRedirect(route('executions.show', [
+                'testPlan' => $plan,
+                'testPlanItem' => $second,
+                'build' => $build->id,
+            ]));
+
+        $this->assertDatabaseMissing('executions', [
+            'test_plan_item_id' => $first->id,
+        ]);
+    }
+
+    public function test_skipping_a_case_requires_execute(): void
+    {
+        $project = TestProject::factory()->create();
+        $plan = TestPlan::factory()->for($project)->create();
+        $item = TestPlanItem::factory()->for($plan, 'testPlan')->create();
+        $build = Build::factory()->for($plan, 'testPlan')->create();
+        $user = $this->userWhoCanOnPlan($plan, Ability::ViewExecutions);
+
+        $this->actingAs($user)
+            ->post(route('executions.store', $item), [
+                'build_id' => $build->id,
+                'status' => ExecutionStatus::NotRun->value,
+                'complete' => '1',
+            ])
+            ->assertForbidden();
+    }
+
+    public function test_saving_a_draft_stays_on_the_same_case(): void
+    {
+        $project = TestProject::factory()->create();
+        $plan = TestPlan::factory()->for($project)->create();
+        $item = TestPlanItem::factory()->for($plan, 'testPlan')->create();
+        $build = Build::factory()->for($plan, 'testPlan')->create();
+        $user = $this->userWhoCanOnPlan($plan, Ability::ExecuteTests, Ability::ViewExecutions);
+        $url = route('executions.show', [
+            'testPlan' => $plan,
+            'testPlanItem' => $item,
+            'build' => $build->id,
+        ]);
+
+        $this->actingAs($user)
+            ->from($url)
+            ->post(route('executions.store', $item), [
+                'build_id' => $build->id,
+                'status' => ExecutionStatus::Passed->value,
+            ])
+            ->assertRedirect($url);
+
+        $this->assertDatabaseHas('executions', [
+            'test_plan_item_id' => $item->id,
+            'is_draft' => true,
+            'status' => ExecutionStatus::Passed->value,
+        ]);
     }
 }

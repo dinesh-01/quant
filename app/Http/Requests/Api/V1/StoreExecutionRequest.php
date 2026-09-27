@@ -136,9 +136,10 @@ class StoreExecutionRequest extends FormRequest
     {
         $externalId = (string) $this->input('full_external_id');
 
-        if (preg_match('/^([A-Za-z0-9]+)-(\d+)$/', $externalId, $matches) !== 1) {
+        /** `QA-TC-12`, or `QA-12` as it was written before cases carried the TC part. */
+        if (preg_match('/^([A-Za-z0-9]+)-(?:TC-)?(\d+)$/', $externalId, $matches) !== 1) {
             throw ValidationException::withMessages([
-                'full_external_id' => 'Use the PREFIX-N identifier, for example QA-12.',
+                'full_external_id' => 'Use the PREFIX-TC-N identifier, for example QA-TC-12.',
             ]);
         }
 

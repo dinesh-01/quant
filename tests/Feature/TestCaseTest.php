@@ -72,7 +72,7 @@ class TestCaseTest extends TestCase
         $suite = TestSuite::factory()->for($project)->create();
         $case = TestCaseModel::factory()->for($suite, 'testSuite')->create(['external_id' => 42]);
 
-        $this->assertSame('QUANTA-42', $case->fullExternalId());
+        $this->assertSame('QUANTA-TC-42', $case->fullExternalId());
     }
 
     public function test_the_latest_version_is_the_highest_numbered_one_not_the_newest_row()

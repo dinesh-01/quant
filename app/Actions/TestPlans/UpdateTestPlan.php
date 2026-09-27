@@ -5,6 +5,7 @@ namespace App\Actions\TestPlans;
 use App\Actions\Audit\AuditLogger;
 use App\Enums\Ability;
 use App\Enums\AuditAction;
+use App\Enums\TestPlanStatus;
 use App\Models\TestPlan;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -26,7 +27,7 @@ final class UpdateTestPlan
     public function __construct(private readonly AuditLogger $audit) {}
 
     /**
-     * @param  array{name: string, description: string|null, is_active: bool, is_open: bool, is_public: bool}  $attributes
+     * @param  array{name: string, description: string|null, is_active: bool, is_open: bool, is_public: bool, status: TestPlanStatus}  $attributes
      *
      * @throws AuthorizationException
      */

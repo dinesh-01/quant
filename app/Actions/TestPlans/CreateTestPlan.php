@@ -3,8 +3,10 @@
 namespace App\Actions\TestPlans;
 
 use App\Actions\Audit\AuditLogger;
+use App\Actions\TestSpecification\AllocateExternalId;
 use App\Enums\Ability;
 use App\Enums\AuditAction;
+use App\Enums\TestPlanStatus;
 use App\Models\TestPlan;
 use App\Models\TestProject;
 use App\Models\User;
@@ -19,10 +21,13 @@ use Illuminate\Support\Facades\Gate;
  */
 final class CreateTestPlan
 {
-    public function __construct(private readonly AuditLogger $audit) {}
+    public function __construct(
+        private readonly AuditLogger $audit,
+        private readonly AllocateExternalId $allocateExternalId,
+    ) {}
 
     /**
-     * @param  array{name: string, description: string|null, is_active: bool, is_open: bool, is_public: bool}  $attributes
+     * @param  array{name: string, description: string|null, is_active: bool, is_open: bool, is_public: bool, status: TestPlanStatus}  $attributes
      *
      * @throws AuthorizationException
      */
@@ -33,6 +38,7 @@ final class CreateTestPlan
         $plan = new TestPlan;
         $plan->fill($attributes);
         $plan->testProject()->associate($project);
+        $plan->external_id = $this->allocateExternalId->forPlan($project);
 
         $properties = $this->audit->changes($plan);
 

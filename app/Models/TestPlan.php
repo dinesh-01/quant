@@ -6,6 +6,7 @@ use App\Concerns\HasAttachments;
 use App\Concerns\HasCustomFieldValues;
 use App\Enums\Ability;
 use App\Enums\CustomFieldEntity;
+use App\Enums\TestPlanStatus;
 use Database\Factories\TestPlanFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
@@ -22,11 +23,13 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property int $test_project_id
+ * @property int|null $external_id per-project plan number, shown as `CO-P12`
  * @property string $name
  * @property string|null $description
  * @property bool $is_active
  * @property bool $is_open whether the plan still accepts execution results
  * @property bool $is_public
+ * @property TestPlanStatus $status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read TestProject $testProject
@@ -40,7 +43,7 @@ use Illuminate\Support\Carbon;
  * @property-read Collection<int, Milestone> $milestones
  * @property-read Collection<int, ReportBaseline> $reportBaselines
  */
-#[Fillable(['name', 'description', 'is_active', 'is_open', 'is_public'])]
+#[Fillable(['name', 'description', 'is_active', 'is_open', 'is_public', 'status'])]
 class TestPlan extends Model implements Attachable, CustomFieldSubject
 {
     use HasAttachments;
@@ -48,6 +51,13 @@ class TestPlan extends Model implements Attachable, CustomFieldSubject
 
     /** @use HasFactory<TestPlanFactory> */
     use HasFactory;
+
+    /**
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'status' => TestPlanStatus::Active->value,
+    ];
 
     /**
      * @return BelongsTo<TestProject, $this>
@@ -178,6 +188,14 @@ class TestPlan extends Model implements Attachable, CustomFieldSubject
     }
 
     /**
+     * How the plan is referred to on screen and in conversation, as `CO-P12`.
+     */
+    public function fullExternalId(): string
+    {
+        return "{$this->testProject->prefix}-P{$this->external_id}";
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -188,6 +206,7 @@ class TestPlan extends Model implements Attachable, CustomFieldSubject
             'is_active' => 'boolean',
             'is_open' => 'boolean',
             'is_public' => 'boolean',
+            'status' => TestPlanStatus::class,
         ];
     }
 }

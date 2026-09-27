@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quanta · Event Log</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">Q</div><div><div class="name">Quanta</div><div class="tag">Test Agents</div></div></div>
+    <nav class="nav">
+      <div class="group-label">Workspace</div>
+      <a href="index.html"><svg class="ico"><use href="#i-dashboard"/></svg> Overview</a>
+      <a href="test-cases.html"><svg class="ico"><use href="#i-folder"/></svg> Test Suites <span class="count">7</span></a>
+      <a href="test-plans.html"><svg class="ico"><use href="#i-plan"/></svg> Test Plans <span class="count">9</span></a>
+      <a href="execution.html"><svg class="ico"><use href="#i-play"/></svg> Execution</a>
+      <div class="group-label">Analytics</div>
+      <a href="reports-test-cases.html"><svg class="ico"><use href="#i-chart"/></svg> Standard Reports</a>
+      <a href="custom-reports.html"><svg class="ico"><use href="#i-sparkles"/></svg> Custom Reports</a>
+      <div class="group-label">Insights</div>
+      <a href="code-tracker.html"><svg class="ico"><use href="#i-git"/></svg> Code Coverage</a>
+      <a href="issues.html"><svg class="ico"><use href="#i-bug"/></svg> Issues <span class="count">42</span></a>
+      <div class="group-label">Admin</div>
+      <a href="users.html"><svg class="ico"><use href="#i-users"/></svg> Users</a>
+      <a href="roles.html"><svg class="ico"><use href="#i-shield"/></svg> Roles</a>
+      <a href="settings.html"><svg class="ico"><use href="#i-settings"/></svg> Settings</a>
+      <a href="event-log.html" class="active"><svg class="ico"><use href="#i-activity"/></svg> Event Log</a>
+    </nav>
+    <div class="user"><div class="avatar a1">MS</div><div class="stack"><span class="u-name">Maya Singh</span><span class="u-role">Team Leader</span></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="project-switch"><span class="dot"></span> Checkout <span class="prefix">CO</span><svg class="ico chev" style="width:16px"><use href="#i-chev-down"/></svg></div>
+      <div class="breadcrumb"><span>Admin</span><span class="sep">/</span><span class="cur">Event Log</span></div>
+      <div class="search"><svg class="ico" style="width:16px"><use href="#i-search"/></svg><input placeholder="Search events…" /><kbd>⌘K</kbd></div>
+      <div class="spacer"></div>
+      <button class="btn sm"><svg class="ico"><use href="#i-download"/></svg> Export</button>
+      <button class="icon-btn"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg><span class="badge"></span></button>
+    </header>
+
+    <main class="content">
+      <div class="page-head" style="margin-bottom:16px">
+        <div class="titles"><h1>Event Log</h1><p>Audit trail of every change in this project. Retained <strong>90 days</strong> — see Settings → Housekeeping.</p></div>
+      </div>
+
+      <!-- tiles -->
+      <div class="grid cols-4" style="margin-bottom:16px">
+        <div class="card stat"><span class="label">Events today</span><div class="value">128</div><div class="pct-of">1,204 this week</div></div>
+        <div class="card stat"><span class="label">Active users</span><div class="value">6</div><div class="pct-of">writing events</div></div>
+        <div class="card stat"><span class="label">From CI / API</span><div class="value">71%</div><div class="pct-of">automated actions</div></div>
+        <div class="card stat"><span class="label">Retention</span><div class="value">90d</div><div class="pct-of">floor 30d</div></div>
+      </div>
+
+      <!-- filters -->
+      <div class="toolbar">
+        <button class="filter"><svg class="ico" style="width:15px"><use href="#i-users"/></svg> Actor: Anyone <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+        <button class="filter"><svg class="ico" style="width:15px"><use href="#i-activity"/></svg> Category <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+        <button class="filter"><svg class="ico" style="width:15px"><use href="#i-git"/></svg> Source <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+        <button class="filter"><svg class="ico" style="width:15px"><use href="#i-calendar"/></svg> Last 7 days <svg class="ico chev" style="width:14px"><use href="#i-chev-down"/></svg></button>
+        <div class="spacer"></div>
+        <span class="muted" style="font-size:12.5px">newest first</span>
+      </div>
+
+      <!-- log -->
+      <div class="card">
+        <div class="card-body flush">
+          <table class="table">
+            <thead><tr><th style="width:92px">Time</th><th>Actor</th><th>Event</th><th>Target</th><th>Source</th></tr></thead>
+            <tbody>
+              <tr class="grp"><td colspan="5">Today · Sep 11</td></tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">14:32</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a3" style="width:22px;height:22px;font-size:9px">RT</span> <span style="font-size:12.5px">Rina</span></span></td>
+                <td><span class="tag" style="background:var(--danger-bg);color:var(--danger)">failed</span> recorded a fail verdict on <span class="mono">CO-TC-241</span> → <span class="mono">JIRA-4821</span></td>
+                <td><a class="mono" style="color:var(--primary-700)">CO-P12</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">14:20</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a2" style="width:22px;height:22px;font-size:9px">SS</span> <span style="font-size:12.5px">Sam</span></span></td>
+                <td><span class="tag" style="background:var(--success-bg);color:var(--success)">passed</span> recorded a pass verdict on <span class="mono">CO-TC-240</span></td>
+                <td><a class="mono" style="color:var(--primary-700)">CO-P12</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">13:58</td>
+                <td><span class="row" style="gap:8px"><span class="avatar" style="width:22px;height:22px;font-size:8px;background:var(--text)">CI</span> <span style="font-size:12.5px">GitHub CI</span></span></td>
+                <td><span class="tag" style="background:var(--primary-050);color:var(--primary-700)">executed</span> posted 46 results from nightly regression</td>
+                <td><a class="mono" style="color:var(--primary-700)">Build 4.8</a></td>
+                <td><span class="tag" style="background:var(--info-bg);color:var(--info)">API</span></td>
+              </tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">11:14</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a5" style="width:22px;height:22px;font-size:9px">DD</span> <span style="font-size:12.5px">Devon</span></span></td>
+                <td><span class="tag" style="background:var(--info-bg);color:var(--info)">updated</span> edited 6 steps in <span class="mono">CO-TC-243</span></td>
+                <td><a class="mono" style="color:var(--primary-700)">Promotions</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">10:02</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a1" style="width:22px;height:22px;font-size:9px">MS</span> <span style="font-size:12.5px">Maya</span></span></td>
+                <td><span class="tag" style="background:var(--warning-bg);color:var(--warning)">froze</span> froze version <span class="mono">v3</span> of <span class="mono">CO-TC-243</span></td>
+                <td><a class="mono" style="color:var(--primary-700)">Promotions</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+
+              <tr class="grp"><td colspan="5">Yesterday · Sep 10</td></tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">18:47</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a4" style="width:22px;height:22px;font-size:9px">AR</span> <span style="font-size:12.5px">Alex</span></span></td>
+                <td><span class="tag" style="background:var(--primary-050);color:var(--primary-700)">created</span> created build <span class="mono">Build 4.8-rc</span></td>
+                <td><a class="mono" style="color:var(--primary-700)">Checkout</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">16:30</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a6" style="width:22px;height:22px;font-size:9px">TE</span> <span style="font-size:12.5px">Test Admin</span></span></td>
+                <td><span class="tag" style="background:var(--warning-bg);color:var(--warning)">admin</span> invited <span class="mono">priya.qa@example.com</span> as Senior Tester</td>
+                <td><a class="mono" style="color:var(--primary-700)">Users</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">15:05</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a1" style="width:22px;height:22px;font-size:9px">MS</span> <span style="font-size:12.5px">Maya</span></span></td>
+                <td><span class="tag" style="background:var(--warning-bg);color:var(--warning)">admin</span> created API token <span class="mono">CI · nightly regression</span></td>
+                <td><a class="mono" style="color:var(--primary-700)">Settings</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">09:41</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a5" style="width:22px;height:22px;font-size:9px">DD</span> <span style="font-size:12.5px">Devon</span></span></td>
+                <td><span class="tag" style="background:var(--primary-050);color:var(--primary-700)">created</span> added 6 cases to <span class="mono">Promotions</span></td>
+                <td><a class="mono" style="color:var(--primary-700)">Promotions</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+
+              <tr class="grp"><td colspan="5">Sep 9</td></tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">22:00</td>
+                <td><span class="row" style="gap:8px"><span class="avatar" style="width:22px;height:22px;font-size:8px;background:var(--text)">SY</span> <span style="font-size:12.5px">System</span></span></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">housekeeping</span> pruned 1,204 event-log rows and 3 expired tokens</td>
+                <td><span class="muted">—</span></td>
+                <td><span class="tag" style="background:var(--warning-bg);color:var(--warning)">Scheduler</span></td>
+              </tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">17:12</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a1" style="width:22px;height:22px;font-size:9px">MS</span> <span style="font-size:12.5px">Maya</span></span></td>
+                <td><span class="tag" style="background:var(--danger-bg);color:var(--danger)">deleted</span> removed suite <span class="mono">Legacy Coupons</span> (empty)</td>
+                <td><a class="mono" style="color:var(--primary-700)">Checkout</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+              <tr>
+                <td class="muted mono" style="font-size:12px">14:03</td>
+                <td><span class="row" style="gap:8px"><span class="avatar a6" style="width:22px;height:22px;font-size:9px">TE</span> <span style="font-size:12.5px">Test Admin</span></span></td>
+                <td><span class="tag" style="background:var(--warning-bg);color:var(--warning)">admin</span> changed <span class="mono">Tester</span> role abilities</td>
+                <td><a class="mono" style="color:var(--primary-700)">Roles</a></td>
+                <td><span class="tag" style="background:var(--neutral-bg);color:var(--neutral)">Web</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body between" style="border-top:1px solid var(--border)">
+          <span class="subtle" style="font-size:12px">Showing 13 of 1,204 events</span>
+          <button class="btn sm">Load more</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

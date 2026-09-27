@@ -1,12 +1,11 @@
 import { Head, Link, setLayoutProps } from '@inertiajs/react';
 import { ListTree, UserPlus } from 'lucide-react';
-import Heading from '@/components/heading';
+import { PageHead } from '@/components/chrome/page-head';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { index as executeIndex } from '@/routes/executions';
 import { index as selectorIndex } from '@/routes/plan-selector';
 import { show } from '@/routes/plans';
-import { index as projectIndex } from '@/routes/projects';
 import type { PlanProject, SelectablePlan } from '@/types/test-plan';
 
 type PlanSelectorProps = {
@@ -24,8 +23,7 @@ export default function PlanSelectorIndex({
 }: PlanSelectorProps) {
     setLayoutProps({
         breadcrumbs: [
-            { title: 'Test projects', href: projectIndex() },
-            { title: 'Execute', href: selectorIndex(project.id) },
+            { title: 'Execution', href: selectorIndex(project.id) },
         ],
     });
 
@@ -33,9 +31,9 @@ export default function PlanSelectorIndex({
         <>
             <Head title={`Execute ${project.name}`} />
 
-            <div className="space-y-6 p-4">
-                <Heading
-                    title="Execute"
+            <div className="space-y-6 p-6">
+                <PageHead
+                    title="Execution"
                     description={`Plans in ${project.name} you can run or inspect.`}
                 />
 
@@ -48,11 +46,11 @@ export default function PlanSelectorIndex({
                         </p>
                     </div>
                 ) : (
-                    <ul className="divide-y rounded-lg border">
+                    <ul className="grid gap-[18px] md:grid-cols-2">
                         {plans.map((plan) => (
                             <li
                                 key={plan.id}
-                                className="flex items-start justify-between gap-4 p-4"
+                                className="bg-card flex items-start justify-between gap-4 rounded-xl border p-[18px] shadow-[0_1px_2px_rgba(16,24,40,.06)]"
                             >
                                 <div className="min-w-0 space-y-1">
                                     <div className="flex flex-wrap items-center gap-2">
@@ -83,7 +81,11 @@ export default function PlanSelectorIndex({
 
                                 <div className="flex shrink-0 gap-1">
                                     <Button asChild size="sm">
-                                        <Link href={executeIndex(plan.id)}>
+                                        <Link
+                                            href={executeIndex.url(plan.id, {
+                                                query: { start: 1 },
+                                            })}
+                                        >
                                             <ListTree className="size-4" />
                                             Open
                                         </Link>

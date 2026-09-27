@@ -3,6 +3,7 @@
 namespace Tests\Feature\TestPlans;
 
 use App\Enums\Ability;
+use App\Enums\TestPlanStatus;
 use App\Models\Role;
 use App\Models\TestPlan;
 use App\Models\TestProject;
@@ -45,8 +46,46 @@ class TestPlanManagementTest extends TestCase
                 ->has('plans', 2)
                 ->where('plans.0.name', 'Regression')
                 ->where('plans.1.name', 'Release 1')
-                ->where('plans.1.is_open', false),
+                ->where('plans.1.is_open', false)
+                ->where('filter', 'active')
+                ->where('status_counts.active', 2),
             );
+    }
+
+    public function test_the_plan_list_filters_by_lifecycle_status(): void
+    {
+        $project = TestProject::factory()->create();
+        TestPlan::factory()->for($project)->create(['name' => 'Live']);
+        TestPlan::factory()->for($project)->draft()->create(['name' => 'Not ready']);
+        TestPlan::factory()->for($project)->archived()->create(['name' => 'Old']);
+
+        $this->actingAs($this->planner($project))
+            ->get(route('plans.index', $project).'?status=draft')
+            ->assertInertia(fn (AssertableInertia $page) => $page
+                ->has('plans', 1)
+                ->where('plans.0.name', 'Not ready')
+                ->where('filter', 'draft')
+                ->where('status_counts.draft', 1)
+                ->where('status_counts.archived', 1),
+            );
+    }
+
+    public function test_a_planner_can_create_a_draft_plan(): void
+    {
+        $project = TestProject::factory()->create();
+
+        $this->actingAs($this->planner($project))
+            ->post(route('plans.store', $project), [
+                'name' => 'Holiday promo',
+                'status' => 'draft',
+            ])
+            ->assertRedirect(route('plans.index', $project));
+
+        $plan = TestPlan::query()->sole();
+
+        $this->assertSame(TestPlanStatus::Draft, $plan->status);
+        $this->assertTrue($plan->is_active);
+        $this->assertFalse($plan->is_open);
     }
 
     public function test_the_plan_list_requires_the_plan_ability_on_the_project(): void

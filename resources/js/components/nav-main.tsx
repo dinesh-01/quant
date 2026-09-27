@@ -20,7 +20,9 @@ export function NavMain({
 
     return (
         <SidebarGroup className="px-2 py-0">
-            <SidebarGroupLabel>{label}</SidebarGroupLabel>
+            <SidebarGroupLabel className="h-auto px-3 pt-4 pb-1.5 text-[10.5px] font-semibold tracking-[0.08em] text-[#6a7185] uppercase">
+                {label}
+            </SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
@@ -32,6 +34,11 @@ export function NavMain({
                             <Link href={item.href} prefetch>
                                 {item.icon && <item.icon />}
                                 <span>{item.title}</span>
+                                {item.count !== undefined && (
+                                    <span className="ml-auto rounded-full bg-white/10 px-[7px] py-px text-[11px] text-[#cfd4de]">
+                                        {item.count}
+                                    </span>
+                                )}
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>

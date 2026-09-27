@@ -42,11 +42,15 @@ class RoleController extends Controller
                 'description' => $role->description,
                 'is_super_admin' => $role->is_super_admin,
                 'is_default' => $role->is_default,
+                'abilities' => array_values($role->abilities
+                    ->map(fn (Ability $ability): string => $ability->value)
+                    ->all()),
                 'abilities_count' => $role->abilities->count(),
                 'users_count' => (int) $role->getAttribute('users_count'),
                 'assignments_count' => (int) $role->getAttribute('project_members_count')
                     + (int) $role->getAttribute('plan_members_count'),
             ])->all()),
+            'abilityGroups' => $this->abilityGroups(),
         ]);
     }
 

@@ -94,7 +94,18 @@ final class ExpandGhostMarkup
             return null;
         }
 
-        $externalId = (int) substr($key, strlen($prefix));
+        $number = substr($key, strlen($prefix));
+
+        /** Cases are written as `CO-TC-241`. Markup stored before they were reads as `CO-241`. */
+        if (str_starts_with($number, 'TC-')) {
+            $number = substr($number, 3);
+        }
+
+        if (! ctype_digit($number)) {
+            return null;
+        }
+
+        $externalId = (int) $number;
 
         return TestCase::query()
             ->where('test_project_id', $project->getKey())

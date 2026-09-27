@@ -17,6 +17,7 @@ use App\Models\TestPlan;
 use App\Models\TestPlanItem;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -33,37 +34,26 @@ class ExecutionNavigatorController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function index(Request $request, TestPlan $testPlan): Response
+    public function index(Request $request, TestPlan $testPlan): Response|RedirectResponse
     {
         $user = $this->actingUser($request);
         $this->authorizeView($user, $testPlan);
 
         $testPlan->loadMissing('testProject');
         $build = $this->selectedBuild($request, $testPlan);
-        $assignedOnly = Gate::forUser($user)->allows(Ability::ExecuteOnlyAssignedTestCases->value, $testPlan);
+        $runList = $this->runList($user, $testPlan, $build);
 
-        $items = $testPlan->items()
-            ->with(['testCaseVersion.testCase.testProject', 'testCaseVersion.steps', 'platform'])
-            ->get();
+        if ($request->boolean('start') && $build !== null && $runList['items'] !== []) {
+            $first = collect($runList['items'])->first(
+                fn (array $row): bool => $row['latest_status'] === null,
+            ) ?? $runList['items'][0];
 
-        if ($assignedOnly && $build !== null) {
-            $assignedIds = TesterAssignment::query()
-                ->where('build_id', $build->id)
-                ->where('user_id', $user->id)
-                ->pluck('test_plan_item_id');
-            $items = $items->whereIn('id', $assignedIds)->values();
+            return redirect()->route('executions.show', [
+                'testPlan' => $testPlan,
+                'testPlanItem' => $first['id'],
+                'build' => $build->id,
+            ]);
         }
-
-        $latest = $build === null
-            ? collect()
-            : Execution::query()
-                ->where('build_id', $build->id)
-                ->whereIn('test_plan_item_id', $items->modelKeys())
-                ->where('is_draft', false)
-                ->orderByDesc('id')
-                ->get()
-                ->unique('test_plan_item_id')
-                ->keyBy('test_plan_item_id');
 
         return Inertia::render('executions/index', [
             'project' => [
@@ -73,6 +63,7 @@ class ExecutionNavigatorController extends Controller
             'plan' => [
                 'id' => $testPlan->id,
                 'name' => $testPlan->name,
+                'external_id' => $testPlan->fullExternalId(),
                 'is_open' => $testPlan->is_open,
             ],
             'builds' => $testPlan->builds()
@@ -88,18 +79,8 @@ class ExecutionNavigatorController extends Controller
             'can' => [
                 'execute' => Gate::forUser($user)->allows(Ability::ExecuteTests->value, $testPlan),
             ],
-            'items' => $items->map(function (TestPlanItem $item) use ($latest): array {
-                $run = $latest->get($item->id);
-
-                return [
-                    'id' => $item->id,
-                    'full_external_id' => $item->testCaseVersion->testCase->fullExternalId(),
-                    'name' => $item->testCaseVersion->testCase->name,
-                    'version' => $item->testCaseVersion->version,
-                    'platform' => $item->platform?->name,
-                    'latest_status' => $run?->status->value,
-                ];
-            })->values()->all(),
+            'items' => $runList['items'],
+            'counts' => $runList['counts'],
         ]);
     }
 
@@ -121,6 +102,7 @@ class ExecutionNavigatorController extends Controller
         $testPlan->loadMissing('testProject.issueTracker');
         $testPlanItem->load([
             'testCaseVersion.testCase.testProject',
+            'testCaseVersion.testCase.keywords',
             'testCaseVersion.steps',
             'platform',
         ]);
@@ -166,6 +148,7 @@ class ExecutionNavigatorController extends Controller
             'plan' => [
                 'id' => $testPlan->id,
                 'name' => $testPlan->name,
+                'external_id' => $testPlan->fullExternalId(),
                 'is_open' => $testPlan->is_open,
             ],
             'build' => [
@@ -173,8 +156,19 @@ class ExecutionNavigatorController extends Controller
                 'name' => $build->name,
                 'is_open' => $build->is_open,
             ],
+            'builds' => $testPlan->builds()
+                ->get()
+                ->map(fn (Build $each): array => [
+                    'id' => $each->id,
+                    'name' => $each->name,
+                    'is_open' => $each->is_open,
+                    'is_active' => $each->is_active,
+                ])
+                ->all(),
+            'openIssue' => $request->boolean('issue'),
             'item' => [
                 'id' => $testPlanItem->id,
+                'test_case_id' => $testPlanItem->testCaseVersion->testCase->id,
                 'full_external_id' => $testPlanItem->testCaseVersion->testCase->fullExternalId(),
                 'name' => $testPlanItem->testCaseVersion->testCase->name,
                 'version' => $testPlanItem->testCaseVersion->version,
@@ -189,6 +183,16 @@ class ExecutionNavigatorController extends Controller
                     'preconditions',
                 ),
                 'platform' => $testPlanItem->platform?->name,
+                'priority' => $testPlanItem->testCaseVersion->importance->value,
+                'keywords' => $testPlanItem->testCaseVersion->testCase->keywords
+                    ->pluck('name')
+                    ->values()
+                    ->all(),
+                'assigned_to_viewer' => TesterAssignment::query()
+                    ->where('build_id', $build->id)
+                    ->where('test_plan_item_id', $testPlanItem->id)
+                    ->where('user_id', $user->id)
+                    ->exists(),
                 'steps' => $testPlanItem->testCaseVersion->steps->map(fn ($step): array => [
                     'id' => $step->id,
                     'sort_order' => $step->sort_order,
@@ -225,6 +229,7 @@ class ExecutionNavigatorController extends Controller
                 'delete' => $gate->allows(Ability::DeleteExecutions->value, $testPlan),
                 'editNotes' => $gate->allows(Ability::EditExecutionNotes->value, $testPlan),
             ],
+            ...$this->runList($user, $testPlan, $build),
         ]);
     }
 
@@ -260,6 +265,80 @@ class ExecutionNavigatorController extends Controller
                 ])->all()
                 : [],
         ];
+    }
+
+    /**
+     * Cases on this plan for the selected build, already filtered to the
+     * tester's assigned set when that ability is in play.
+     *
+     * @return array{items: list<array<string, mixed>>, counts: array{passed: int, failed: int, blocked: int, not_run: int}}
+     */
+    private function runList(User $user, TestPlan $testPlan, ?Build $build): array
+    {
+        $assignedOnly = Gate::forUser($user)->allows(Ability::ExecuteOnlyAssignedTestCases->value, $testPlan);
+
+        $items = $testPlan->items()
+            ->with([
+                'testCaseVersion.testCase.testProject',
+                'testCaseVersion.testCase.testSuite',
+                'testCaseVersion.testCase.keywords',
+                'platform',
+            ])
+            ->get();
+
+        $assignedIds = $build === null
+            ? collect()
+            : TesterAssignment::query()
+                ->where('build_id', $build->id)
+                ->where('user_id', $user->id)
+                ->pluck('test_plan_item_id');
+
+        if ($assignedOnly && $build !== null) {
+            $items = $items->whereIn('id', $assignedIds)->values();
+        }
+
+        $latest = $build === null
+            ? collect()
+            : Execution::query()
+                ->where('build_id', $build->id)
+                ->whereIn('test_plan_item_id', $items->modelKeys())
+                ->where('is_draft', false)
+                ->orderByDesc('id')
+                ->get()
+                ->unique('test_plan_item_id')
+                ->keyBy('test_plan_item_id');
+
+        $mapped = $items->map(function (TestPlanItem $item) use ($assignedIds, $latest): array {
+            $run = $latest->get($item->id);
+            $case = $item->testCaseVersion->testCase;
+
+            return [
+                'id' => $item->id,
+                'full_external_id' => $case->fullExternalId(),
+                'name' => $case->name,
+                'version' => $item->testCaseVersion->version,
+                'platform' => $item->platform?->name,
+                'suite' => $case->testSuite->name,
+                'priority' => $item->testCaseVersion->importance->value,
+                'keywords' => $case->keywords->pluck('name')->values()->all(),
+                'assigned_to_viewer' => $assignedIds->contains($item->id),
+                'latest_status' => $run?->status->value,
+            ];
+        })->values()->all();
+
+        $counts = ['passed' => 0, 'failed' => 0, 'blocked' => 0, 'not_run' => 0];
+
+        foreach ($mapped as $row) {
+            $key = match ($row['latest_status']) {
+                'passed' => 'passed',
+                'failed' => 'failed',
+                'blocked' => 'blocked',
+                default => 'not_run',
+            };
+            $counts[$key]++;
+        }
+
+        return ['items' => $mapped, 'counts' => $counts];
     }
 
     /**

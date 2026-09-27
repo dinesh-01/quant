@@ -1,5 +1,6 @@
 import { Form, Head, Link, setLayoutProps } from '@inertiajs/react';
 import RoleController from '@/actions/App/Http/Controllers/Roles/RoleController';
+import { PageHead } from '@/components/chrome/page-head';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
 import RoleFormFields from '@/components/roles/role-form-fields';
@@ -38,8 +39,8 @@ export default function EditRole({ role, abilityGroups }: EditRoleProps) {
         <>
             <Head title={`Edit ${role.name}`} />
 
-            <div className="max-w-3xl space-y-8 p-4">
-                <Heading
+            <div className="mx-auto max-w-3xl space-y-8 p-6">
+                <PageHead
                     title={`Edit ${role.name}`}
                     description="Changes apply to everyone holding this role, everywhere, as soon as they are saved."
                 />

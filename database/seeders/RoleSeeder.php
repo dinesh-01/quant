@@ -36,7 +36,7 @@ class RoleSeeder extends Seeder
                 'is_super_admin' => true,
             ],
             [
-                'name' => 'Leader',
+                'name' => 'Team Leader',
                 'description' => 'Runs a test project: specification, planning, execution and role assignment.',
                 'abilities' => [
                     Ability::AssignGlobalRoles,

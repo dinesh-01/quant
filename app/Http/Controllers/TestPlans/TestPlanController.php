@@ -8,12 +8,14 @@ use App\Actions\TestPlans\DeleteTestPlan;
 use App\Actions\TestPlans\UpdateTestPlan;
 use App\Concerns\PresentsCustomFields;
 use App\Enums\Ability;
+use App\Enums\TestPlanStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TestPlans\TestPlanDeleteRequest;
 use App\Http\Requests\TestPlans\TestPlanStoreRequest;
 use App\Http\Requests\TestPlans\TestPlanUpdateRequest;
 use App\Models\TestPlan;
 use App\Models\TestProject;
+use App\Reports\ProjectDashboardReport;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -36,27 +38,62 @@ class TestPlanController extends Controller
 {
     use PresentsCustomFields;
 
-    public function index(Request $request, TestProject $testProject): Response
-    {
+    public function index(
+        Request $request,
+        TestProject $testProject,
+        ProjectDashboardReport $dashboard,
+    ): Response {
         Gate::forUser($this->actingUser($request))
             ->authorize(Ability::CreateTestPlans->value, $testProject);
 
+        $filter = $request->enum('status', TestPlanStatus::class) ?? TestPlanStatus::Active;
+
+        $counts = $testProject->testPlans()
+            ->selectRaw('status, count(*) as aggregate')
+            ->groupBy('status')
+            ->pluck('aggregate', 'status');
+
         $plans = $testProject->testPlans()
+            ->where('status', $filter)
+            ->with(['platforms:id,name', 'milestones:id,test_plan_id,name', 'members:id,name'])
             ->orderBy('name')
-            ->get()
-            ->map(fn (TestPlan $plan): array => [
-                'id' => $plan->id,
-                'name' => $plan->name,
-                'description' => $plan->description,
-                'is_active' => $plan->is_active,
-                'is_open' => $plan->is_open,
-                'is_public' => $plan->is_public,
-            ])
+            ->get();
+        $status = collect($dashboard($plans))->keyBy('id');
+
+        $rows = $plans
+            ->map(function (TestPlan $plan) use ($status): array {
+                $row = $status->get($plan->id);
+                $counts = $row['counts'] ?? null;
+                $items = $row['items'] ?? 0;
+
+                return [
+                    'id' => $plan->id,
+                    'name' => $plan->name,
+                    'description' => $plan->description,
+                    'is_active' => $plan->is_active,
+                    'is_open' => $plan->is_open,
+                    'is_public' => $plan->is_public,
+                    'status' => $plan->status->value,
+                    'items' => $items,
+                    'build' => $row['build']['name'] ?? null,
+                    'counts' => $counts,
+                    'run_status' => $this->runStatus($plan, $counts, $items),
+                    'platforms' => $plan->platforms->pluck('name')->all(),
+                    'milestone' => $plan->milestones->first()?->name,
+                    'assignees' => $plan->members->pluck('name')->all(),
+                ];
+            })
             ->all();
 
         return Inertia::render('test-plans/index', [
             'project' => $this->projectProp($testProject),
-            'plans' => array_values($plans),
+            'plans' => array_values($rows),
+            'filter' => $filter->value,
+            'status_counts' => [
+                'active' => (int) $counts->get(TestPlanStatus::Active->value, 0),
+                'draft' => (int) $counts->get(TestPlanStatus::Draft->value, 0),
+                'archived' => (int) $counts->get(TestPlanStatus::Archived->value, 0),
+            ],
         ]);
     }
 
@@ -96,6 +133,7 @@ class TestPlanController extends Controller
                 'is_active' => $testPlan->is_active,
                 'is_open' => $testPlan->is_open,
                 'is_public' => $testPlan->is_public,
+                'status' => $testPlan->status->value,
             ],
             'customFields' => $this->customFieldProps($testPlan),
         ]);
@@ -140,10 +178,42 @@ class TestPlanController extends Controller
     }
 
     /**
-     * @return array{id: int, name: string}
+     * @return array{id: int, name: string, prefix: string}
      */
     private function projectProp(TestProject $project): array
     {
-        return ['id' => $project->id, 'name' => $project->name];
+        return ['id' => $project->id, 'name' => $project->name, 'prefix' => $project->prefix];
+    }
+
+    /**
+     * @param  array{passed: int, failed: int, blocked: int, not_run: int}|null  $counts
+     */
+    private function runStatus(TestPlan $plan, ?array $counts, int $items): string
+    {
+        if ($plan->status === TestPlanStatus::Draft) {
+            return 'draft';
+        }
+
+        if ($plan->status === TestPlanStatus::Archived) {
+            return 'archived';
+        }
+
+        if ($counts === null || $items === 0) {
+            return $plan->is_open ? 'running' : 'completed';
+        }
+
+        if ($counts['not_run'] === 0) {
+            return 'completed';
+        }
+
+        if ($counts['blocked'] > 0 && $counts['passed'] + $counts['failed'] === 0) {
+            return 'blocked';
+        }
+
+        if ($counts['passed'] + $counts['failed'] + $counts['blocked'] > 0) {
+            return 'in_progress';
+        }
+
+        return $plan->is_open ? 'running' : 'completed';
     }
 }

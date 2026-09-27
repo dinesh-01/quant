@@ -23,6 +23,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [TestSpecificationController::class, 'show'])
             ->name('specification.show');
 
+        Route::get('cases/create', [TestCaseController::class, 'create'])
+            ->name('test-cases.create');
+
         Route::get('search', [TestSpecificationController::class, 'search'])
             ->name('specification.search');
 

@@ -20,7 +20,12 @@ class RoleManagementTest extends TestCase
         $this->actingAs($this->roleManager())
             ->get(route('roles.index'))
             ->assertOk()
-            ->assertSee('Senior Tester');
+            ->assertSee('Senior Tester')
+            ->assertInertia(fn ($page) => $page
+                ->component('roles/index')
+                ->has('abilityGroups')
+                ->has('roles.0.abilities')
+            );
     }
 
     public function test_the_role_list_needs_the_manage_roles_ability()

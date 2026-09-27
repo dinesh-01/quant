@@ -23,7 +23,20 @@ export type CurrentProject = {
         viewReports: boolean;
         viewCodeTrackers: boolean;
         viewIssueTrackers: boolean;
+        manageProject: boolean;
     };
+    /** Shown beside the sidebar destinations they belong to. */
+    counts: {
+        suites: number;
+        plans: number;
+        issues: number;
+    };
+};
+
+export type AvailableProject = {
+    id: number;
+    name: string;
+    prefix: string;
 };
 
 export type ProjectSummary = {

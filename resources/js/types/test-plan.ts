@@ -6,11 +6,25 @@ export type PlanSummary = {
     /** Whether the plan still accepts execution results. */
     is_open: boolean;
     is_public: boolean;
+    status?: 'active' | 'draft' | 'archived';
+    run_status?: string;
+    platforms?: string[];
+    milestone?: string | null;
+    assignees?: string[];
+    items?: number;
+    build?: string | null;
+    counts?: {
+        passed: number;
+        failed: number;
+        blocked: number;
+        not_run: number;
+    } | null;
 };
 
 export type PlanProject = {
     id: number;
     name: string;
+    prefix?: string;
 };
 
 export type PlanContentsProject = PlanProject & {

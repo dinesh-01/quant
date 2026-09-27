@@ -136,7 +136,16 @@ class TestCase extends Model
      */
     public function fullExternalId(): string
     {
-        return "{$this->testProject->prefix}-{$this->external_id}";
+        return self::formatExternalId($this->testProject->prefix, $this->external_id);
+    }
+
+    /**
+     * The same identifier for callers that already hold a prefix and a number
+     * and would otherwise load the project only to read it.
+     */
+    public static function formatExternalId(string $prefix, int $externalId): string
+    {
+        return "{$prefix}-TC-{$externalId}";
     }
 
     /**

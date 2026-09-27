@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\Issues\ProjectIssuesController;
 use App\Http\Controllers\IssueTrackers\IssueTrackerConnectionController;
 use App\Http\Controllers\IssueTrackers\IssueTrackerController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('projects/{testProject}/issues', [ProjectIssuesController::class, 'index'])
+        ->name('issues.index');
+
     Route::get('projects/{testProject}/issue-tracker', [IssueTrackerController::class, 'show'])
         ->name('issue-trackers.show');
     Route::put('projects/{testProject}/issue-tracker', [IssueTrackerController::class, 'update'])
